@@ -2,7 +2,8 @@ import java.util.LinkedList;
 
 public class Main {
     public static void main(String[] args) {
-        //Juego towerDefenseCerroGloria = new Juego();
+        Juego cerroGloriaTD = new Juego();
+        cerroGloriaTD.iniciarJuego();
     }
 }
 
