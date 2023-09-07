@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public abstract class Enemigo extends Entidad implements Ataque {
     protected double vida;
     protected double daño; // cantidad de daño que realiza a barreras o Cerro Gloria
@@ -5,7 +8,12 @@ public abstract class Enemigo extends Entidad implements Ataque {
     protected int alcanceAtaque; // Define si un enemigo puede atacar mas alla de su propio casillero.
     protected int velocidadDesplazamiento; // Determina cada cuantas iteraciones avanza un casillero
     protected int recompensaEnemigo; // Puntos de magia ganados al eliminar el enemigo
+    protected ArrayList<Coordenada> camino = new ArrayList<>(); //lista de posiciones que debe recorrer cada enemigo por mapa
 
+    public void obtenerCaminoNivel(Nivel nivel){
+        //camino = nivel.getCamino();
+
+    }
     @Override
     public void atacar(Mapa mapa) {
         // El mapa es un array de arrays (veremos que tipo de array), el enemigo consulta si en el mismo casillero hay barrera o Cerro Gloria

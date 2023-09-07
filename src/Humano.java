@@ -7,4 +7,7 @@ public class Humano extends Enemigo {
         this.inmunidad = "None";
         this.recompensaEnemigo = 30;
     }
+    public String getNombreClass(){
+        return ("Humano");
+    }
 }
