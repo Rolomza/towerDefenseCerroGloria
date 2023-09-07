@@ -17,6 +17,11 @@ public class Juego {
         // Se debe mostrar cantidad de puntos de magia
         System.out.println("Puntos de magia disponibles: " + this.getPuntosMagia());
         // mostrar mapa
+        mapa.generarCasilleros();
+
+        Humano h1 = new Humano();
+
+
         mapa.mostrarMapa();
 
         // Se debe mostrar tipos de torres disponibles para comprar y su precio y caracteristicas

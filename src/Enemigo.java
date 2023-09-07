@@ -1,4 +1,4 @@
-public abstract class Enemigo implements Ataque {
+public abstract class Enemigo extends Entidad implements Ataque {
     protected double vida;
     protected double daño; // cantidad de daño que realiza a barreras o Cerro Gloria
     protected String inmunidad; // Puede ser hielo, fuego o ninguno, esto reducirá el ataque sufrido por la torre correspondiente
