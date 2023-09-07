@@ -16,8 +16,11 @@ public class Juego {
         System.out.println("Debe posicionar sus torres en el mapa");
         // Se debe mostrar cantidad de puntos de magia
         System.out.println("Puntos de magia disponibles: " + this.getPuntosMagia());
+
+        Nivel nivel1=new Nivel();
+        nivel1.generarCasilleros();
         // mostrar mapa
-        mapa.generarCasilleros();
+        //mapa.generarCasilleros();
 
         Humano h1 = new Humano();
 
