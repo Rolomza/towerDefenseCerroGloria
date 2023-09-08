@@ -9,27 +9,30 @@ public class Juego {
 
     public void iniciarJuego() {
         // Instanciar mapa
-        Mapa mapa = new Mapa();
+        // Crear objero Nivel nivel1 = new Nivel();
+        // nivel1.generarMapa()
+        // nivel1.mostrarMenuUsuario()
+        // nivel1.iniciarNivel()
+                // iniciarNivel genera oleadas
 
         System.out.println("Bienvenido a Cerro de la Gloria Defense!");
-        // Iniciar menus para usuario
-        System.out.println("Debe posicionar sus torres en el mapa");
-        // Se debe mostrar cantidad de puntos de magia
-        System.out.println("Puntos de magia disponibles: " + this.getPuntosMagia());
+        Nivel nivel1 = new Nivel();
+        nivel1.generarCoordCaminoEnemigos();
+        nivel1.mostrarMapaNivel();
 
-        Nivel nivel1=new Nivel();
-        nivel1.generarCasilleros();
-        // mostrar mapa
-        //mapa.generarCasilleros();
-        Humano h1 = new Humano();
-        mapa.mostrarMapa();
 
-        // Se debe mostrar tipos de torres disponibles para comprar y su precio y caracteristicas
+//        // Iniciar menus para usuario
+//        System.out.println("Debe posicionar sus torres en el mapa");
+//        // Se debe mostrar cantidad de puntos de magia
+//        System.out.println("Puntos de magia disponibles: " + this.getPuntosMagia());
+//
+//        // Se debe mostrar tipos de torres disponibles para comprar y su precio y caracteristicas
+//
+//        this.comprarTorres();
+//
+//        // Posicionar torres
+//            // Dar inicio al juego si está seguro
 
-        this.comprarTorres();
-
-        // Posicionar torres
-            // Dar inicio al juego si está seguro
 
     }
 
@@ -74,8 +77,6 @@ public class Juego {
         }
 
     }
-    public void moverEnemigos(mapa.)
-
     // Getters and setter
 
     public int getPuntosMagia() {
