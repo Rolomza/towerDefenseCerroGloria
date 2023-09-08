@@ -32,7 +32,14 @@ public class Nivel {
             casillerosEnemigos.add(new Casillero());
         }
     }
+    public void posicionarTorres(){
+        System.out.println("Probandooooo");
+        System.out.println("Probandooooo");
+        System.out.println("Probandooooo");
+        System.out.println("Probandooooo");
+        System.out.println("saludos git");
 
+    }
     public void mostrarMapaNivel() {
         mapaNivel.mostrarMapa();
     }

@@ -11,7 +11,7 @@ public abstract class Enemigo extends Entidad implements Ataque {
     protected ArrayList<Coordenada> camino = new ArrayList<>(); //lista de posiciones que debe recorrer cada enemigo por mapa
 
     public void obtenerCaminoNivel(Nivel nivel){
-        camino = nivel.getCaminoEnemigos();
+        //camino = nivel.getCaminoEnemigos();
     }
     @Override
     public void atacar(Mapa mapa) {
