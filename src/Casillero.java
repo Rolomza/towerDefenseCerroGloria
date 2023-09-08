@@ -37,9 +37,10 @@ public class Casillero {
             //
         } else if (enemigo instanceof Enano) {
             Enano enano = (Enano) enemigo;
+            listaEnanos = entidadesCasillero.get("Enano");
+            listaEnanos.add(enano);
+            entidadesCasillero.put("Enano",listaEnanos);
             //
-        } else {
-            // Manejar el caso en el que no es ninguna de las subclases esperadas
         }
         }
 

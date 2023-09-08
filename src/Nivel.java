@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 
 public class Nivel extends Mapa {
-
-
+    protected ArrayList<Casillero> casillerosCaminos = new ArrayList<>();
     public void generarCasilleros() {
         //Esto en el futuro se creara aleatoriamente por nivel como nos dijo el profe
         caminosEnemigos.add(new Coordenada(0, 0));
@@ -12,9 +11,6 @@ public class Nivel extends Mapa {
         caminosEnemigos.add(new Coordenada(2, 2));
 
 
-// Llena la lista de coordenadas con objetos Coordenada
-
-// Supongamos que tienes una matriz de tamaño n x m
         int n = mapa.length;      // Número de filas
         int m = mapa[0].length;   // Número de columnas
 
@@ -31,6 +27,8 @@ public class Nivel extends Mapa {
             // Verifica si la coordenada coincide con una posición en la matriz
             if (x >= 0 && x < n && y >= 0 && y < m) {
                 mapa[x][y] = new Casillero(true);
+
+
                 // Realiza acciones con el valor en la matriz si es necesario
             }
         }
@@ -43,7 +41,9 @@ public class Nivel extends Mapa {
 
 
     }
-
+    public ArrayList<Coordenada>  getCaminoEnemigos() {
+        return caminosEnemigos;
+    }
 
 
 

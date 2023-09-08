@@ -10,8 +10,8 @@ public class Juego {
     public void iniciarJuego() {
         // Instanciar mapa
         Mapa mapa = new Mapa();
-        System.out.println("Bienvenido a Cerro de la Gloria Defense!");
 
+        System.out.println("Bienvenido a Cerro de la Gloria Defense!");
         // Iniciar menus para usuario
         System.out.println("Debe posicionar sus torres en el mapa");
         // Se debe mostrar cantidad de puntos de magia
@@ -21,10 +21,7 @@ public class Juego {
         nivel1.generarCasilleros();
         // mostrar mapa
         //mapa.generarCasilleros();
-
         Humano h1 = new Humano();
-
-
         mapa.mostrarMapa();
 
         // Se debe mostrar tipos de torres disponibles para comprar y su precio y caracteristicas
@@ -77,6 +74,7 @@ public class Juego {
         }
 
     }
+    public void moverEnemigos(mapa.)
 
     // Getters and setter
 
