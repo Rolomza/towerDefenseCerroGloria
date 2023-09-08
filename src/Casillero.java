@@ -2,11 +2,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Casillero {
-    private boolean esCamino = false;
     private HashMap<String,ArrayList<Entidad>> entidadesCasillero = new HashMap<>();
 
-    public Casillero(boolean esCamino) {
-        this.esCamino = esCamino;
+    public Casillero() {
+        System.out.println("Casillero creado!");
     }
 
     private ArrayList<Entidad> listaHumanos = new ArrayList<>();
@@ -45,8 +44,5 @@ public class Casillero {
 
     public void mostrarCasillero() {
         // Para posible print de la info de cada casillero
-    }
-    public boolean getEsCamino(){
-       return this.esCamino;
     }
 }
