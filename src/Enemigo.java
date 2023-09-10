@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public abstract class Enemigo extends Entidad implements Ataque {
     protected double vida;

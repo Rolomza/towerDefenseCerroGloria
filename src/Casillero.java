@@ -13,12 +13,10 @@ public class Casillero {
     private ArrayList<Entidad> listaElfos = new ArrayList<>();
     private ArrayList<Entidad> listaEnanos = new ArrayList<>();
 
-
     public void agregarEnemigo(Enemigo enemigo) {
 
         if (enemigo instanceof Humano) {
             Humano humano = (Humano) enemigo;
-            listaHumanos = entidadesCasillero.get("Humano");
             listaHumanos.add(humano);
             entidadesCasillero.put("Humano",listaHumanos);
             //
@@ -44,6 +42,11 @@ public class Casillero {
         }
 
     public void mostrarCasillero() {
-        // Para posible print de la info de cada casillero
+        /// Ver como implementarlo, saludos Victor
+    }
+
+    public void mostrarListaHumanos() {
+        Humano h1 = (Humano) this.listaHumanos.get(0);
+        h1.getNombreClass();
     }
 }

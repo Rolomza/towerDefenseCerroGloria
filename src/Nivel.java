@@ -2,12 +2,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Nivel {
+    private int nroNivel;
     private ArrayList<Coordenada> caminosEnemigos = new ArrayList<>();
     private ArrayList<Casillero> casillerosEnemigos = new ArrayList<>();
     private ArrayList<Torre> listaTorres = new ArrayList<>();
     private Mapa mapaNivel = new Mapa();
 
-    public Nivel() {}
+    public Nivel(int nroNivel) {
+        this.nroNivel = nroNivel;
+    }
 
     public void generarCoordCaminoEnemigos() {
         //Objetivo: Crear aleatoriamente por nivel como nos dijo el profe
@@ -87,7 +90,29 @@ public class Nivel {
         }
 
     }
+
+    public void cargarEnemigosCasillero() {
+        Oleada oleada1 = new Oleada(getNroNivel());
+        oleada1.generarEnemigos();
+        ArrayList<Enemigo> listaEnemigosOleada = oleada1.getListaEnemigosOleada();
+        // Ver implementacion de cola FIFO para ir cargando enemigos en el primer casillero.
+        // Porque el unico lugar donde se carga es el primer casillero de CasilleroEnemigos
+        // Luego desde el primer casillero se van desplaznado por el mapa.
+        Casillero c1 = casillerosEnemigos.get(0);  //.agregarEnemigo(new Humano());
+        c1.agregarEnemigo(listaEnemigosOleada.get(0));
+        c1.mostrarListaHumanos();
+    }
+
+
     public void mostrarMapaNivel() {
         mapaNivel.mostrarMapa();
+    }
+
+    public int getNroNivel() {
+        return nroNivel;
+    }
+
+    public void mostrarCasillero() {
+        // Chau Aida
     }
 }
