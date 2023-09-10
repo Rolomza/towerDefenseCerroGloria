@@ -41,4 +41,13 @@ public class Mapa {
         }
     }
 
+    public void colocarRefTorre(Coordenada coordenadaTorre){
+        int posX = coordenadaTorre.getX();
+        int posY = coordenadaTorre.getY();
+        mapaRefCoord[posX][posY] = "T";
+    }
+
+    public String[][] getMapaRefCoord() {
+        return mapaRefCoord;
+    }
 }

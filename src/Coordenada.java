@@ -24,4 +24,10 @@ public class Coordenada {
     public void mostrarCoordenada() {
         System.out.println("(" + x + ", " + y + ")");
     }
+
+    public boolean equals(Coordenada coordenada2){
+        return this.getX() == coordenada2.getX() && this.getY() == coordenada2.getY();
+    }
+
+
 }
