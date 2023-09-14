@@ -4,21 +4,16 @@ import java.util.Scanner;
 public class Juego {
     private int puntosMagia = 300;
 
-    // ArrayList<Mapa> mapas = new ArrayList<Mapa>();
-
-
     public void iniciarJuego() {
         System.out.println("Bienvenido a Cerro de la Gloria Defense!");
         Nivel nivel1 = new Nivel(1);
         nivel1.generarCasillerosEnemigos();
         nivel1.mostrarMapaNivel();
         //nivel1.menuTorre();
-        nivel1.cargarEnemigosCasillero();
-
+        nivel1.iniciarOleadas();
     }
 
     // Getters and setter
-
     public int getPuntosMagia() {
         return puntosMagia;
     }

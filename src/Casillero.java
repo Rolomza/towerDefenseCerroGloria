@@ -2,49 +2,41 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Casillero {
-    private HashMap<String,ArrayList<Entidad>> entidadesCasillero = new HashMap<>();
+    private HashMap<String,ArrayList<Enemigo>> enemigosCasillero = new HashMap<>();
+    private ArrayList<Enemigo> listaHumanos = new ArrayList<>();
+    private ArrayList<Enemigo> listaHobbits = new ArrayList<>();
+    private ArrayList<Enemigo> listaElfos = new ArrayList<>();
+    private ArrayList<Enemigo> listaEnanos = new ArrayList<>();
 
-    public Casillero() {}
-
-    private ArrayList<Entidad> listaHumanos = new ArrayList<>();
-    private ArrayList<Entidad> listaHobbits = new ArrayList<>();
-    private ArrayList<Entidad> listaElfos = new ArrayList<>();
-    private ArrayList<Entidad> listaEnanos = new ArrayList<>();
-
-    public void agregarEnemigo(Enemigo enemigo) {
-
-        if (enemigo instanceof Humano) {
-            Humano humano = (Humano) enemigo;
-            listaHumanos.add(humano);
-            entidadesCasillero.put("Humano",listaHumanos);
-            //
-        } else if (enemigo instanceof Hobbit) {
-            Hobbit hobbit = (Hobbit) enemigo;
-            listaHobbits = entidadesCasillero.get("Hobbit");
-            listaHobbits.add(hobbit);
-            entidadesCasillero.put("Hobbit",listaHobbits);
-            //
-        } else if (enemigo instanceof Elfo) {
-            Elfo elfo = (Elfo) enemigo;
-            listaElfos = entidadesCasillero.get("Elfo");
-            listaElfos.add(elfo);
-            entidadesCasillero.put("Elfo",listaElfos);
-            //
-        } else if (enemigo instanceof Enano) {
-            Enano enano = (Enano) enemigo;
-            listaEnanos = entidadesCasillero.get("Enano");
-            listaEnanos.add(enano);
-            entidadesCasillero.put("Enano",listaEnanos);
-            //
-        }
-        }
-
-    public void mostrarCasillero() {
-        /// Ver como implementarlo, saludos Victor
+    public Casillero() {
+        // Agrego listas al HashMap de Casillero
+        this.enemigosCasillero.put("Humano",listaHumanos);
+        this.enemigosCasillero.put("Hobbit",listaHobbits);
+        this.enemigosCasillero.put("Elfo",listaElfos);
+        this.enemigosCasillero.put("Enano",listaEnanos);
     }
 
-    public void mostrarListaHumanos() {
-        Humano h1 = (Humano) this.listaHumanos.get(0);
-        h1.getNombreClass();
+    public void agregarEnemigo(Enemigo enemigo) {
+        // Agrego enemigo a cada lista dentro del hashmap Enemigos segun el tipo de enemigo
+        if (enemigo instanceof Humano) {
+            // Obtengo el arrayList asociado
+            ArrayList<Enemigo> listaHumanos = enemigosCasillero.get("Humano");
+            // Actualizo lista
+            listaHumanos.add(enemigo);
+        } else if (enemigo instanceof Hobbit) {
+            ArrayList<Enemigo> listaHobbits = enemigosCasillero.get("Hobbit");
+            listaHobbits.add(enemigo);
+        } else if (enemigo instanceof Elfo) {
+            ArrayList<Enemigo> listaElfos = enemigosCasillero.get("Elfo");
+            listaElfos.add(enemigo);
+        } else if (enemigo instanceof Enano) {
+            ArrayList<Enemigo> listaEnanos = enemigosCasillero.get("Enano");
+            listaEnanos.add(enemigo);
+        }
+    }
+
+    public void mostrarEntidadesCasillero() {
+        /// Muestra el HashMap
+        System.out.println(this.enemigosCasillero);
     }
 }

@@ -9,10 +9,11 @@ public class Nivel {
     // 4) Genera oleadas (3) por nivel.
 
     private int nroNivel;
-
     private ArrayList<Casillero> casillerosEnemigos = new ArrayList<>();
     private ArrayList<Torre> listaTorres = new ArrayList<>();
     private Mapa mapaNivel = new Mapa();
+
+    private Oleada oleadaNivel = new Oleada(1);
 
     public Nivel(int nroNivel) {
         this.nroNivel = nroNivel;
@@ -28,6 +29,11 @@ public class Nivel {
             int y = coordenada.getY();
             casillerosEnemigos.add(new Casillero());
         }
+    }
+
+    public void iniciarOleadas() {
+        oleadaNivel.generarEnemigos();
+        oleadaNivel.cargarEnemigosCasilleroInicial(this.casillerosEnemigos);
     }
 
     public void menuTorre() {
@@ -89,18 +95,6 @@ public class Nivel {
             }
         }
 
-    }
-
-    public void cargarEnemigosCasillero() {
-        Oleada oleada1 = new Oleada(getNroNivel());
-        oleada1.generarEnemigos();
-        ArrayList<Enemigo> listaEnemigosOleada = oleada1.getListaEnemigosOleada();
-        // Ver implementacion de cola FIFO para ir cargando enemigos en el primer casillero.
-        // Porque el unico lugar donde se carga es el primer casillero de CasilleroEnemigos
-        // Luego desde el primer casillero se van desplaznado por el mapa.
-        Casillero c1 = casillerosEnemigos.get(0);  //.agregarEnemigo(new Humano());
-        c1.agregarEnemigo(listaEnemigosOleada.get(0));
-        //c1.mostrarListaHumanos();
     }
 
     public Mapa getMapaNivel() {
