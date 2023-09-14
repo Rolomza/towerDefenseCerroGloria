@@ -4,9 +4,7 @@ import java.util.HashMap;
 public class Casillero {
     private HashMap<String,ArrayList<Entidad>> entidadesCasillero = new HashMap<>();
 
-    public Casillero() {
-        System.out.println("Casillero creado!");
-    }
+    public Casillero() {}
 
     private ArrayList<Entidad> listaHumanos = new ArrayList<>();
     private ArrayList<Entidad> listaHobbits = new ArrayList<>();

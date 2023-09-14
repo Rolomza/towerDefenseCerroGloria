@@ -1,15 +1,29 @@
 import java.util.ArrayList;
 
 public class Mapa {
-    // El objeto mapa generado tendra en su estado un array de String para verificar al posicionar torres
+    // Responsabilidad principal: Determinar referencias para generar coordenadas tanto para casilleros, torres y barreras.
     // Tambien para verificar a que casilleros alcanza cada torre y para mostrar por consola el desarrollo de las iteraciones
-    protected ArrayList<Coordenada> caminosEnemigos;
+    protected ArrayList<Coordenada> caminosEnemigos = new ArrayList<>();
     protected String[][] mapaRefCoord = new String[3][3];
 
 
-    public void generarCoordMapaRef(ArrayList<Coordenada> coordCaminoEnemigoNivel) {
+    public void generarCoordCaminoEnemigos() {
+        //Objetivo: Crear aleatoriamente por nivel como nos dijo el profe
 
-        for (Coordenada coordenada : coordCaminoEnemigoNivel) {
+        // Validar que las coordenadas sean validas
+
+        // Ahora probamos hardcodeando algunas coordenadas
+        this.caminosEnemigos.add(new Coordenada(0, 0));
+        this.caminosEnemigos.add(new Coordenada(0, 1));
+        this.caminosEnemigos.add(new Coordenada(1, 1));
+        this.caminosEnemigos.add(new Coordenada(2, 1));
+        this.caminosEnemigos.add(new Coordenada(2, 2));
+
+    }
+
+    public void colocarReferenciasEnMapa() {
+
+        for (Coordenada coordenada : this.caminosEnemigos) {
             int x = coordenada.getX();
             int y = coordenada.getY();
             mapaRefCoord[x][y] = "C";
@@ -23,10 +37,12 @@ public class Mapa {
             }
         }
     }
-    public void generarCasillerosEnemigos() {
-        System.out.println(" ");
-    }
 
+    public void colocarRefTorre(Coordenada coordenadaTorre){
+        int posX = coordenadaTorre.getX();
+        int posY = coordenadaTorre.getY();
+        mapaRefCoord[posX][posY] = "T";
+    }
 
     public void mostrarMapa() {
         System.out.println("  A  B  C  ");
@@ -41,13 +57,9 @@ public class Mapa {
         }
     }
 
-    public void colocarRefTorre(Coordenada coordenadaTorre){
-        int posX = coordenadaTorre.getX();
-        int posY = coordenadaTorre.getY();
-        mapaRefCoord[posX][posY] = "T";
+    public ArrayList<Coordenada> getCaminosEnemigos() {
+        return caminosEnemigos;
     }
 
-    public String[][] getMapaRefCoord() {
-        return mapaRefCoord;
-    }
+    public String[][] getMapaRefCoord() { return mapaRefCoord; }
 }

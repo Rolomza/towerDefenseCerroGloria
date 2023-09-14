@@ -2,8 +2,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Nivel {
+    // Cada nivel tiene la responsabilidad de:
+    // 1) Generar un mapa
+    // 2) A partir del mapa generar estructura casillerosEnemigos
+    // 3) Mostrar menus de interaccion para comprar torres, ponerlas, mejorarlas, e iniciar oleadas
+    // 4) Genera oleadas (3) por nivel.
+
     private int nroNivel;
-    private ArrayList<Coordenada> caminosEnemigos = new ArrayList<>();
+
     private ArrayList<Casillero> casillerosEnemigos = new ArrayList<>();
     private ArrayList<Torre> listaTorres = new ArrayList<>();
     private Mapa mapaNivel = new Mapa();
@@ -12,25 +18,12 @@ public class Nivel {
         this.nroNivel = nroNivel;
     }
 
-    public void generarCoordCaminoEnemigos() {
-        //Objetivo: Crear aleatoriamente por nivel como nos dijo el profe
-
-        // Validar que las coordenadas sean validas
-
-        // Ahora probamos hardcodeando algunas coordenadas
-        this.caminosEnemigos.add(new Coordenada(0, 0));
-        this.caminosEnemigos.add(new Coordenada(0, 1));
-        this.caminosEnemigos.add(new Coordenada(1, 1));
-        this.caminosEnemigos.add(new Coordenada(2, 1));
-        this.caminosEnemigos.add(new Coordenada(2, 2));
-
-        mapaNivel.generarCoordMapaRef(this.caminosEnemigos);
-
-        this.generarCasillerosEnemigos();
-
-    }
     public void generarCasillerosEnemigos() {
-        for (Coordenada coordenada : caminosEnemigos) {
+
+        this.mapaNivel.generarCoordCaminoEnemigos();
+        this.mapaNivel.colocarReferenciasEnMapa();
+
+        for (Coordenada coordenada : this.mapaNivel.getCaminosEnemigos()) {
             int x = coordenada.getX();
             int y = coordenada.getY();
             casillerosEnemigos.add(new Casillero());
@@ -38,6 +31,13 @@ public class Nivel {
     }
 
     public void menuTorre() {
+        // Despliega menu torres
+        // El usuario puede elegir entre 3 torres
+        // El usuario decide donde colocar la torre, el metodo valida, si es posible, la coloca en el mapa
+        // Cada vez una torre es colocada, se muestra el mapa.
+
+        // Mejorar la torres en este metodo? Luego de cada oleada
+
         int tipoTorre; // Numero de opcion
         boolean seguirComprando = true;
 
@@ -70,7 +70,7 @@ public class Nivel {
                     mapaNivel.colocarRefTorre(new Coordenada(posX, posY)); // Desarrollar input para las coordenadas del usuario
                     this.mostrarMapaNivel();
                     this.listaTorres.add(torreComun);
-                    torreComun.calcularCasillerosAtaque(mapaNivel.mapaRefCoord , caminosEnemigos);
+                    torreComun.calcularCasillerosAtaque(this.mapaNivel);
                     torreComun.imprimirCasillerosAtaque();
 
                     // torreComun.posicionarEnMapa(Mapa);
@@ -100,9 +100,12 @@ public class Nivel {
         // Luego desde el primer casillero se van desplaznado por el mapa.
         Casillero c1 = casillerosEnemigos.get(0);  //.agregarEnemigo(new Humano());
         c1.agregarEnemigo(listaEnemigosOleada.get(0));
-        c1.mostrarListaHumanos();
+        //c1.mostrarListaHumanos();
     }
 
+    public Mapa getMapaNivel() {
+        return mapaNivel;
+    }
 
     public void mostrarMapaNivel() {
         mapaNivel.mostrarMapa();

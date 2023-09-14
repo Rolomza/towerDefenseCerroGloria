@@ -8,19 +8,12 @@ public class Juego {
 
 
     public void iniciarJuego() {
-        // Instanciar mapa
-        // Crear objero Nivel nivel1 = new Nivel();
-        // nivel1.generarMapa()
-        // nivel1.mostrarMenuUsuario()
-        // nivel1.iniciarNivel()
-                // iniciarNivel genera oleadas
-
         System.out.println("Bienvenido a Cerro de la Gloria Defense!");
         Nivel nivel1 = new Nivel(1);
-        nivel1.generarCoordCaminoEnemigos();
+        nivel1.generarCasillerosEnemigos();
         nivel1.mostrarMapaNivel();
-        nivel1.menuTorre();
-        nivel1.cargarEnemigosCasillero(); // Que no explote nada por favor te lo pido.
+        //nivel1.menuTorre();
+        nivel1.cargarEnemigosCasillero();
 
     }
 

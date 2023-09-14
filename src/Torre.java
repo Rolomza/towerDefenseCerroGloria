@@ -19,7 +19,9 @@ public abstract class Torre implements Ataque {
 
     // De acuerdo al alcanze de la torre y su posicion en el mapa, determinas a que casilleros
     // puede atacar en cada iteracion. Esos casilleros los guarda en casillerosAtaque.
-    public void calcularCasillerosAtaque(String[][] mapaNivel , ArrayList<Coordenada> casillerosEnemigos){
+    public void calcularCasillerosAtaque(Mapa mapaNivel){
+
+        String [][] arrayMapa = mapaNivel.getMapaRefCoord();
 
         int posX = coordenadaTorre.getX();
         int posY = coordenadaTorre.getY();
@@ -31,20 +33,19 @@ public abstract class Torre implements Ataque {
         for (int i = newPosX; i <= posX + this.alcanceAtaque; i++) {
             for (int j = newPosY; j <= posY + this.alcanceAtaque; j++) {
                 // Verificar que i y j estén dentro de los límites del mapa
-                if (i >= 0 && i < mapaNivel.length && j >= 0 && j < mapaNivel[0].length) {
+                if (i >= 0 && i < arrayMapa.length && j >= 0 && j < arrayMapa[0].length) {
                     // Verificar si el casillero es diferente de la posición de la torre
 
-                    if (!mapaNivel[i][j].equals("C") || (i == posX && j == posY)) {
+                    if (!arrayMapa[i][j].equals("C") || (i == posX && j == posY)) {
                         continue;
                     }
                     // Agregar la coordenada a casillerosAtaque
-                    casillerosAtaque.add(new Coordenada(i, j));
+                    this.casillerosAtaque.add(new Coordenada(i, j));
                 }
             }
         }
 
     }
-
 
     public void imprimirCasillerosAtaque() {
 
