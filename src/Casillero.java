@@ -1,16 +1,22 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Casillero {
+    private static final AtomicInteger contador = new AtomicInteger(-1);
+    private final int id;
     private HashMap<String,ArrayList<Enemigo>> enemigosCasillero = new HashMap<>();
 
-    // Hace falta agregar lista de barreras
+    // Revisar modelado de barrera, si hacemos solo clase Barrera o creamos clase Estructura para Barreras y Cerro Gloria
+    private ArrayList<Barrera> listaBarreras = new ArrayList<Barrera>();
+    private Cerro cerroGloria = null;
     private ArrayList<Enemigo> listaHumanos = new ArrayList<>();
     private ArrayList<Enemigo> listaHobbits = new ArrayList<>();
     private ArrayList<Enemigo> listaElfos = new ArrayList<>();
     private ArrayList<Enemigo> listaEnanos = new ArrayList<>();
 
     public Casillero() {
+        this.id = contador.incrementAndGet();
         // Agrego listas al HashMap de Casillero
         this.enemigosCasillero.put("Humano",listaHumanos);
         this.enemigosCasillero.put("Hobbit",listaHobbits);
@@ -37,10 +43,11 @@ public class Casillero {
         }
     }
 
-    public void moverEnemigos(Casillero casilleroSiguiente) {
-        // Verifica enemigos con contador de iteraciones listos para pasar al siguiente casillero
-        // Los mueve al siguiente casillero de casillerosEnemigos
-
+    public void eliminarEnemigo(Enemigo enemigo) {
+        if (enemigo instanceof Humano) {
+            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Humano");
+            listaEnemigos.remove(enemigo);
+        }
     }
 
     public boolean tieneEnemigos() {
@@ -52,8 +59,31 @@ public class Casillero {
         return false;
     }
 
+
+    public HashMap<String, ArrayList<Enemigo>> getEnemigosCasillero() {
+        return enemigosCasillero;
+    }
+
     public void mostrarEntidadesCasillero() {
         /// Muestra el HashMap
-        System.out.println(this.enemigosCasillero);
+        String nombreCasillero = toString();
+        System.out.println(nombreCasillero + this.enemigosCasillero);
+    }
+
+    @Override
+    public String toString() {
+        return "Casillero{" + "id=" + id + '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setCerroGloria(Cerro cerroGloria) {
+        this.cerroGloria = cerroGloria;
+    }
+
+    public Cerro getCerroGloria() {
+        return cerroGloria;
     }
 }

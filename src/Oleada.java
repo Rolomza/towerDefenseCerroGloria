@@ -30,7 +30,7 @@ public class Oleada {
 //        listaEnemigosOleada.add(new Elfo());
 //        listaEnemigosOleada.add(new Enano());
 //        listaEnemigosOleada.add(new Hobbit());
-       listaEnemigosOleada.add(new Humano());
+        //listaEnemigosOleada.add(new Humano());
 //        listaEnemigosOleada.add(new Elfo());
 //        listaEnemigosOleada.add(new Enano());
     }
@@ -38,7 +38,7 @@ public class Oleada {
     public void cargarEnemigosCasilleroInicial(ArrayList<Casillero> casillerosEnemigos) {
         // Se cargan una determinada cantidad de enemigos segun el nivel y la oleada
         Casillero c1 = casillerosEnemigos.get(0);
-        int cantidadEnemigosCarga = 7;
+        int cantidadEnemigosCarga = 3;
 
 //        if (nivelActual == 1) {
 //            switch (nroOleada) {
@@ -58,7 +58,7 @@ public class Oleada {
 
         }
 
-        c1.mostrarEntidadesCasillero();
+        //c1.mostrarEntidadesCasillero();
     }
 
     public int getNroOleada() {
