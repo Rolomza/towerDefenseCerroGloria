@@ -98,7 +98,6 @@ public class Casillero {
 
 
     public void setEnemigosListosParaMoverse(){
-
         for (ArrayList<Enemigo> listaEnemigos : this.enemigosCasillero.values()){
             if (!listaEnemigos.isEmpty()){
                 for (Enemigo enemigo : listaEnemigos){
