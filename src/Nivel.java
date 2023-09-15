@@ -36,6 +36,30 @@ public class Nivel {
         oleadaNivel.cargarEnemigosCasilleroInicial(this.casillerosEnemigos);
     }
 
+    public void iniciarNivel() {
+        // Cada ciclo dura 1 oleada, donde se comprueba que:
+        //                                 1 La listaEnemigos de oleada este vacia
+        //                                 2 No hayan enemigos en ningun casillero
+        //                                 3 El cerro siga con vida
+        //
+        iniciarOleadas();
+        recorrerCasillleros();
+    }
+
+
+    public void recorrerCasillleros() {
+        // Primer approach: Recorro lista casillerosEnemigos
+        //                  Si hay enemigos en dicho casillero, lo muevo al siguiente
+        //                  (Por ahora evito tema de velocidades distintas de desplazamiento
+        for (Casillero casillero: this.casillerosEnemigos) {
+            if(casillero.tieneEnemigos()) {
+                // mover enemigo al siguiente casillero
+
+                System.out.println("Hay un enemigo");
+            }
+        }
+    }
+
     public void menuTorre() {
         // Despliega menu torres
         // El usuario puede elegir entre 3 torres

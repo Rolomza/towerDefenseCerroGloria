@@ -10,7 +10,7 @@ public class Juego {
         nivel1.generarCasillerosEnemigos();
         nivel1.mostrarMapaNivel();
         //nivel1.menuTorre();
-        nivel1.iniciarOleadas();
+        nivel1.iniciarNivel();
     }
 
     // Getters and setter

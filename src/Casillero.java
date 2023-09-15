@@ -3,6 +3,8 @@ import java.util.HashMap;
 
 public class Casillero {
     private HashMap<String,ArrayList<Enemigo>> enemigosCasillero = new HashMap<>();
+
+    // Hace falta agregar lista de barreras
     private ArrayList<Enemigo> listaHumanos = new ArrayList<>();
     private ArrayList<Enemigo> listaHobbits = new ArrayList<>();
     private ArrayList<Enemigo> listaElfos = new ArrayList<>();
@@ -33,6 +35,21 @@ public class Casillero {
             ArrayList<Enemigo> listaEnanos = enemigosCasillero.get("Enano");
             listaEnanos.add(enemigo);
         }
+    }
+
+    public void moverEnemigos(Casillero casilleroSiguiente) {
+        // Verifica enemigos con contador de iteraciones listos para pasar al siguiente casillero
+        // Los mueve al siguiente casillero de casillerosEnemigos
+
+    }
+
+    public boolean tieneEnemigos() {
+        for (ArrayList<Enemigo> listaEnemigo : enemigosCasillero.values()) {
+            if (!listaEnemigo.isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void mostrarEntidadesCasillero() {

@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
-public abstract class Enemigo extends Entidad implements Ataque {
-    protected int ID; // ????
+public abstract class Enemigo implements Ataque {
+    protected int id; // Como lo generamos por cada tipo Enemigo
+    protected int iteracionesRestantes;
     protected double vida;
     protected double daño; // cantidad de daño que realiza a barreras o Cerro Gloria
     protected String inmunidad; // Puede ser hielo, fuego o ninguno, esto reducirá el ataque sufrido por la torre correspondiente
@@ -26,5 +27,9 @@ public abstract class Enemigo extends Entidad implements Ataque {
     public void entregarPuntosMagia(Juego juego) {
         // Cuando una torre elimina al enemigo, antes de ser eliminado el objeto, este devuelve al juego puntos de magia, para mejoras y/o compras.
         juego.aumentarPuntosMagia(recompensaEnemigo);
+    }
+
+    public int getID() {
+        return id;
     }
 }
