@@ -23,7 +23,7 @@ public class Oleada {
 
         // Pureba inicial:
         listaEnemigosOleada.add(new Humano());
-//        listaEnemigosOleada.add(new Elfo());
+        listaEnemigosOleada.add(new Elfo());
 //        listaEnemigosOleada.add(new Enano());
 //        listaEnemigosOleada.add(new Hobbit());
 //        listaEnemigosOleada.add(new Humano());

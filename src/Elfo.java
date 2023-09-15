@@ -7,7 +7,8 @@ public class Elfo extends Enemigo {
         this.vida = 150;
         this.daño = 100;
         this.alcanceAtaque = 1;
-        this.velocidadDesplazamiento = 2; // Por ejemplo si un ciclo de juego son 3 iteraciones, el humano se mueve 1 casillero por ciclo.
+        this.velocidadDesplazamiento = 1; // Por ejemplo si un ciclo de juego son 3 iteraciones, el humano se mueve 1 casillero por ciclo.
+        this.contadorMovimientosRestantes = 1;
         this.inmunidad = "None";
         this.recompensaEnemigo = 30;
     }
@@ -15,4 +16,5 @@ public class Elfo extends Enemigo {
     public String toString() {
         return "Elf"+this.id;
     }
+
 }

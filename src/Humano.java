@@ -8,6 +8,7 @@ public class Humano extends Enemigo {
         this.daño = 50;
         this.alcanceAtaque = 1;
         this.velocidadDesplazamiento = 2; // Por ejemplo si un ciclo de juego son 3 iteraciones, el humano se mueve 1 casillero por ciclo.
+        this.contadorMovimientosRestantes = 2;
         this.inmunidad = "None";
         this.recompensaEnemigo = 30;
     }
@@ -15,4 +16,8 @@ public class Humano extends Enemigo {
     public String toString() {
         return "Hu"+this.id;
     }
+
+    // Este metodo se va a llamar cuando se cambie de casillero
+
+
 }

@@ -46,44 +46,74 @@ public class Nivel {
         //                                 3 El cerro siga con vida
         //
         iniciarOleadas();
-        recorrerCasillleros();
+        int count = 0;
+        while (count < 2){
+            reducirContadoresEnemigos();
+            moverEnemigosListos();
+            //mostrarTodosLosCasilleros();
+            count++;
+        }
     }
 
     public void moverEnemigos(Casillero casilleroActual, Casillero casilleroSiguiente) {
         // Verifica enemigos con contador de iteraciones listos para pasar al siguiente casillero
-        ArrayList<Enemigo> enemigosListosParaMoverse = new ArrayList<>();
+        ArrayList<Enemigo> enemigosListosParaMoverse = casilleroActual.getEnemigosListosParaMoverse();
 
-        enemigosListosParaMoverse.add(casilleroActual.getEnemigosCasillero().get("Humano").get(0));
-        // Primer approach para elegir humano y moverlo
-        // Elegir enemigo a mover: Prueba basica sin tener en cuenta iteraciones, solo mover.
+        if (!enemigosListosParaMoverse.isEmpty()){
+            if (casilleroSiguiente.getId() == this.casillerosEnemigos.size() - 1) {
+                // Enemigo ataque el cerro y se elimine
+                System.out.println("Ultimo casillero");
+            }
 
-        casilleroActual.eliminarEnemigo(enemigosListosParaMoverse.get(0));
-        if (casilleroSiguiente.getId() == this.casillerosEnemigos.size() - 1) {
-            // Enemigo ataque el cerro y se elimine
-            System.out.println("Ultimo casillero");
+            // Agrego al siguiente casillero los enemigos listos para moverse y luego los elemino del actual
+//            for (Enemigo enemigo : enemigosListosParaMoverse){
+//                casilleroSiguiente.agregarEnemigo(enemigo);
+//                casilleroActual.eliminarEnemigo(enemigo);
+//                enemigo.reiniciarContadorIteraciones();
+//                casilleroActual.getEnemigosListosParaMoverse().remove(enemigo);
+//            }
+
+            Enemigo enemigo = enemigosListosParaMoverse.remove(0);
+            for (int i=0 ; i < enemigosListosParaMoverse.size() ; i++){
+                System.out.println(casilleroActual.getEnemigosListosParaMoverse());
+            }
+            System.out.println(enemigo);
+
         }
 
-        casilleroSiguiente.agregarEnemigo(enemigosListosParaMoverse.get(0));
     }
 
-    public void recorrerCasillleros() {
-        // Primer approach: Recorro lista casillerosEnemigos
-        //                  Si hay enemigos en dicho casillero, lo muevo al siguiente
-        //                  (Por ahora evito tema de velocidades distintas de desplazamiento
+    public void reducirContadoresEnemigos() {
+
+        for (Casillero casillero: this.casillerosEnemigos) {
+            if(casillero.tieneEnemigos()) {
+                casillero.reducirContadores();
+                casillero.setEnemigosListosParaMoverse();
+
+            }
+        }
+
+    }
+
+    public void moverEnemigosListos() {
         for (Casillero casillero: this.casillerosEnemigos) {
             if(casillero.tieneEnemigos()) {
                 if (casillero.getId() < this.casillerosEnemigos.size()-1) {
                     Casillero casilleroSiguiente = this.casillerosEnemigos.get(casillero.getId()+1);
-                    // Antes de mover
-                    casillero.mostrarEntidadesCasillero();
-                    casilleroSiguiente.mostrarEntidadesCasillero();
                     moverEnemigos(casillero, casilleroSiguiente);
-                    // Despues de mover
-                    casillero.mostrarEntidadesCasillero();
-                    casilleroSiguiente.mostrarEntidadesCasillero();
                 }
             }
         }
+
+    }
+
+    public void mostrarTodosLosCasilleros(){
+
+        for (Casillero casillero : this.casillerosEnemigos){
+            casillero.mostrarEntidadesCasillero();
+        }
+
+
     }
 
     public void menuTorre() {

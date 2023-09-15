@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Casillero {
@@ -14,6 +15,7 @@ public class Casillero {
     private ArrayList<Enemigo> listaHobbits = new ArrayList<>();
     private ArrayList<Enemigo> listaElfos = new ArrayList<>();
     private ArrayList<Enemigo> listaEnanos = new ArrayList<>();
+    private ArrayList<Enemigo> enemigosListosParaMoverse = new ArrayList<>();
 
     public Casillero() {
         this.id = contador.incrementAndGet();
@@ -47,8 +49,19 @@ public class Casillero {
         if (enemigo instanceof Humano) {
             ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Humano");
             listaEnemigos.remove(enemigo);
+        } else if (enemigo instanceof Elfo) {
+            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Elfo");
+            listaEnemigos.remove(enemigo);
+        }else if (enemigo instanceof Enano) {
+            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Enano");
+            listaEnemigos.remove(enemigo);
+        }else {
+            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Hobbit");
+            listaEnemigos.remove(enemigo);
         }
+
     }
+
 
     public boolean tieneEnemigos() {
         for (ArrayList<Enemigo> listaEnemigo : enemigosCasillero.values()) {
@@ -68,6 +81,37 @@ public class Casillero {
         /// Muestra el HashMap
         String nombreCasillero = toString();
         System.out.println(nombreCasillero + this.enemigosCasillero);
+    }
+
+    public void reducirContadores(){
+
+        for (ArrayList<Enemigo> listaEnemigos : this.enemigosCasillero.values()){
+
+            if (!listaEnemigos.isEmpty()){
+                for (Enemigo enemigo : listaEnemigos){
+                    enemigo.reducirContadorIteraciones();
+                }
+            }
+        }
+
+    }
+
+
+    public void setEnemigosListosParaMoverse(){
+
+        for (ArrayList<Enemigo> listaEnemigos : this.enemigosCasillero.values()){
+            if (!listaEnemigos.isEmpty()){
+                for (Enemigo enemigo : listaEnemigos){
+                    if (enemigo.getContadorMovimientosRestantes() == 0){
+                        this.enemigosListosParaMoverse.add(enemigo);
+                    }
+                }
+            }
+        }
+    }
+
+    public ArrayList<Enemigo> getEnemigosListosParaMoverse(){
+        return this.enemigosListosParaMoverse;
     }
 
     @Override

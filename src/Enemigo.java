@@ -2,12 +2,13 @@ import java.util.ArrayList;
 
 public abstract class Enemigo implements Ataque {
     protected int id; // Como lo generamos por cada tipo Enemigo
-    protected int iteracionesRestantes;
     protected double vida;
     protected double daño; // cantidad de daño que realiza a barreras o Cerro Gloria
     protected String inmunidad; // Puede ser hielo, fuego o ninguno, esto reducirá el ataque sufrido por la torre correspondiente
     protected int alcanceAtaque; // Define si un enemigo puede atacar mas alla de su propio casillero.
     protected int velocidadDesplazamiento; // Determina cada cuantas iteraciones avanza un casillero
+    protected int contadorMovimientosRestantes;
+
     protected int recompensaEnemigo; // Puntos de magia ganados al eliminar el enemigo
     protected ArrayList<Coordenada> camino = new ArrayList<>(); //lista de posiciones que debe recorrer cada enemigo por mapa
 
@@ -32,4 +33,20 @@ public abstract class Enemigo implements Ataque {
     public int getID() {
         return id;
     }
+
+    public int getContadorMovimientosRestantes() {
+        return this.contadorMovimientosRestantes;
+    }
+
+    public void reiniciarContadorIteraciones(){
+        this.contadorMovimientosRestantes = this.velocidadDesplazamiento;
+    }
+
+    //Este metodo reduce en 1 unidad el contador que determina despues de cuantas iteracion se debe mover cada enemigo
+    // El contador depende de la velocidad de desplazamiento de cada enemigo
+
+    public void reducirContadorIteraciones(){
+        this.contadorMovimientosRestantes--;
+    }
+
 }
