@@ -51,7 +51,5 @@ public abstract class Torre implements Ataque {
         for (Coordenada coord : this.casillerosAtaque){
             coord.mostrarCoordenada();
         }
-
-
     }
 }

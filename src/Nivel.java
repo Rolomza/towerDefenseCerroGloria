@@ -50,16 +50,18 @@ public class Nivel {
         //                                 3 El cerro siga con vida
         //
 
+        // Colocacion de torres solo al principio de nivel.
+        // Mejora de torres y colocacion de barreras solo al principio de cada oleada.
+
+        menuTorre();
+        colocarBarreraEnMapa();
         int count = 0;
         System.out.println("Iteracion: "+count);
         mostrarTodosLosCasilleros();
         int posicionCerro = casillerosEnemigos.size()-1;
         casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();
-
-
-        colocarBarreraEnMapa();
-        colocarBarreraEnMapa();
         iniciarOleadas();
+
         while (casillerosEnemigos.get(posicionCerro).getCerroGloria().getVida() > 0){
             if (!existenEnemigos()){
                 break;
@@ -193,21 +195,12 @@ public class Nivel {
 
             tipoTorre = sc.nextInt();
 
-            // Verificar si podemos comprar la torre
-
-            // Si se puede comprar, se crea un objeto de esa clase
-            // Se posiciona en mapa
-
-            System.out.println("Ingrese posicion de las coordenadas torre");
-            System.out.println("Ingrese la X");
-            int posX = sc.nextInt();
-            System.out.println("Ingrese la Y");
-            int posY = sc.nextInt();
+            Coordenada coordTorre = ingresarYValidarCoordenadas("Torre");
 
             switch (tipoTorre) {
                 case 1:
-                    TorreComun torreComun = new TorreComun(new Coordenada(posX,posY));
-                    mapaNivel.colocarRefTorre(new Coordenada(posX, posY)); // Desarrollar input para las coordenadas del usuario
+                    TorreComun torreComun = new TorreComun(coordTorre);
+                    mapaNivel.colocarRefTorre(coordTorre); // Desarrollar input para las coordenadas del usuario
                     this.mostrarMapaNivel();
                     this.listaTorres.add(torreComun);
                     torreComun.calcularCasillerosAtaque(this.mapaNivel);
@@ -247,28 +240,29 @@ public class Nivel {
     public void colocarBarreraEnMapa(){
         System.out.println("Donde desea colocar su barrera");
         Scanner scanner = new Scanner(System.in);
-        Coordenada coordenadaBarrera;
 
-        do {
-            System.out.print("Ingrese coordenada X: ");
-            int coordX = scanner.nextInt();
-            System.out.print("Ingrese coordenada Y: ");
-            int coordY = scanner.nextInt();
-            coordenadaBarrera = new Coordenada(coordX , coordY);
-
-//            if (!validarCoordenada(coordenadaBarrera , "Barrera")){
-//                System.out.println("Coordenada NO válida, ingrese una nueva");
-//            }
-
-        } while (!validarCoordenada(coordenadaBarrera , "Barrera"));
+        Coordenada coordBarrera = ingresarYValidarCoordenadas("Barrera");
 
         for (Casillero casillero : casillerosEnemigos){
-            if (casillero.getCoordenadaCasillero().compararConCoordenada(coordenadaBarrera)){
+            if (casillero.getCoordenadaCasillero().compararConCoordenada(coordBarrera)){
 
                 casillero.agregarBarrera();
                 System.out.println("Se agrego Barrera: "+casillero.getBarrera().toString()+" en el casillero "+casillero.getCoordenadaCasillero().mostrarCoordenada());
             }
         }
+    }
+
+    public Coordenada ingresarYValidarCoordenadas(String tipoEstructura) {
+        Coordenada coordenadaEstructura;
+        do {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Ingrese coordenada X: ");
+            int coordX = scanner.nextInt();
+            System.out.print("Ingrese coordenada Y: ");
+            int coordY = scanner.nextInt();
+            coordenadaEstructura = new Coordenada(coordX , coordY);
+        } while (!validarCoordenada(coordenadaEstructura, tipoEstructura));
+        return coordenadaEstructura;
     }
 
     public boolean validarCoordenada(Coordenada coordenada , String tipoEstructura){
@@ -305,10 +299,17 @@ public class Nivel {
         }
 
         if (tipoEstructura.equals("Torre")){
-            for (Coordenada coordMapa : this.mapaNivel.getCaminosEnemigos()){
-                if (coordMapa.compararConCoordenada(coordenada)){
-                    return false;
-                }
+            int coordX = coordenada.getX();
+            int coordY = coordenada.getY();
+
+            if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("T")) {
+                System.out.println("No puedes colocar mas de 1 torre por casillero.");
+                return false;
+            }
+
+            if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("C")) {
+                System.out.println("No puedes colocar la torre en el camino de enemigos.");
+                return false;
             }
         }
         return true;
