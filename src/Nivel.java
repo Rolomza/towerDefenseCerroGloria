@@ -56,6 +56,8 @@ public class Nivel {
         int posicionCerro = casillerosEnemigos.size()-1;
         casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();
 
+
+        colocarBarreraEnMapa();
         colocarBarreraEnMapa();
         iniciarOleadas();
         while (casillerosEnemigos.get(posicionCerro).getCerroGloria().getVida() > 0){
@@ -246,6 +248,7 @@ public class Nivel {
         System.out.println("Donde desea colocar su barrera");
         Scanner scanner = new Scanner(System.in);
         Coordenada coordenadaBarrera;
+
         do {
             System.out.print("Ingrese coordenada X: ");
             int coordX = scanner.nextInt();
@@ -253,15 +256,15 @@ public class Nivel {
             int coordY = scanner.nextInt();
             coordenadaBarrera = new Coordenada(coordX , coordY);
 
-            if (!validarCoordenada(coordenadaBarrera , "Barrera")){
-                System.out.println("Coordenada NO válida, ingrese una nueva");
-            }
+//            if (!validarCoordenada(coordenadaBarrera , "Barrera")){
+//                System.out.println("Coordenada NO válida, ingrese una nueva");
+//            }
 
         } while (!validarCoordenada(coordenadaBarrera , "Barrera"));
 
-
         for (Casillero casillero : casillerosEnemigos){
             if (casillero.getCoordenadaCasillero().compararConCoordenada(coordenadaBarrera)){
+
                 casillero.agregarBarrera();
                 System.out.println("Se agrego Barrera: "+casillero.getBarrera().toString()+" en el casillero "+casillero.getCoordenadaCasillero().mostrarCoordenada());
             }
@@ -272,8 +275,11 @@ public class Nivel {
 
         // Cambiar el 2 por las dimensiones del mapa
         if (( coordenada.getX() < 0 || coordenada.getX() > 2) || (coordenada.getY() < 0 || coordenada.getY() > 2)){
+            System.out.println("Coordenada NO válida (fuera de rango del mapa).");
             return false;
         }
+
+        // Lista de casilleros servirá para determinar si en determinado casillero existe o no barrera/torre para evitar tener 2 estructuras en el mismo casillero
 
         if (tipoEstructura.equals("Barrera")){
             int ultimaCoordenada = this.mapaNivel.getCaminosEnemigos().size()-1;
@@ -282,11 +288,18 @@ public class Nivel {
             if (!coordenada.compararConCoordenada(coordenadaCerro)) {
                 for (Coordenada coordMapa : this.mapaNivel.getCaminosEnemigos()) {
                     if (coordMapa.compararConCoordenada(coordenada)) {
-                        return true;
+                        if (!buscarCasilleroPorCoordenada(coordenada).tieneBarrera()) {
+                            return true;
+                        } else {
+                            System.out.println("No puedes poner mas de 1 barrera por casillero.");
+                            return false;
+                        }
                     }
                 }
+                System.out.println("No puedes poner barrera fuera del camino de enemigos.");
                 return false;
-            }   else{
+            } else {
+                System.out.println("No puedes colocar barrera en el mismo casillero del Cerro.");
                 return false;
             }
         }
@@ -313,7 +326,12 @@ public class Nivel {
         return nroNivel;
     }
 
-    public void mostrarCasillero() {
-        // Chau Aida
+    public Casillero buscarCasilleroPorCoordenada(Coordenada coordenada) {
+        for (Casillero casillero : this.casillerosEnemigos) {
+            if (casillero.getCoordenadaCasillero().compararConCoordenada(coordenada)) {
+                return casillero;
+            }
+        }
+        return null;
     }
 }
