@@ -15,16 +15,25 @@ public abstract class Enemigo implements Ataque {
     public void obtenerCaminoNivel(Nivel nivel){
         //camino = nivel.getCaminoEnemigos();
     }
-    @Override
+
+
+
+@Override
     public void atacar(Casillero casillero) {
         // Si el enemigo tiene alcance != 1, debe poder iterar mas alla de su propio casillero para atacar.
         // Si hay barrera, el enemigo resta daño a barrera
-        // Si hay cerro Gloria, el enemigo resta daño a Cerro y desaparece.
-        Cerro cerroGloria = casillero.getCerroGloria();
+        if (casillero.tieneBarrera()){
+            casillero.getBarrera().restarVida(this.danio);
+            System.out.println(this.toString() + " inflinge daño " + this.danio + " a " + casillero.getBarrera().toString());
+        }
+        if (casillero.getCerroGloria() != null){
+            // Si hay cerro Gloria, el enemigo resta daño a Cerro y desaparece.
+            Cerro cerroGloria = casillero.getCerroGloria();
+            cerroGloria.restarVida(this.getDanio());
+            // Ver de borrar objeto enemigo cuando ataque Cerro.
+            System.out.println("El "+this.toString()+" inflinge "+this.getDanio()+" de daño al cerro gloria.");
 
-        cerroGloria.restarVida(this.getDanio());
-        // Ver de borrar objeto enemigo cuando ataque Cerro.
-        System.out.println("El "+this.toString()+" inflinge "+this.getDanio()+" de daño al cerro gloria.");
+        }
     }
 
 

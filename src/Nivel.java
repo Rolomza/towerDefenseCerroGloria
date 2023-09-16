@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Nivel {
@@ -68,7 +69,7 @@ public class Nivel {
             reducirContadoresEnemigos();
             System.out.println("Casilleros antes del ataque:");
             mostrarTodosLosCasilleros();
-
+            enemigosAtacan();
             moverEnemigosListos(); //Aca muevo a los enemigos, si estan en el penultimo casillero atacan y mueren
             System.out.println("Casilleros despues de mover enemigos:");
             mostrarTodosLosCasilleros();
@@ -101,33 +102,65 @@ public class Nivel {
 
     }
 
-    public void moverEnemigos(Casillero casilleroActual, Casillero casilleroSiguiente) {
-        ArrayList<Enemigo> listaEnemigosParaMoverse = casilleroActual.getEnemigosListosParaMoverse();
-        Boolean esPenultimo = false;
-        if (!listaEnemigosParaMoverse.isEmpty()){
-
-            if (casilleroSiguiente.getId() == this.casillerosEnemigos.size() - 1) {
-                esPenultimo = true;
-            }
-
-            Enemigo enemigo;
-            if (esPenultimo){
-                while(!listaEnemigosParaMoverse.isEmpty()) {
-                    enemigo = listaEnemigosParaMoverse.remove(0);
-                    enemigo.atacar(casilleroSiguiente);
-                    casilleroActual.eliminarEnemigo(enemigo);
-                }
-
-            }else{
-                while(!listaEnemigosParaMoverse.isEmpty()) {
-                    enemigo = listaEnemigosParaMoverse.remove(0);
-                    casilleroSiguiente.agregarEnemigo(enemigo);
-                    casilleroActual.eliminarEnemigo(enemigo);
-                    enemigo.reiniciarContadorIteraciones();
+    public void enemigosAtacan(){
+        for (Casillero casillero: this.casillerosEnemigos) {
+            if(casillero.tieneEnemigos() && casillero.tieneBarrera()) {
+                for (ArrayList<Enemigo> listaEnemigos : casillero.getEnemigosCasillero().values()) {
+                    if (casillero.getBarrera() != null) {
+                        for (Enemigo enemigo : listaEnemigos) {
+                            if (casillero.getBarrera().getVida() > 0) {
+                                enemigo.atacar(casillero);
+                            } else {
+                                casillero.eliminarBarrera();
+                                break;
+                            }
+                        }
+                    }else{
+                        break;
+                    }
                 }
             }
         }
     }
+
+
+    public void moverEnemigos(Casillero casilleroActual, Casillero casilleroSiguiente) {
+        ArrayList<Enemigo> listaEnemigosParaMoverse = casilleroActual.getEnemigosListosParaMoverse();
+        boolean esPenultimo = false;
+        if (!casilleroActual.tieneBarrera()){
+            //si tiene barrera los enemigos listos para moverse no tienen que moverse
+
+            if (!listaEnemigosParaMoverse.isEmpty()) {
+
+                if (casilleroSiguiente.getId() == this.casillerosEnemigos.size() - 1) {
+                    esPenultimo = true;
+                }
+                Enemigo enemigo;
+
+
+                if (esPenultimo) {
+                    while (!listaEnemigosParaMoverse.isEmpty()) {
+                        enemigo = listaEnemigosParaMoverse.remove(0);
+                        enemigo.atacar(casilleroSiguiente);
+                        casilleroActual.eliminarEnemigo(enemigo);
+                    }
+
+                } else {
+                    while (!listaEnemigosParaMoverse.isEmpty()) {
+                        enemigo = listaEnemigosParaMoverse.remove(0);
+                        casilleroSiguiente.agregarEnemigo(enemigo);
+                        casilleroActual.eliminarEnemigo(enemigo);
+                        enemigo.reiniciarContadorIteraciones();
+                    }
+                }
+            }
+        }else{
+            //atacar barrera
+
+        }
+    }
+
+
 
     public void mostrarTodosLosCasilleros(){
         for (Casillero casillero : this.casillerosEnemigos){
@@ -238,17 +271,24 @@ public class Nivel {
     public boolean validarCoordenada(Coordenada coordenada , String tipoEstructura){
 
         // Cambiar el 2 por las dimensiones del mapa
-        if ((coordenada.getX() < 0 || coordenada.getX() > 2) || (coordenada.getY() < 0 || coordenada.getY() > 2)){
+        if (( coordenada.getX() < 0 || coordenada.getX() > 2) || (coordenada.getY() < 0 || coordenada.getY() > 2)){
             return false;
         }
 
         if (tipoEstructura.equals("Barrera")){
-            for (Coordenada coordMapa : this.mapaNivel.getCaminosEnemigos()){
-                if (coordMapa.compararConCoordenada(coordenada)){
-                    return true;
+            int ultimaCoordenada = this.mapaNivel.getCaminosEnemigos().size()-1;
+            Coordenada coordenadaCerro = this.mapaNivel.getCaminosEnemigos().get(ultimaCoordenada);
+
+            if (!coordenada.compararConCoordenada(coordenadaCerro)) {
+                for (Coordenada coordMapa : this.mapaNivel.getCaminosEnemigos()) {
+                    if (coordMapa.compararConCoordenada(coordenada)) {
+                        return true;
+                    }
                 }
+                return false;
+            }   else{
+                return false;
             }
-            return false;
         }
 
         if (tipoEstructura.equals("Torre")){

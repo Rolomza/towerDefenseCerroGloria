@@ -24,7 +24,7 @@ public class Oleada {
         if (this.nivelActual == 1){
             switch (nroOleada){
                 case 1:
-                    crearNEnemigosDeTipoS(15 , "Hobbit");
+                    crearNEnemigosDeTipoS(15 , "Elfo");
                     break;
                 case 2:
                     crearNEnemigosDeTipoS(10 , "Hobbit");
@@ -57,7 +57,7 @@ public class Oleada {
     public void cargarEnemigosCasilleroInicial(ArrayList<Casillero> casillerosEnemigos) {
         // Se cargan una determinada cantidad de enemigos segun el nivel y la oleada
         Casillero c1 = casillerosEnemigos.get(0);
-        int cantidadEnemigosCarga = this.listaEnemigosOleada.size();
+        int cantidadEnemigosCarga = 5;
 
 //        if (nivelActual == 1) {
 //            switch (nroOleada) {

@@ -108,7 +108,7 @@ public class Casillero {
         for (ArrayList<Enemigo> listaEnemigos : this.enemigosCasillero.values()){
             if (!listaEnemigos.isEmpty()){
                 for (Enemigo enemigo : listaEnemigos){
-                    if (enemigo.getContadorMovimientosRestantes() == 0){
+                    if (enemigo.getContadorMovimientosRestantes() <= 0){
                         this.enemigosListosParaMoverse.add(enemigo);
                     }
                 }
@@ -119,6 +119,9 @@ public class Casillero {
     public void agregarBarrera(){
         this.barrera = new Barrera();
     }
+    public void eliminarBarrera(){
+        System.out.println(this.barrera.toString() + " ha sido destruida.");
+        this.barrera = null;}
 
     public boolean tieneBarrera(){
         return !(barrera == null);
