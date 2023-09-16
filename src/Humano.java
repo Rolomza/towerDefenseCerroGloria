@@ -5,7 +5,7 @@ public class Humano extends Enemigo {
     public Humano() {
         this.id = contador.incrementAndGet();
         this.vida = 200;
-        this.daño = 50;
+        this.danio = 50;
         this.alcanceAtaque = 1;
         this.velocidadDesplazamiento = 2; // Por ejemplo si un ciclo de juego son 3 iteraciones, el humano se mueve 1 casillero por ciclo.
         this.contadorMovimientosRestantes = 2;

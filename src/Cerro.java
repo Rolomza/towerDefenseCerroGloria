@@ -1,9 +1,12 @@
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Cerro {
-    private int puntosResistencia = 10000;
+    private double vida = 10000;
+    public double getVida() {
+        return vida;
+    }
 
-    public int getPuntosResistencia() {
-        return puntosResistencia;
+    public void restarVida(double danio) {
+        this.vida = vida - danio;
     }
 }

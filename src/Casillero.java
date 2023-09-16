@@ -9,21 +9,26 @@ public class Casillero {
     private HashMap<String,ArrayList<Enemigo>> enemigosCasillero = new HashMap<>();
 
     // Revisar modelado de barrera, si hacemos solo clase Barrera o creamos clase Estructura para Barreras y Cerro Gloria
-    private ArrayList<Barrera> listaBarreras = new ArrayList<Barrera>();
+    private Barrera barrera;
     private Cerro cerroGloria = null;
     private ArrayList<Enemigo> listaHumanos = new ArrayList<>();
     private ArrayList<Enemigo> listaHobbits = new ArrayList<>();
     private ArrayList<Enemigo> listaElfos = new ArrayList<>();
     private ArrayList<Enemigo> listaEnanos = new ArrayList<>();
     private ArrayList<Enemigo> enemigosListosParaMoverse = new ArrayList<>();
-
-    public Casillero() {
+    private Coordenada coordenadaCasillero;
+    public Casillero(int coordX,int coordY) {
         this.id = contador.incrementAndGet();
         // Agrego listas al HashMap de Casillero
         this.enemigosCasillero.put("Humano",listaHumanos);
         this.enemigosCasillero.put("Hobbit",listaHobbits);
         this.enemigosCasillero.put("Elfo",listaElfos);
         this.enemigosCasillero.put("Enano",listaEnanos);
+        this.coordenadaCasillero = new Coordenada(coordX,coordY);
+    }
+    public Casillero(Cerro cerroGloria){
+        this.id =contador.incrementAndGet();
+        this.cerroGloria=cerroGloria;
     }
 
     public void agregarEnemigo(Enemigo enemigo) {
@@ -128,5 +133,9 @@ public class Casillero {
 
     public Cerro getCerroGloria() {
         return cerroGloria;
+    }
+
+    public Coordenada getCoordenadaCasillero() {
+        return coordenadaCasillero;
     }
 }

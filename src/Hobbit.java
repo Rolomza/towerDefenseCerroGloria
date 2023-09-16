@@ -5,7 +5,7 @@ public class Hobbit extends Enemigo {
     public Hobbit() {
         this.id = contador.incrementAndGet();
         this.vida = 100;
-        this.daño = 20;
+        this.danio = 20;
         this.alcanceAtaque = 1;
         this.velocidadDesplazamiento = 3; // Por ejemplo si un ciclo de juego son 3 iteraciones, el humano se mueve 1 casillero por ciclo.
         this.contadorMovimientosRestantes = 3;

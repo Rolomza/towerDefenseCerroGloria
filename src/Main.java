@@ -8,7 +8,9 @@ public class Main {
 }
 
 interface Ataque {
-    void atacar(Mapa mapa); // Abstrae el comportamiento de ataque ya sea de torre o enemigo.
+    void atacar(Casillero casillero);
+
+
 }
 
 

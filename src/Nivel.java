@@ -23,11 +23,17 @@ public class Nivel {
 
         this.mapaNivel.generarCoordCaminoEnemigos();
         this.mapaNivel.colocarReferenciasEnMapa();
+        int count =0; //sirve para saber la posicion de la lista de tuplas caminos enemigos
 
         for (Coordenada coordenada : this.mapaNivel.getCaminosEnemigos()) {
-            int x = coordenada.getX();
-            int y = coordenada.getY();
-            casillerosEnemigos.add(new Casillero());
+            if (count!=this.mapaNivel.getCaminosEnemigos().size()-1) {
+                int x = coordenada.getX();
+                int y = coordenada.getY();
+                casillerosEnemigos.add(new Casillero(x, y));
+            }else {
+                casillerosEnemigos.add(new Casillero(new Cerro() ));
+            }
+            count++;
         }
 
         // Agrega al ultimo casillero el cerro gloria
@@ -47,7 +53,8 @@ public class Nivel {
         //
         iniciarOleadas();
         int count = 0;
-        while (count < 4){
+        mostrarTodosLosCasilleros();
+        while (count < 8){
             reducirContadoresEnemigos();
             moverEnemigosListos();
             System.out.println("Iteracion: " + (count+1));
@@ -79,18 +86,29 @@ public class Nivel {
 
     public void moverEnemigos(Casillero casilleroActual, Casillero casilleroSiguiente) {
         ArrayList<Enemigo> listaEnemigosParaMoverse = casilleroActual.getEnemigosListosParaMoverse();
+        Boolean esPenultimo =false;
         if (!listaEnemigosParaMoverse.isEmpty()){
 
             if (casilleroSiguiente.getId() == this.casillerosEnemigos.size() - 1) {
+                esPenultimo=true;
                 // Enemigo ataque el cerro y se elimine
             }
-
             Enemigo enemigo;
-            while(!listaEnemigosParaMoverse.isEmpty()) {
-                enemigo = listaEnemigosParaMoverse.remove(0);
-                casilleroSiguiente.agregarEnemigo(enemigo);
-                casilleroActual.eliminarEnemigo(enemigo);
-                enemigo.reiniciarContadorIteraciones();
+            if (esPenultimo){
+                while(!listaEnemigosParaMoverse.isEmpty()) {
+                    enemigo = listaEnemigosParaMoverse.remove(0);
+                    enemigo.atacar(casilleroSiguiente);
+
+                    casilleroActual.eliminarEnemigo(enemigo);
+                }
+
+            }else{
+                while(!listaEnemigosParaMoverse.isEmpty()) {
+                    enemigo = listaEnemigosParaMoverse.remove(0);
+                    casilleroSiguiente.agregarEnemigo(enemigo);
+                    casilleroActual.eliminarEnemigo(enemigo);
+                    enemigo.reiniciarContadorIteraciones();
+                }
             }
         }
     }

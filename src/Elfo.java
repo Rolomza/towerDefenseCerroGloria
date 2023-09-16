@@ -5,7 +5,7 @@ public class Elfo extends Enemigo {
     public Elfo() {
         this.id = contador.incrementAndGet();
         this.vida = 150;
-        this.daño = 100;
+        this.danio = 100;
         this.alcanceAtaque = 1;
         this.velocidadDesplazamiento = 1; // Por ejemplo si un ciclo de juego son 3 iteraciones, el humano se mueve 1 casillero por ciclo.
         this.contadorMovimientosRestantes = 1;

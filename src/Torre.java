@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public abstract class Torre implements Ataque {
     protected int costeTorre; //cantidad de puntos de magia que necesitaremos para comprar la torre
@@ -12,7 +11,7 @@ public abstract class Torre implements Ataque {
     protected ArrayList<Coordenada> casillerosAtaque = new ArrayList<>();
 
     @Override
-    public void atacar(Mapa mapa) {
+    public void atacar(Casillero casillero) {
         //
 
     }
