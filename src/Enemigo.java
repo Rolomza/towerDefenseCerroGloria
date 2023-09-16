@@ -24,7 +24,7 @@ public abstract class Enemigo implements Ataque {
 
         cerroGloria.restarVida(this.getDanio());
         // Ver de borrar objeto enemigo cuando ataque Cerro.
-        System.out.println("Estoy atacando!!!");
+        System.out.println("El "+this.toString()+" inflinge "+this.getDanio()+" de daño al cerro gloria.");
     }
 
 

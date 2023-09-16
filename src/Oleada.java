@@ -18,30 +18,39 @@ public class Oleada {
         this.nroOleada = 1;
     }
 
-    public void generarEnemigos(int nroOleada) {
+    public void generarEnemigos() {
         // Segun nivel actual y nro oleada debe generar cierta cantidad y tipo de enemigos de forma random
 
-        // Pureba inicial:
-        listaEnemigosOleada.add(new Humano());
-        listaEnemigosOleada.add(new Elfo());
-  //      listaEnemigosOleada.add(new Enano());
-        listaEnemigosOleada.add(new Hobbit());
-        listaEnemigosOleada.add(new Humano());
-        listaEnemigosOleada.add(new Humano());
-//        listaEnemigosOleada.add(new Humano());
-//        listaEnemigosOleada.add(new Elfo());
-//        listaEnemigosOleada.add(new Enano());
-//        listaEnemigosOleada.add(new Hobbit());
-        //listaEnemigosOleada.add(new Humano());
-        listaEnemigosOleada.add(new Elfo());
-        listaEnemigosOleada.add(new Enano());
+        if (this.nivelActual == 1){
+            switch (nroOleada){
+                case 1:
+                    crearNEnemigosDeTipoS(15 , "Hobbit");
+                    break;
+                case 2:
+                    crearNEnemigosDeTipoS(10 , "Hobbit");
+                    crearNEnemigosDeTipoS(10 , "Humano");
+                    break;
+                case 3:
+                    crearNEnemigosDeTipoS(15 , "Hobbit");
+                    crearNEnemigosDeTipoS(15 , "Humano");
+                    break;
 
-//        switch (nroOleada){ Falta implementar
-//            case 1:
-//            case 2:
-//            case 3:
-//
-//        }
+            }
+        }
+
+
+    }
+
+    public void crearNEnemigosDeTipoS(int n , String tipoEnemigo){
+
+        for (int i=0 ; i <= n; i++){
+            switch (tipoEnemigo) {
+                case ("Hobbit") -> listaEnemigosOleada.add(new Hobbit());
+                case ("Humano") -> listaEnemigosOleada.add(new Humano());
+                case ("Elfo") -> listaEnemigosOleada.add(new Elfo());
+                case ("Enano") -> listaEnemigosOleada.add(new Enano());
+            }
+        }
 
     }
 
@@ -89,5 +98,8 @@ public class Oleada {
 
     public ArrayList<Enemigo> getListaEnemigosOleada() {
         return listaEnemigosOleada;
+    }
+    public void aumentarOleada(){
+        this.nroOleada++;
     }
 }

@@ -24,10 +24,12 @@ public class Casillero {
         this.enemigosCasillero.put("Hobbit",listaHobbits);
         this.enemigosCasillero.put("Elfo",listaElfos);
         this.enemigosCasillero.put("Enano",listaEnanos);
+        // Esta coordenada nos servira para colocar las barreras en el lugar indicado por el usuario
         this.coordenadaCasillero = new Coordenada(coordX,coordY);
     }
-    public Casillero(Cerro cerroGloria){
+    public Casillero(int coordX , int coordY , Cerro cerroGloria){
         this.id =contador.incrementAndGet();
+        this.coordenadaCasillero = new Coordenada(coordX,coordY);
         this.cerroGloria=cerroGloria;
     }
 
@@ -114,6 +116,14 @@ public class Casillero {
         }
     }
 
+    public void agregarBarrera(){
+        this.barrera = new Barrera();
+    }
+
+    public boolean tieneBarrera(){
+        return !(barrera == null);
+    }
+
     public ArrayList<Enemigo> getEnemigosListosParaMoverse(){
         return this.enemigosListosParaMoverse;
     }
@@ -136,6 +146,9 @@ public class Casillero {
     }
 
     public Coordenada getCoordenadaCasillero() {
-        return coordenadaCasillero;
+        return this.coordenadaCasillero;
+    }
+    public Barrera getBarrera(){
+        return this.barrera;
     }
 }

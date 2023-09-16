@@ -21,11 +21,11 @@ public class Coordenada {
     public int getY() {
         return y;
     }
-    public void mostrarCoordenada() {
-        System.out.println("(" + x + ", " + y + ")");
+    public String mostrarCoordenada() {
+        return "(" + x + ", " + y + ")";
     }
 
-    public boolean equals(Coordenada coordenada2){
+    public boolean compararConCoordenada(Coordenada coordenada2){
         return this.getX() == coordenada2.getX() && this.getY() == coordenada2.getY();
     }
 

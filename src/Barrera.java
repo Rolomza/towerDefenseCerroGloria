@@ -8,4 +8,8 @@ public class Barrera {
     public Barrera() {
         this.id = contador.incrementAndGet();
     }
+
+    public String toString() {
+        return "Barr"+this.id;
+    }
 }

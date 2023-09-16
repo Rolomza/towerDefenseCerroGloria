@@ -26,19 +26,19 @@ public class Nivel {
         int count =0; //sirve para saber la posicion de la lista de tuplas caminos enemigos
 
         for (Coordenada coordenada : this.mapaNivel.getCaminosEnemigos()) {
+            int x = coordenada.getX();
+            int y = coordenada.getY();
             if (count!=this.mapaNivel.getCaminosEnemigos().size()-1) {
-                int x = coordenada.getX();
-                int y = coordenada.getY();
-                casillerosEnemigos.add(new Casillero(x, y));
+                casillerosEnemigos.add(new Casillero(x, y)); //Revisar para que servian estas coordenadas
             }else {
-                casillerosEnemigos.add(new Casillero(new Cerro() ));
+                casillerosEnemigos.add(new Casillero(x , y ,new Cerro() ));
             }
             count++;
         }
     }
 
     public void iniciarOleadas() {
-        oleadaNivel.generarEnemigos(1);
+        oleadaNivel.generarEnemigos();
         oleadaNivel.cargarEnemigosCasilleroInicial(this.casillerosEnemigos);
     }
 
@@ -48,14 +48,15 @@ public class Nivel {
         //                                 2 No hayan enemigos en ningun casillero
         //                                 3 El cerro siga con vida
         //
-        iniciarOleadas(); // Este metodo va a estar dentro de un For de longitud 3, es decir la cantidad de oleadas
-        int count = 0;
 
+        int count = 0;
         System.out.println("Iteracion: "+count);
         mostrarTodosLosCasilleros();
         int posicionCerro = casillerosEnemigos.size()-1;
         casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();
 
+        colocarBarreraEnMapa();
+        iniciarOleadas();
         while (casillerosEnemigos.get(posicionCerro).getCerroGloria().getVida() > 0){
             if (!existenEnemigos()){
                 break;
@@ -107,15 +108,14 @@ public class Nivel {
 
             if (casilleroSiguiente.getId() == this.casillerosEnemigos.size() - 1) {
                 esPenultimo = true;
-                // Enemigo ataque el cerro y se elimine
             }
+
             Enemigo enemigo;
             if (esPenultimo){
                 while(!listaEnemigosParaMoverse.isEmpty()) {
                     enemigo = listaEnemigosParaMoverse.remove(0);
                     enemigo.atacar(casilleroSiguiente);
                     casilleroActual.eliminarEnemigo(enemigo);
-                    //casilleroSiguiente.getCerroGloria().mostarVida();
                 }
 
             }else{
@@ -209,7 +209,57 @@ public class Nivel {
         return false;
     }
 
+    public void colocarBarreraEnMapa(){
+        System.out.println("Donde desea colocar su barrera");
+        Scanner scanner = new Scanner(System.in);
+        Coordenada coordenadaBarrera;
+        do {
+            System.out.print("Ingrese coordenada X: ");
+            int coordX = scanner.nextInt();
+            System.out.print("Ingrese coordenada Y: ");
+            int coordY = scanner.nextInt();
+            coordenadaBarrera = new Coordenada(coordX , coordY);
 
+            if (!validarCoordenada(coordenadaBarrera , "Barrera")){
+                System.out.println("Coordenada NO válida, ingrese una nueva");
+            }
+
+        } while (!validarCoordenada(coordenadaBarrera , "Barrera"));
+
+
+        for (Casillero casillero : casillerosEnemigos){
+            if (casillero.getCoordenadaCasillero().compararConCoordenada(coordenadaBarrera)){
+                casillero.agregarBarrera();
+                System.out.println("Se agrego Barrera: "+casillero.getBarrera().toString()+" en el casillero "+casillero.getCoordenadaCasillero().mostrarCoordenada());
+            }
+        }
+    }
+
+    public boolean validarCoordenada(Coordenada coordenada , String tipoEstructura){
+
+        // Cambiar el 2 por las dimensiones del mapa
+        if ((coordenada.getX() < 0 || coordenada.getX() > 2) || (coordenada.getY() < 0 || coordenada.getY() > 2)){
+            return false;
+        }
+
+        if (tipoEstructura.equals("Barrera")){
+            for (Coordenada coordMapa : this.mapaNivel.getCaminosEnemigos()){
+                if (coordMapa.compararConCoordenada(coordenada)){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        if (tipoEstructura.equals("Torre")){
+            for (Coordenada coordMapa : this.mapaNivel.getCaminosEnemigos()){
+                if (coordMapa.compararConCoordenada(coordenada)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     public Mapa getMapaNivel() {
         return mapaNivel;
