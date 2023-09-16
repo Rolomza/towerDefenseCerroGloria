@@ -5,7 +5,7 @@ public abstract class Enemigo implements Ataque {
     protected double vida;
     protected double danio; // cantidad de daño que realiza a barreras o Cerro Gloria
     protected String inmunidad; // Puede ser hielo, fuego o ninguno, esto reducirá el ataque sufrido por la torre correspondiente
-    protected int alcanceAtaque; // Define si un enemigo puede atacar mas alla de su propio casillero.
+    protected int alcanceAtaque; // Define si un enemigo puede atacar mas alla de su propio casillero. (Borrar?)
     protected int velocidadDesplazamiento; // Determina cada cuantas iteraciones avanza un casillero
     protected int contadorMovimientosRestantes;
 

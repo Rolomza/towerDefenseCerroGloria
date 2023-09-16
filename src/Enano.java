@@ -5,7 +5,7 @@ public class Enano extends Enemigo {
     public Enano() {
         this.id = contador.incrementAndGet();
         this.vida = 200;
-        this.danio = 50;
+        this.danio = 100;
         this.alcanceAtaque = 1;
         this.velocidadDesplazamiento = 4; // Por ejemplo si un ciclo de juego son 3 iteraciones, el humano se mueve 1 casillero por ciclo.
         this.contadorMovimientosRestantes = 4;

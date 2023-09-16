@@ -35,13 +35,10 @@ public class Nivel {
             }
             count++;
         }
-
-        // Agrega al ultimo casillero el cerro gloria
-        casillerosEnemigos.get(casillerosEnemigos.size() - 1).setCerroGloria(new Cerro());
     }
 
     public void iniciarOleadas() {
-        oleadaNivel.generarEnemigos();
+        oleadaNivel.generarEnemigos(1);
         oleadaNivel.cargarEnemigosCasilleroInicial(this.casillerosEnemigos);
     }
 
@@ -51,15 +48,34 @@ public class Nivel {
         //                                 2 No hayan enemigos en ningun casillero
         //                                 3 El cerro siga con vida
         //
-        iniciarOleadas();
+        iniciarOleadas(); // Este metodo va a estar dentro de un For de longitud 3, es decir la cantidad de oleadas
         int count = 0;
+
+        System.out.println("Iteracion: "+count);
         mostrarTodosLosCasilleros();
-        while (count < 8){
-            reducirContadoresEnemigos();
-            moverEnemigosListos();
+        int posicionCerro = casillerosEnemigos.size()-1;
+        casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();
+
+        while (casillerosEnemigos.get(posicionCerro).getCerroGloria().getVida() > 0){
+            if (!existenEnemigos()){
+                break;
+            }
+
             System.out.println("Iteracion: " + (count+1));
+            System.out.println("Vida antes del ataque:");
+            casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();
+            reducirContadoresEnemigos();
+            System.out.println("Casilleros antes del ataque:");
             mostrarTodosLosCasilleros();
+
+            moverEnemigosListos(); //Aca muevo a los enemigos, si estan en el penultimo casillero atacan y mueren
+            System.out.println("Casilleros despues de mover enemigos:");
+            mostrarTodosLosCasilleros();
+            System.out.println("Vida Post-Ataque");
+            casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();
+
             count++;
+
         }
     }
 
@@ -86,11 +102,11 @@ public class Nivel {
 
     public void moverEnemigos(Casillero casilleroActual, Casillero casilleroSiguiente) {
         ArrayList<Enemigo> listaEnemigosParaMoverse = casilleroActual.getEnemigosListosParaMoverse();
-        Boolean esPenultimo =false;
+        Boolean esPenultimo = false;
         if (!listaEnemigosParaMoverse.isEmpty()){
 
             if (casilleroSiguiente.getId() == this.casillerosEnemigos.size() - 1) {
-                esPenultimo=true;
+                esPenultimo = true;
                 // Enemigo ataque el cerro y se elimine
             }
             Enemigo enemigo;
@@ -98,8 +114,8 @@ public class Nivel {
                 while(!listaEnemigosParaMoverse.isEmpty()) {
                     enemigo = listaEnemigosParaMoverse.remove(0);
                     enemigo.atacar(casilleroSiguiente);
-
                     casilleroActual.eliminarEnemigo(enemigo);
+                    //casilleroSiguiente.getCerroGloria().mostarVida();
                 }
 
             }else{
@@ -179,6 +195,21 @@ public class Nivel {
         }
 
     }
+
+    public Boolean existenEnemigos(){
+
+        for (Casillero casilleroActual : this.casillerosEnemigos){
+
+            for (ArrayList<Enemigo> listaEnemigos : casilleroActual.getEnemigosCasillero().values()){
+                if (!listaEnemigos.isEmpty()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
 
     public Mapa getMapaNivel() {
         return mapaNivel;

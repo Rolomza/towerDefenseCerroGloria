@@ -18,7 +18,7 @@ public class Oleada {
         this.nroOleada = 1;
     }
 
-    public void generarEnemigos() {
+    public void generarEnemigos(int nroOleada) {
         // Segun nivel actual y nro oleada debe generar cierta cantidad y tipo de enemigos de forma random
 
         // Pureba inicial:
@@ -35,6 +35,14 @@ public class Oleada {
         //listaEnemigosOleada.add(new Humano());
         listaEnemigosOleada.add(new Elfo());
         listaEnemigosOleada.add(new Enano());
+
+//        switch (nroOleada){ Falta implementar
+//            case 1:
+//            case 2:
+//            case 3:
+//
+//        }
+
     }
 
     public void cargarEnemigosCasilleroInicial(ArrayList<Casillero> casillerosEnemigos) {
