@@ -17,7 +17,6 @@ public abstract class Enemigo implements Ataque {
     }
 
 
-
 @Override
     public void atacar(Casillero casillero) {
         // Si el enemigo tiene alcance != 1, debe poder iterar mas alla de su propio casillero para atacar.
@@ -63,5 +62,13 @@ public abstract class Enemigo implements Ataque {
 
     public double getDanio() {
         return danio;
+    }
+
+    public void restarVida(double danio){
+        this.vida = this.vida - danio;
+    }
+
+    public double getVida() {
+        return vida;
     }
 }

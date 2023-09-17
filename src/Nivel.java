@@ -30,7 +30,7 @@ public class Nivel {
             int x = coordenada.getX();
             int y = coordenada.getY();
             if (count!=this.mapaNivel.getCaminosEnemigos().size()-1) {
-                casillerosEnemigos.add(new Casillero(x, y)); //Revisar para que servian estas coordenadas
+                casillerosEnemigos.add(new Casillero(x, y));
             }else {
                 casillerosEnemigos.add(new Casillero(x , y ,new Cerro() ));
             }
@@ -53,26 +53,27 @@ public class Nivel {
         // Colocacion de torres solo al principio de nivel.
         // Mejora de torres y colocacion de barreras solo al principio de cada oleada.
 
-        menuTorre();
+        menuTorre(); // Aca agrego la Torre comprada a listaTorres
         colocarBarreraEnMapa();
         int count = 0;
         System.out.println("Iteracion: "+count);
-        mostrarTodosLosCasilleros();
         int posicionCerro = casillerosEnemigos.size()-1;
         casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();
         iniciarOleadas();
+        mostrarTodosLosCasilleros();
 
+        // Revisar el orden en el que mostramos las cosas
         while (casillerosEnemigos.get(posicionCerro).getCerroGloria().getVida() > 0){
+
             if (!existenEnemigos()){
                 break;
             }
-
             System.out.println("Iteracion: " + (count+1));
-            System.out.println("Vida antes del ataque:");
+            torresAtacan();
+
+            System.out.println("Vida del Cerro antes del ataque de los Enemigos:");
             casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();
-            reducirContadoresEnemigos();
-            System.out.println("Casilleros antes del ataque:");
-            mostrarTodosLosCasilleros();
+            reducirContadoresEnemigos(); // El error estaba aqui
             enemigosAtacan();
             moverEnemigosListos(); //Aca muevo a los enemigos, si estan en el penultimo casillero atacan y mueren
             System.out.println("Casilleros despues de mover enemigos:");
@@ -81,6 +82,20 @@ public class Nivel {
             casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();
 
             count++;
+            // Nota: Cuando destruyo la barrera, los enemigos no se mueven hasta la siguiente iteracion
+            // porque el que chequea que la barrera este destruida es enemigosAtacan
+        }
+    }
+
+    public void torresAtacan(){
+        System.out.println("Atacan las Torres");
+        // Aca iterariamos todas las torres y atacarian antes de que los enemigos se muevan
+        for (Torre torreActual : listaTorres){
+
+            if (torreActual instanceof TorreComun){
+                TorreComun torreComun = (TorreComun) torreActual;
+                torreComun.chequearCasillerosAtaque(this.casillerosEnemigos);
+            } // Aca hay que agregar el caso de TorreFuego y TorreHielo
 
         }
     }
@@ -89,7 +104,7 @@ public class Nivel {
         for (Casillero casillero: this.casillerosEnemigos) {
             if(casillero.tieneEnemigos()) {
                 casillero.reducirContadores();
-                casillero.setEnemigosListosParaMoverse();
+                casillero.setEnemigosListosParaMoverse(); // Aca agregaba los enemigos que no era
             }
         }
     }
@@ -114,6 +129,9 @@ public class Nivel {
                         for (Enemigo enemigo : listaEnemigos) {
                             if (casillero.getBarrera().getVida() > 0) {
                                 enemigo.atacar(casillero);
+                                if (casillero.getBarrera().getVida() < 0){
+                                    System.out.println("La barrera ha sido eliminada");
+                                }
                             } else {
                                 casillero.eliminarBarrera();
                                 break;
@@ -163,7 +181,6 @@ public class Nivel {
 
         }
     }
-
 
 
     public void mostrarTodosLosCasilleros(){

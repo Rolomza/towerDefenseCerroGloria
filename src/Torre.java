@@ -2,19 +2,34 @@ import java.util.ArrayList;
 
 public abstract class Torre implements Ataque {
     protected int costeTorre; //cantidad de puntos de magia que necesitaremos para comprar la torre
-    protected  double daño;
+    protected  double danio;
     protected int velocidadAtaque;
     protected int alcanceAtaque;
     protected int nivelTorre;
+    protected int id;
     protected Coordenada coordenadaTorre;
 
     protected ArrayList<Coordenada> casillerosAtaque = new ArrayList<>();
+    protected ArrayList<Enemigo> listaAtaqueEnemigos = new ArrayList<>(); // Esta lista contiene a los enemigos a los que esta atacando la torre
 
-    @Override
-    public void atacar(Casillero casillero) {
-        //
+    public abstract ArrayList<Enemigo> prioridadEnemigo(Casillero casilleroEnemigo);
+    public void chequearCasillerosAtaque(ArrayList<Casillero> casillerosEnemigos) {
 
+        for (Casillero casilleroEnemigo : casillerosEnemigos) {
+
+            for (Coordenada coordenadaAtaqueTorre : casillerosAtaque) {
+                if (casilleroEnemigo.getCoordenadaCasillero().compararConCoordenada(coordenadaAtaqueTorre)) {
+                    if (casilleroEnemigo.tieneEnemigos()) {
+                        // En el casillero actual devuelvo los enemigos a los que le voy a pegar
+                        this.atacar(casilleroEnemigo);
+                        break;
+                    }
+                }
+            }
+
+        }
     }
+
 
     // De acuerdo al alcanze de la torre y su posicion en el mapa, determinas a que casilleros
     // puede atacar en cada iteracion. Esos casilleros los guarda en casillerosAtaque.
@@ -52,4 +67,5 @@ public abstract class Torre implements Ataque {
             coord.mostrarCoordenada();
         }
     }
+
 }
