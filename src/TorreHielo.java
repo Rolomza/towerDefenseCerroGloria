@@ -9,6 +9,7 @@ public class TorreHielo extends Torre{
         this.danio = 20;
         this.coordenadaTorre = coordenadaTorre;
         this.alcanceAtaque = 1;
+        this.costeTorre = 400;
     }
 
     public void getCoordenadaTorre() {
@@ -37,7 +38,7 @@ public class TorreHielo extends Torre{
 
     public ArrayList<Enemigo> prioridadEnemigo(Casillero casilleroEnemigo) {
         ArrayList<Enemigo> listaEnemigosPorPrioridad = new ArrayList<>();
-        String[] tiposEnemigos = {"Elfo", "Humano", "Hobbit", "Enano"};
+        String[] tiposEnemigos = {"Elfo", "Humano", "Hobbit", "Enano"}; // Prioriza por velocidad
 
         for (String tipo : tiposEnemigos) {
             ArrayList<Enemigo> listaEnemigos = casilleroEnemigo.getEnemigosCasillero().get(tipo);

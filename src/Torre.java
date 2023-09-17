@@ -73,4 +73,7 @@ public abstract class Torre implements Ataque {
         }
     }
 
+    public int getCosteTorre() {
+        return costeTorre;
+    }
 }

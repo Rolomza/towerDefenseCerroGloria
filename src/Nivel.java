@@ -15,12 +15,10 @@ public class Nivel {
     private Mapa mapaNivel = new Mapa();
 
     private Oleada oleadaNivel = new Oleada(1);
-    private int puntosMagiaNivel;
-    private int recompensaNivel;
-    public Nivel(int nroNivel, int puntosNivel) {
+    private int puntosMagia;
+    public Nivel(int nroNivel) {
         this.nroNivel = nroNivel;
-        this.recompensaNivel = 0;
-        this.puntosMagiaNivel = puntosNivel;
+        this.puntosMagia = 500;
     }
 
     public void generarCasillerosEnemigos() {
@@ -210,9 +208,11 @@ public class Nivel {
     }
 
     public void menuOleada(){
-         //añadir barreras solo si tenemos puntos de magia
+        //añadir barreras solo si tenemos puntos de magia
         colocarBarreraEnMapa();
-        //Mejorar torres,
+        //Mejorar torres
+
+
 
     }
     public void mejorarTorre(){
@@ -233,66 +233,109 @@ public class Nivel {
         //mejora 1: daño
         //mejora 2: alcance que sea muuuuuuy caro
 
-        int tipoTorre; // Numero de opcion
-        boolean seguirComprando = true;
+        if (puntosMagia > 200){
+            int tipoTorre; // Numero de opcion
+            boolean seguirComprando = true;
 
-        while (seguirComprando) {
+            while (seguirComprando) {
 
-            Scanner sc = new Scanner(System.in);
+                Scanner sc = new Scanner(System.in);
 
-            do {
-                System.out.println();
-                System.out.println("--- Mercado de Torres ---");
-                System.out.println("1 - Torre simple: 200 ptos. magia (Ataca un enemigo a la vez)");
-                System.out.println("2 - Torre hielo: 500 ptos. magia (Relentiza enemigos)");
-                System.out.println("3 - Torre fuego: 1000 ptos. magia (Causa daño de area)");
+                do {
+                    System.out.println();
+                    System.out.println("--- Mercado de Torres ---");
+                    System.out.println("1 - Torre comun: 200 ptos. magia (Ataca un enemigo a la vez)");
+                    System.out.println("2 - Torre hielo: 400 ptos. magia (Relentiza enemigos)");
+                    System.out.println("3 - Torre fuego: 1000 ptos. magia (Causa daño de area)");
 
-                System.out.print("Ingrese numero según desee: ");
-                tipoTorre = sc.nextInt();
-                if (tipoTorre < 0 || tipoTorre>3){
-                    System.out.println("Número inválido , ingrese un número entre 1 y 3");
+                    do {
+                        System.out.print("Ingrese numero según desee: ");
+                        tipoTorre = sc.nextInt();
+                        if (tipoTorre < 0 || tipoTorre>3){
+                            System.out.println("Número inválido , ingrese un número entre 1 y 3");
+                        }
+                    }while ((tipoTorre < 0 || tipoTorre>3));
+
+                }while (!validarPrecioTorre(tipoTorre));
+
+                Coordenada coordTorre = ingresarYValidarCoordenadas("Torre");
+
+                switch (tipoTorre) {
+                    case 1 -> {
+                        TorreComun torreComun = new TorreComun(coordTorre);
+                        restarPuntosMagia(torreComun.getCosteTorre());
+                        mapaNivel.colocarRefTorre(coordTorre, "Comun"); // Desarrollar input para las coordenadas del usuario
+                        this.mostrarMapaNivel();
+                        this.listaTorres.add(torreComun);
+                        torreComun.calcularCasillerosAtaque(this.mapaNivel);
+                        //torreComun.imprimirCasillerosAtaque();
+                    }
+
+                    case 2 -> {
+                        // Torre de Hielo
+                        TorreHielo torreHielo = new TorreHielo(coordTorre);
+                        restarPuntosMagia(torreHielo.getCosteTorre());
+                        mapaNivel.colocarRefTorre(coordTorre , "Hielo"); // Desarrollar input para las coordenadas del usuario
+                        this.mostrarMapaNivel();
+                        this.listaTorres.add(torreHielo);
+                        torreHielo.calcularCasillerosAtaque(this.mapaNivel);
+                        //torreHielo.imprimirCasillerosAtaque();
+                    }
+                    case 3 -> {
+                        TorreFuego torreFuego = new TorreFuego(coordTorre);
+                        restarPuntosMagia(torreFuego.getCosteTorre());
+                        mapaNivel.colocarRefTorre(coordTorre , "Fuego");
+                        this.mostrarMapaNivel();
+                        this.listaTorres.add(torreFuego);
+                        torreFuego.calcularCasillerosAtaque(this.mapaNivel);
+                        //torreFuego.imprimirCasillerosAtaque();
+                    }
+
                 }
 
-            }while (tipoTorre < 0 || tipoTorre>3);
-
-            Coordenada coordTorre = ingresarYValidarCoordenadas("Torre");
-
-            switch (tipoTorre) {
-                case 1 -> {
-                    TorreComun torreComun = new TorreComun(coordTorre);
-                    mapaNivel.colocarRefTorre(coordTorre, "Comun"); // Desarrollar input para las coordenadas del usuario
-                    this.mostrarMapaNivel();
-                    this.listaTorres.add(torreComun);
-                    torreComun.calcularCasillerosAtaque(this.mapaNivel);
-                    //torreComun.imprimirCasillerosAtaque();
-                }
-
-                case 2 -> {
-                    // Torre de Hielo
-                    TorreHielo torreHielo = new TorreHielo(coordTorre);
-                    mapaNivel.colocarRefTorre(coordTorre , "Hielo"); // Desarrollar input para las coordenadas del usuario
-                    this.mostrarMapaNivel();
-                    this.listaTorres.add(torreHielo);
-                    torreHielo.calcularCasillerosAtaque(this.mapaNivel);
-                    //torreHielo.imprimirCasillerosAtaque();
-                }
-                case 3 -> {
-                    TorreFuego torreFuego = new TorreFuego(coordTorre);
-                    mapaNivel.colocarRefTorre(coordTorre , "Fuego");
-                    this.mostrarMapaNivel();
-                    this.listaTorres.add(torreFuego);
-                    torreFuego.calcularCasillerosAtaque(this.mapaNivel);
-                    //torreFuego.imprimirCasillerosAtaque();
+                if (puntosMagia > 200){
+                    System.out.println("¿Desea comprar otra torre? y/n");
+                    String respuesta = sc.next();
+                    if(respuesta.equals("n")) {
+                        seguirComprando = false;
+                    }
+                }else {
+                    System.out.println("No te alcanza para torres");
+                    break;
                 }
 
             }
+        }else {
+            System.out.println("No tienes dinero suficiente para comprar Torres");
+        }
 
-            System.out.println("¿Desea comprar otra torre? y/n");
-            String respuesta = sc.next();
-            if(respuesta.equals("n")) {
-                seguirComprando = false;
+    }
+
+    public boolean validarPrecioTorre(int tipoTorre){
+
+        boolean dineroSuficiente = true;
+
+        switch (tipoTorre) {
+            case 1 -> {
+                if (puntosMagia < 200) {
+                    System.out.println("No te alcanza para la Torre Comun");
+                    dineroSuficiente = false;
+                }
+            }
+            case 2 -> {
+                if (puntosMagia < 400) {
+                    System.out.println("No te alcanza para la Torre de Hielo");
+                    dineroSuficiente = false;
+                }
+            }
+            case 3 -> {
+                if (puntosMagia < 1000) {
+                    System.out.println("No te alcanza para la Torre de Fuego");
+                    dineroSuficiente = false;
+                }
             }
         }
+        return dineroSuficiente;
     }
 
     public Boolean existenEnemigos(){
@@ -309,28 +352,46 @@ public class Nivel {
     }
 
     public void colocarBarreraEnMapa(){
-        if (puntosMagiaNivel >=100){
 
-            Scanner scanner = new Scanner(System.in);
-            String respuesta;
-            do {
-                System.out.println("¿Desea colocar una barrera? (y/n)");
-                respuesta=scanner.nextLine().trim().toLowerCase();
-            }while (!respuesta.equals("y") && !respuesta.equals("n"));
+        boolean seguirComprando = true;
 
-            if (!respuesta.equals("n")){
+        do {
+            if (puntosMagia >=100){
 
-                System.out.println("Donde desea colocar su barrera");
-                Coordenada coordBarrera = ingresarYValidarCoordenadas("Barrera");
+                Scanner scanner = new Scanner(System.in);
+                String respuesta;
+                do {
+                    System.out.println("¿Desea colocar una barrera? (y/n)");
+                    respuesta=scanner.nextLine().trim().toLowerCase();
 
-                for (Casillero casillero : casillerosEnemigos) {
-                    if (casillero.getCoordenadaCasillero().compararConCoordenada(coordBarrera)) {
-                        casillero.agregarBarrera();
-                        System.out.println("Se agrego Barrera: " + casillero.getBarrera().toString() + " en el casillero " + casillero.getCoordenadaCasillero().mostrarCoordenada());
+                }while (!respuesta.equals("y") && !respuesta.equals("n"));
+
+                if (!respuesta.equals("n")){
+
+                    System.out.println("Donde desea colocar su barrera");
+                    Coordenada coordBarrera = ingresarYValidarCoordenadas("Barrera");
+
+                    for (Casillero casillero : casillerosEnemigos) {
+                        if (casillero.getCoordenadaCasillero().compararConCoordenada(coordBarrera)) {
+                            casillero.agregarBarrera();
+                            restarPuntosMagia(casillero.getBarrera().getPrecioBarrera());
+                            System.out.println("Se agrego Barrera: " + casillero.getBarrera().toString() + " en el casillero " + casillero.getCoordenadaCasillero().mostrarCoordenada());
+                        }
                     }
                 }
+                if (puntosMagia >= 100){
+                    System.out.println("¿Desea comprar otra barrera? y/n");
+                    respuesta = scanner.next();
+                    if(respuesta.equals("n")) {
+                        seguirComprando = false;
+                    }
+                }else {
+                    System.out.println("No te alcanza para comprar Barrera");
+                    break;
+                }
+
             }
-        }
+        }while (seguirComprando);
     }
 
     public Coordenada ingresarYValidarCoordenadas(String tipoEstructura) {
@@ -411,9 +472,6 @@ public class Nivel {
         mapaNivel.mostrarMapa();
     }
 
-    public int getRecompensaNivel() {
-        return recompensaNivel;
-    }
 
     public int getNroNivel() {
         return nroNivel;
@@ -426,5 +484,17 @@ public class Nivel {
             }
         }
         return null;
+    }
+
+    public int getPuntosMagia() {
+        return puntosMagia;
+    }
+
+    public void aumentarPuntosMagia(int puntosMagia) {
+        this.puntosMagia += puntosMagia;
+    }
+
+    public void restarPuntosMagia(int puntosMagia) {
+        this.puntosMagia -= puntosMagia;
     }
 }

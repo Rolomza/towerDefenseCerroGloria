@@ -37,10 +37,10 @@ public abstract class Enemigo implements Ataque {
     }
 
 
-    public void entregarPuntosMagia(Juego juego) {
-        // Cuando una torre elimina al enemigo, antes de ser eliminado el objeto, este devuelve al juego puntos de magia, para mejoras y/o compras.
-        juego.aumentarPuntosMagia(recompensaEnemigo);
-    }
+//    public void entregarPuntosMagia(Juego juego) {
+//        // Cuando una torre elimina al enemigo, antes de ser eliminado el objeto, este devuelve al juego puntos de magia, para mejoras y/o compras.
+//        juego.aumentarPuntosMagia(recompensaEnemigo);
+//    }
 
     public int getID() {
         return id;

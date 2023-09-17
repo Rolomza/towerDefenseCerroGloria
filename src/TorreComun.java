@@ -9,6 +9,7 @@ public class TorreComun extends Torre{
         this.danio = 50;
         this.coordenadaTorre = coordenadaTorre;
         this.alcanceAtaque = 1;
+        this.costeTorre = 200;
     }
 
     public void getCoordenadaTorre() {
