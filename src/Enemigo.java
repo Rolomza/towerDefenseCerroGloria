@@ -8,6 +8,7 @@ public abstract class Enemigo implements Ataque {
     protected int alcanceAtaque; // Define si un enemigo puede atacar mas alla de su propio casillero. (Borrar?)
     protected int velocidadDesplazamiento; // Determina cada cuantas iteraciones avanza un casillero
     protected int contadorMovimientosRestantes;
+    protected boolean relentizado = false;
 
     protected int recompensaEnemigo; // Puntos de magia ganados al eliminar el enemigo
     protected ArrayList<Coordenada> camino = new ArrayList<>(); //lista de posiciones que debe recorrer cada enemigo por mapa
@@ -58,6 +59,13 @@ public abstract class Enemigo implements Ataque {
 
     public void reducirContadorIteraciones(){
         this.contadorMovimientosRestantes--;
+        if (this.contadorMovimientosRestantes == 0){
+            this.relentizado = false;
+        }
+    }
+    public void aumentarContadorIteraciones(){
+        this.relentizado = true;
+        this.contadorMovimientosRestantes++;
     }
 
     public double getDanio() {
@@ -70,5 +78,9 @@ public abstract class Enemigo implements Ataque {
 
     public double getVida() {
         return vida;
+    }
+
+    public boolean isRelentizado() {
+        return this.relentizado;
     }
 }

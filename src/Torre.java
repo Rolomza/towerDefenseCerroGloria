@@ -14,19 +14,24 @@ public abstract class Torre implements Ataque {
 
     public abstract ArrayList<Enemigo> prioridadEnemigo(Casillero casilleroEnemigo);
     public void chequearCasillerosAtaque(ArrayList<Casillero> casillerosEnemigos) {
+        boolean haAtacado = false;
 
         for (Casillero casilleroEnemigo : casillerosEnemigos) {
+            if (haAtacado) {
+                // Si ya ha atacado en otro casillero, salir del bucle
+                break;
+            }
 
             for (Coordenada coordenadaAtaqueTorre : casillerosAtaque) {
                 if (casilleroEnemigo.getCoordenadaCasillero().compararConCoordenada(coordenadaAtaqueTorre)) {
                     if (casilleroEnemigo.tieneEnemigos()) {
                         // En el casillero actual devuelvo los enemigos a los que le voy a pegar
                         this.atacar(casilleroEnemigo);
+                        haAtacado = true; // Activar la bandera de ataque
                         break;
                     }
                 }
             }
-
         }
     }
 
@@ -64,7 +69,7 @@ public abstract class Torre implements Ataque {
     public void imprimirCasillerosAtaque() {
 
         for (Coordenada coord : this.casillerosAtaque){
-            coord.mostrarCoordenada();
+            System.out.println(coord.mostrarCoordenada());
         }
     }
 

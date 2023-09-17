@@ -38,10 +38,21 @@ public class Mapa {
         }
     }
 
-    public void colocarRefTorre(Coordenada coordenadaTorre){
+    public void colocarRefTorre(Coordenada coordenadaTorre , String tipoTorre){
         int posX = coordenadaTorre.getX();
         int posY = coordenadaTorre.getY();
-        mapaRefCoord[posX][posY] = "T";
+        switch (tipoTorre) {
+            case ("Comun") -> {
+                mapaRefCoord[posX][posY] = "Tc";
+            }
+            case ("Hielo") -> {
+                mapaRefCoord[posX][posY] = "Th";
+            }
+            case ("Fuego") -> {
+                mapaRefCoord[posX][posY] = "Tf";
+            }
+
+        }
     }
 
     public void mostrarMapa() {

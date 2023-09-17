@@ -95,7 +95,14 @@ public class Nivel {
             if (torreActual instanceof TorreComun){
                 TorreComun torreComun = (TorreComun) torreActual;
                 torreComun.chequearCasillerosAtaque(this.casillerosEnemigos);
-            } // Aca hay que agregar el caso de TorreFuego y TorreHielo
+            } else if (torreActual instanceof TorreHielo) {
+                TorreHielo torreHielo = (TorreHielo) torreActual;
+                torreHielo.chequearCasillerosAtaque(this.casillerosEnemigos);
+            } else if (torreActual instanceof TorreFuego){
+                TorreFuego torreFuego = (TorreFuego) torreActual;
+                torreFuego.chequearCasillerosAtaque(this.casillerosEnemigos);
+            }
+
 
         }
     }
@@ -200,36 +207,56 @@ public class Nivel {
         int tipoTorre; // Numero de opcion
         boolean seguirComprando = true;
 
-        System.out.println();
-        System.out.println("--- Mercado de Torres ---");
-        System.out.println("1 - Torre simple: 200 ptos. magia (Ataca un enemigo a la vez)");
-        System.out.println("2 - Torre hielo: 500 ptos. magia (Relentiza enemigos)");
-        System.out.println("3 - Torre fuego: 1000 ptos. magia (Causa daño de area)");
 
         while (seguirComprando) {
-            System.out.print("Ingrese numero según desee: ");
+
             Scanner sc = new Scanner(System.in);
 
-            tipoTorre = sc.nextInt();
+            do {
+                System.out.println();
+                System.out.println("--- Mercado de Torres ---");
+                System.out.println("1 - Torre simple: 200 ptos. magia (Ataca un enemigo a la vez)");
+                System.out.println("2 - Torre hielo: 500 ptos. magia (Relentiza enemigos)");
+                System.out.println("3 - Torre fuego: 1000 ptos. magia (Causa daño de area)");
+
+                System.out.print("Ingrese numero según desee: ");
+                tipoTorre = sc.nextInt();
+                if (tipoTorre < 0 || tipoTorre>3){
+                    System.out.println("Número inválido , ingrese un número entre 1 y 3");
+                }
+
+            }while (tipoTorre < 0 || tipoTorre>3);
 
             Coordenada coordTorre = ingresarYValidarCoordenadas("Torre");
 
             switch (tipoTorre) {
-                case 1:
+                case 1 -> {
                     TorreComun torreComun = new TorreComun(coordTorre);
-                    mapaNivel.colocarRefTorre(coordTorre); // Desarrollar input para las coordenadas del usuario
+                    mapaNivel.colocarRefTorre(coordTorre, "Comun"); // Desarrollar input para las coordenadas del usuario
                     this.mostrarMapaNivel();
                     this.listaTorres.add(torreComun);
                     torreComun.calcularCasillerosAtaque(this.mapaNivel);
-                    torreComun.imprimirCasillerosAtaque();
+                    //torreComun.imprimirCasillerosAtaque();
+                }
 
-                    // torreComun.posicionarEnMapa(Mapa);
-                    break;
-                case 2:
-                    // ....
-                    break;
-                default:
-                    System.out.println("Ingrese un numero de torre válido por favor...");
+                case 2 -> {
+                    // Torre de Hielo
+                    TorreHielo torreHielo = new TorreHielo(coordTorre);
+                    mapaNivel.colocarRefTorre(coordTorre , "Hielo"); // Desarrollar input para las coordenadas del usuario
+                    this.mostrarMapaNivel();
+                    this.listaTorres.add(torreHielo);
+                    torreHielo.calcularCasillerosAtaque(this.mapaNivel);
+                    //torreHielo.imprimirCasillerosAtaque();
+                }
+                case 3 -> {
+                    TorreFuego torreFuego = new TorreFuego(coordTorre);
+                    mapaNivel.colocarRefTorre(coordTorre , "Fuego");
+                    this.mostrarMapaNivel();
+                    this.listaTorres.add(torreFuego);
+                    torreFuego.calcularCasillerosAtaque(this.mapaNivel);
+                    //torreFuego.imprimirCasillerosAtaque();
+                }
+
             }
 
             System.out.println("¿Desea comprar otra torre? y/n");
