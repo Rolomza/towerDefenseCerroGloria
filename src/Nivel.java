@@ -15,9 +15,12 @@ public class Nivel {
     private Mapa mapaNivel = new Mapa();
 
     private Oleada oleadaNivel = new Oleada(1);
-
-    public Nivel(int nroNivel) {
+    private int puntosMagiaNivel;
+    private int recompensaNivel;
+    public Nivel(int nroNivel, int puntosNivel) {
         this.nroNivel = nroNivel;
+        this.recompensaNivel = 0;
+        this.puntosMagiaNivel = puntosNivel;
     }
 
     public void generarCasillerosEnemigos() {
@@ -38,33 +41,42 @@ public class Nivel {
         }
     }
 
-    public void iniciarOleadas() {
-        oleadaNivel.generarEnemigos();
-        oleadaNivel.cargarEnemigosCasilleroInicial(this.casillerosEnemigos);
-    }
+
 
     public void iniciarNivel() {
-        // Cada ciclo dura 1 oleada, donde se comprueba que:
-        //                                 1 La listaEnemigos de oleada este vacia
-        //                                 2 No hayan enemigos en ningun casillero
-        //                                 3 El cerro siga con vida
-        //
+        menuNivel(); // Aca agrego la Torre comprada a listaTorres
+        int posicionCerro = casillerosEnemigos.size()-1;
+        while (oleadaNivel.getNroOleada()<=3 && casillerosEnemigos.get(posicionCerro).getCerroGloria().getVida() > 0){
+            iniciarOleada();
+        }
+
+    }
+    public void iniciarOleada() {
 
         // Colocacion de torres solo al principio de nivel.
+
         // Mejora de torres y colocacion de barreras solo al principio de cada oleada.
 
-        menuTorre(); // Aca agrego la Torre comprada a listaTorres
-        colocarBarreraEnMapa();
+        menuOleada();
+
+        //Iteraciones Juego
         int count = 0;
         System.out.println("Iteracion: "+count);
+
         int posicionCerro = casillerosEnemigos.size()-1;
-        casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();
-        iniciarOleadas();
-        mostrarTodosLosCasilleros();
+        casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();;
+        oleadaNivel.generarEnemigos();
+
 
         // Revisar el orden en el que mostramos las cosas
         while (casillerosEnemigos.get(posicionCerro).getCerroGloria().getVida() > 0){
-
+            //si hay enemigos en mi lista enemigos por iteracion mandamos los enemigos que correspondan a la oleada
+            if (!oleadaNivel.getListaEnemigosOleada().isEmpty()){
+                oleadaNivel.cargarEnemigosCasilleroInicial(this.casillerosEnemigos);
+            }
+            if (count ==0){
+                System.out.println("Iteracion: "+ count);
+                mostrarTodosLosCasilleros();}
             if (!existenEnemigos()){
                 break;
             }
@@ -85,6 +97,7 @@ public class Nivel {
             // Nota: Cuando destruyo la barrera, los enemigos no se mueven hasta la siguiente iteracion
             // porque el que chequea que la barrera este destruida es enemigosAtacan
         }
+        oleadaNivel.aumentarOleada();
     }
 
     public void torresAtacan(){
@@ -196,17 +209,32 @@ public class Nivel {
         }
     }
 
-    public void menuTorre() {
+    public void menuOleada(){
+         //añadir barreras solo si tenemos puntos de magia
+        colocarBarreraEnMapa();
+        //Mejorar torres,
+
+    }
+    public void mejorarTorre(){
+            //preguntar si deseamos mejorar alguna torre
+            //pasar coordenadas
+            //validar que exista esa torre comparando su coordenda
+
+
+
+    }
+    public void menuNivel() {
         // Despliega menu torres
         // El usuario puede elegir entre 3 torres
         // El usuario decide donde colocar la torre, el metodo valida, si es posible, la coloca en el mapa
         // Cada vez una torre es colocada, se muestra el mapa.
 
         // Mejorar la torres en este metodo? Luego de cada oleada
+        //mejora 1: daño
+        //mejora 2: alcance que sea muuuuuuy caro
 
         int tipoTorre; // Numero de opcion
         boolean seguirComprando = true;
-
 
         while (seguirComprando) {
 
@@ -265,7 +293,6 @@ public class Nivel {
                 seguirComprando = false;
             }
         }
-
     }
 
     public Boolean existenEnemigos(){
@@ -282,16 +309,26 @@ public class Nivel {
     }
 
     public void colocarBarreraEnMapa(){
-        System.out.println("Donde desea colocar su barrera");
-        Scanner scanner = new Scanner(System.in);
+        if (puntosMagiaNivel >=100){
 
-        Coordenada coordBarrera = ingresarYValidarCoordenadas("Barrera");
+            Scanner scanner = new Scanner(System.in);
+            String respuesta;
+            do {
+                System.out.println("¿Desea colocar una barrera? (y/n)");
+                respuesta=scanner.nextLine().trim().toLowerCase();
+            }while (!respuesta.equals("y") && !respuesta.equals("n"));
 
-        for (Casillero casillero : casillerosEnemigos){
-            if (casillero.getCoordenadaCasillero().compararConCoordenada(coordBarrera)){
+            if (!respuesta.equals("n")){
 
-                casillero.agregarBarrera();
-                System.out.println("Se agrego Barrera: "+casillero.getBarrera().toString()+" en el casillero "+casillero.getCoordenadaCasillero().mostrarCoordenada());
+                System.out.println("Donde desea colocar su barrera");
+                Coordenada coordBarrera = ingresarYValidarCoordenadas("Barrera");
+
+                for (Casillero casillero : casillerosEnemigos) {
+                    if (casillero.getCoordenadaCasillero().compararConCoordenada(coordBarrera)) {
+                        casillero.agregarBarrera();
+                        System.out.println("Se agrego Barrera: " + casillero.getBarrera().toString() + " en el casillero " + casillero.getCoordenadaCasillero().mostrarCoordenada());
+                    }
+                }
             }
         }
     }
@@ -311,8 +348,8 @@ public class Nivel {
 
     public boolean validarCoordenada(Coordenada coordenada , String tipoEstructura){
 
-        // Cambiar el 2 por las dimensiones del mapa
-        if (( coordenada.getX() < 0 || coordenada.getX() > 2) || (coordenada.getY() < 0 || coordenada.getY() > 2)){
+        // Cambiar el 4 por las dimensiones del mapa
+        if (( coordenada.getX() < 0 || coordenada.getX() > 4) || (coordenada.getY() < 0 || coordenada.getY() > 4)){
             System.out.println("Coordenada NO válida (fuera de rango del mapa).");
             return false;
         }
@@ -346,10 +383,17 @@ public class Nivel {
             int coordX = coordenada.getX();
             int coordY = coordenada.getY();
 
-            if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("T")) {
-                System.out.println("No puedes colocar mas de 1 torre por casillero.");
+            if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("Tc")) {
+                System.out.println("No puedes colocar torre ya hay una Tc en el casillero.");
+                return false;
+            } else if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("Th")) {
+                System.out.println("No puedes colocartorre ya hay Th en el casillero.");
+                return false;
+            } else if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("Tf")) {
+                System.out.println("No puedes colocar ya hay Tf en el casillero.");
                 return false;
             }
+
 
             if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("C")) {
                 System.out.println("No puedes colocar la torre en el camino de enemigos.");
@@ -365,6 +409,10 @@ public class Nivel {
 
     public void mostrarMapaNivel() {
         mapaNivel.mostrarMapa();
+    }
+
+    public int getRecompensaNivel() {
+        return recompensaNivel;
     }
 
     public int getNroNivel() {

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Oleada {
     // Esta Clase Oleada se encarga de:
@@ -18,13 +19,14 @@ public class Oleada {
         this.nroOleada = 1;
     }
 
+
     public void generarEnemigos() {
         // Segun nivel actual y nro oleada debe generar cierta cantidad y tipo de enemigos de forma random
 
         if (this.nivelActual == 1){
             switch (nroOleada){
                 case 1:
-                    crearNEnemigosDeTipoS(15 , "Elfo");
+                    crearNEnemigosDeTipoS(15 , "Hobbit");
                     break;
                 case 2:
                     crearNEnemigosDeTipoS(10 , "Hobbit");
@@ -36,14 +38,50 @@ public class Oleada {
                     break;
 
             }
+        } else if (this.nivelActual == 2){
+            switch (nroOleada){
+                case 1:
+                    crearNEnemigosDeTipoS(15 , "Hobbit");
+                    crearNEnemigosDeTipoS(15 , "Humano");
+                    crearNEnemigosDeTipoS(5 , "Elfo");
+                    break;
+                case 2:
+                    crearNEnemigosDeTipoS(20 , "Hobbit");
+                    crearNEnemigosDeTipoS(15 , "Humano");
+                    crearNEnemigosDeTipoS(10 , "Elfo");
+                    break;
+                case 3:
+                    crearNEnemigosDeTipoS(15 , "Hobbit");
+                    crearNEnemigosDeTipoS(20 , "Humano");
+                    crearNEnemigosDeTipoS(15 , "Elfo");
+                    break;
+
+            }
+        } else if (this.nivelActual == 3){
+            switch (nroOleada){
+                case 1:
+                    crearNEnemigosDeTipoS(15 , "Hobbit");
+                    crearNEnemigosDeTipoS(15 , "Humano");
+                    crearNEnemigosDeTipoS(15 , "Elfo");
+                    crearNEnemigosDeTipoS(5 , "Enano");
+                    break;
+                case 2:
+                    crearNEnemigosDeTipoS(20 , "Humano");
+                    crearNEnemigosDeTipoS(15 , "Elfo");
+                    crearNEnemigosDeTipoS(15 , "Enano");
+                    break;
+                case 3:
+                    crearNEnemigosDeTipoS(20 , "Humano");
+                    crearNEnemigosDeTipoS(20 , "Elfo");
+                    crearNEnemigosDeTipoS(20 , "Enano");
+                    break;
+            }
         }
-
-
     }
 
     public void crearNEnemigosDeTipoS(int n , String tipoEnemigo){
 
-        for (int i=0 ; i <= n; i++){
+        for (int i=0 ; i < n; i++){
             switch (tipoEnemigo) {
                 case ("Hobbit") -> listaEnemigosOleada.add(new Hobbit());
                 case ("Humano") -> listaEnemigosOleada.add(new Humano());
@@ -57,22 +95,23 @@ public class Oleada {
     public void cargarEnemigosCasilleroInicial(ArrayList<Casillero> casillerosEnemigos) {
         // Se cargan una determinada cantidad de enemigos segun el nivel y la oleada
         Casillero c1 = casillerosEnemigos.get(0);
-        int cantidadEnemigosCarga = 5;
-
-//        if (nivelActual == 1) {
-//            switch (nroOleada) {
-//                case 1: cantidadEnemigosCarga = 3;
-//                        break;
-//                case 2: cantidadEnemigosCarga = 4;
-//                        break;
-//                case 3: cantidadEnemigosCarga = 5;
-//                        break;
-//            }
-//        }
-
+        //int cantidadEnemigosCarga = 8;
+        int cantidadEnemigosCarga = 0;
+            switch (nivelActual) {
+                case 1: cantidadEnemigosCarga = 2;
+                        break;
+                case 2: cantidadEnemigosCarga = 4;
+                        break;
+                case 3: cantidadEnemigosCarga = 5;
+                        break;
+            }
+        Random random = new Random();
+        int numeroRandomEnemigo;
         for (int i = 0; i < cantidadEnemigosCarga; i++) {
+
             if (!this.listaEnemigosOleada.isEmpty()) {
-                c1.agregarEnemigo(this.listaEnemigosOleada.remove(listaEnemigosOleada.size() - 1));
+                numeroRandomEnemigo = random.nextInt(listaEnemigosOleada.size());
+                c1.agregarEnemigo(this.listaEnemigosOleada.remove(numeroRandomEnemigo));
             }
 
         }

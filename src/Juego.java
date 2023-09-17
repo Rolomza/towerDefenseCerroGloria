@@ -2,12 +2,12 @@ import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Juego {
-    private int puntosMagia = 300;
+    private int puntosMagia = 500;
 
     public void iniciarJuego() {
         System.out.println("Bienvenido a Cerro de la Gloria Defense!");
         // Aca iria un For donde nroNivel comienze en 1 y termine en 3
-        Nivel nivel1 = new Nivel(1);
+        Nivel nivel1 = new Nivel(1,this.puntosMagia);
         nivel1.generarCasillerosEnemigos();
         nivel1.mostrarMapaNivel();
         //nivel1.menuTorre();

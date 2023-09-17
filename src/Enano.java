@@ -10,7 +10,7 @@ public class Enano extends Enemigo {
         this.velocidadDesplazamiento = 4; // Por ejemplo si un ciclo de juego son 3 iteraciones, el humano se mueve 1 casillero por ciclo.
         this.contadorMovimientosRestantes = 4;
         this.inmunidad = "None";
-        this.recompensaEnemigo = 30;
+        this.recompensaEnemigo = 40;
     }
 
     public String toString() {

@@ -4,7 +4,7 @@ public class Mapa {
     // Responsabilidad principal: Determinar referencias para generar coordenadas tanto para casilleros, torres y barreras.
     // Tambien para verificar a que casilleros alcanza cada torre y para mostrar por consola el desarrollo de las iteraciones
     protected ArrayList<Coordenada> caminosEnemigos = new ArrayList<>();
-    protected String[][] mapaRefCoord = new String[3][3];
+    protected String[][] mapaRefCoord = new String[5][5];
 
 
     public void generarCoordCaminoEnemigos() {
@@ -15,9 +15,17 @@ public class Mapa {
         // Ahora probamos hardcodeando algunas coordenadas
         this.caminosEnemigos.add(new Coordenada(0, 0));
         this.caminosEnemigos.add(new Coordenada(0, 1));
-        this.caminosEnemigos.add(new Coordenada(1, 1));
-        this.caminosEnemigos.add(new Coordenada(2, 1));
+        this.caminosEnemigos.add(new Coordenada(0, 2));
+
+
+        this.caminosEnemigos.add(new Coordenada(1, 2));
         this.caminosEnemigos.add(new Coordenada(2, 2));
+        this.caminosEnemigos.add(new Coordenada(3, 2));
+        this.caminosEnemigos.add(new Coordenada(4, 2));
+
+        this.caminosEnemigos.add(new Coordenada(4, 3));
+        this.caminosEnemigos.add(new Coordenada(4, 4));
+
 
     }
 
