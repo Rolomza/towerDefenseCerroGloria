@@ -46,14 +46,12 @@ public class Nivel {
         menuNivel(); // Aca agrego la Torre comprada a listaTorres
         int posicionCerro = casillerosEnemigos.size()-1;
         while (oleadaNivel.getNroOleada()<=3 && casillerosEnemigos.get(posicionCerro).getCerroGloria().getVida() > 0){
+            menuOleada();
             iniciarOleada();
         }
 
     }
     public void iniciarOleada() {
-        // Mejora de torres y colocacion de barreras solo al principio de cada oleada.
-        menuOleada();
-
         //Iteraciones Juego
         int count = 0;
         System.out.println("Iteracion: "+count);
@@ -204,71 +202,96 @@ public class Nivel {
         }
     }
 
-    public void menuOleada(){
-        //añadir barreras solo si tenemos puntos de magia
-        colocarBarreraEnMapa();
-        //Mejorar torres
-    }
-    public void mejorarTorre(){
-            //preguntar si deseamos mejorar alguna torre
-            //pasar coordenadas
-            //validar que exista esa torre comparando su coordenda
-
-
-
-    }
     public void menuNivel() {
         // Despliega menu torres
         // El usuario puede elegir entre 3 torres
         // El usuario decide donde colocar la torre, el metodo valida, si es posible, la coloca en el mapa
         // Cada vez una torre es colocada, se muestra el mapa.
+        Scanner sc = new Scanner(System.in);
 
-        if (puntosMagia > 200){
-            int tipoTorre; // Numero de opcion
-            boolean seguirComprando = true;
+        int tipoTorre;
+        boolean seguirComprando = true;
 
-            while (seguirComprando) {
+        while (seguirComprando) {
+            do {
+                this.mapaNivel.mostrarMapa();
+                System.out.println();
+                System.out.println("--- Mercado de Torres ---");
+                System.out.println("Puntos de magia: " + this.puntosMagia);
+                System.out.println("1 - Torre comun: 200 ptos. magia (Ataca un enemigo a la vez)");
+                System.out.println("2 - Torre hielo: 400 ptos. magia (Relentiza enemigos)");
+                System.out.println("3 - Torre fuego: 1000 ptos. magia (Causa daño de area)");
 
-                Scanner sc = new Scanner(System.in);
-
-                do {
-                    System.out.println();
-                    System.out.println("--- Mercado de Torres ---");
-                    System.out.println("1 - Torre comun: 200 ptos. magia (Ataca un enemigo a la vez)");
-                    System.out.println("2 - Torre hielo: 400 ptos. magia (Relentiza enemigos)");
-                    System.out.println("3 - Torre fuego: 1000 ptos. magia (Causa daño de area)");
-
-                    do {
-                        System.out.print("Ingrese numero según desee: ");
-                        tipoTorre = sc.nextInt();
-                        if (tipoTorre < 0 || tipoTorre>3){
-                            System.out.println("Número inválido , ingrese un número entre 1 y 3");
-                        }
-                    }while ((tipoTorre < 0 || tipoTorre>3));
-
-                }while (!validarPrecioTorre(tipoTorre));
-
-                Coordenada coordTorre = ingresarYValidarCoordenadas("Torre");
-
-                colocarTorre(tipoTorre, coordTorre);
-                this.mostrarMapaNivel();
-
-                if (puntosMagia > 200){
-                    System.out.println("¿Desea comprar otra torre? y/n");
-                    String respuesta = sc.next();
-                    if(respuesta.equals("n")) {
-                        seguirComprando = false;
-                    }
-                }else {
-                    System.out.println("No te alcanza para torres");
-                    break;
+                if (!listaTorres.isEmpty()) {
+                    System.out.println("4 - No comprar ninguna Torre.");
                 }
 
-            }
-        }else {
-            System.out.println("No tienes dinero suficiente para comprar Torres");
-        }
+                do {
+                    System.out.print("Ingrese numero según opción deseada: ");
+                    tipoTorre = sc.nextInt();
+                    if (tipoTorre < 0 || tipoTorre>3){
+                        System.out.println("Número inválido , ingrese un número entre 1 y 3");
+                    }
+                }while ((tipoTorre < 0 || tipoTorre>3));
 
+            }while (!validarPrecioTorre(tipoTorre));
+
+            Coordenada coordTorre = ingresarYValidarCoordenadas("Torre");
+            colocarTorre(tipoTorre, coordTorre);
+            this.mostrarMapaNivel();
+
+            if (this.puntosMagia >= 200) {
+                System.out.print("Desea comprar otra torre? (y/n): ");
+                String otraTorre = sc.next();
+                if (otraTorre.equals("n")) {
+                    seguirComprando = false;
+                }
+            } else {
+                System.out.println("No tiene suficientes puntos de magia para seguir comprando Torres.");
+                seguirComprando = false;
+            }
+        }
+    }
+
+    public void menuOleada(){
+        // El usuario debe poder elegir entre mejorar torres y/o colocar barreras (solo al finalizar cada oleada)
+        Scanner scanner = new Scanner(System.in);
+        boolean seguirEnMenuOleada = true;
+        int opcionSeleccionada;
+
+        do {
+            System.out.println(" --- MENU OLEADA ---");
+            System.out.println("Puntos de magia: " + this.puntosMagia);
+            System.out.println("1 - Mejorar Torres.");
+            System.out.println("2 - Comprar y colocar barrera. (100 puntos de magia c/u)");
+            System.out.println("3 - Iniciar Oleada.");
+            System.out.print("Seleccione una opción: ");
+
+            opcionSeleccionada = scanner.nextInt();
+            if (opcionSeleccionada < 4 && opcionSeleccionada > 0) {
+                if (opcionSeleccionada == 3) {
+                    seguirEnMenuOleada = false;
+                }
+
+                switch (opcionSeleccionada) {
+                    case 1: //mejorarTorre();
+                        break;
+                    case 2:
+                        if (puntosMagia < 100) {
+                            System.out.println("No tienes puntos de magia suficientes para comprar Barreras.");
+                        } else {
+                            colocarBarrera();
+                        }
+                        break;
+                }
+            }
+        } while(seguirEnMenuOleada);
+    }
+
+    public void mejorarTorre(){
+        //preguntar si deseamos mejorar alguna torre
+        //pasar coordenadas
+        //validar que exista esa torre comparando su coordenda
     }
 
     public void colocarTorre(int nroTorre, Coordenada coordTorre) {
@@ -294,7 +317,22 @@ public class Nivel {
         mapaNivel.colocarRefTorre(coordTorre, tipoTorre);
         listaTorres.add(torre);
         torre.calcularCasillerosAtaque(this.mapaNivel);
+        System.out.println("Se colocó Torre: " + torre.toString() + " en la posición " + coordTorre.mostrarCoordenada());
+    }
 
+    public void colocarBarrera() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println(" --- COLOCACION BARRERA ---");
+        System.out.println("Puntos de magia: " + this.puntosMagia);
+
+        this.mapaNivel.mostrarMapa();
+        Coordenada coordBarrera = ingresarYValidarCoordenadas("Barrera");
+        Casillero casillero = buscarCasilleroPorCoordenada(coordBarrera);
+        casillero.agregarBarrera();
+        Barrera barrera = casillero.getBarrera();
+        restarPuntosMagia(barrera.getPrecioBarrera());
+        System.out.println("Se agregó Barrera: " + barrera.toString() + " en el casillero " + casillero.getCoordenadaCasillero().mostrarCoordenada());
     }
 
     public boolean validarPrecioTorre(int tipoTorre){
@@ -325,9 +363,7 @@ public class Nivel {
     }
 
     public Boolean existenEnemigos(){
-
         for (Casillero casilleroActual : this.casillerosEnemigos){
-
             for (ArrayList<Enemigo> listaEnemigos : casilleroActual.getEnemigosCasillero().values()){
                 if (!listaEnemigos.isEmpty()){
                     return true;
@@ -335,49 +371,6 @@ public class Nivel {
             }
         }
         return false;
-    }
-
-    public void colocarBarreraEnMapa(){
-
-        boolean seguirComprando = true;
-
-        do {
-            if (puntosMagia >=100){
-
-                Scanner scanner = new Scanner(System.in);
-                String respuesta;
-                do {
-                    System.out.println("¿Desea colocar una barrera? (y/n)");
-                    respuesta=scanner.nextLine().trim().toLowerCase();
-
-                }while (!respuesta.equals("y") && !respuesta.equals("n"));
-
-                if (!respuesta.equals("n")){
-
-                    System.out.println("Donde desea colocar su barrera");
-                    Coordenada coordBarrera = ingresarYValidarCoordenadas("Barrera");
-
-                    for (Casillero casillero : casillerosEnemigos) {
-                        if (casillero.getCoordenadaCasillero().compararConCoordenada(coordBarrera)) {
-                            casillero.agregarBarrera();
-                            restarPuntosMagia(casillero.getBarrera().getPrecioBarrera());
-                            System.out.println("Se agrego Barrera: " + casillero.getBarrera().toString() + " en el casillero " + casillero.getCoordenadaCasillero().mostrarCoordenada());
-                        }
-                    }
-                }
-                if (puntosMagia >= 100){
-                    System.out.println("¿Desea comprar otra barrera? y/n");
-                    respuesta = scanner.next();
-                    if(respuesta.equals("n")) {
-                        seguirComprando = false;
-                    }
-                }else {
-                    System.out.println("No te alcanza para comprar Barrera");
-                    break;
-                }
-
-            }
-        }while (seguirComprando);
     }
 
     public Coordenada ingresarYValidarCoordenadas(String tipoEstructura) {
