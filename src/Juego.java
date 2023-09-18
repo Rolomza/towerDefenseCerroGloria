@@ -7,12 +7,13 @@ public class Juego {
         System.out.println("Bienvenido a Cerro de la Gloria Defense!");
         int cantidadNiveles = 2;
 
-        Nivel nivel1 = new Nivel(1);
-        nivel1.generarCasillerosEnemigos();
+        Nivel nivel = new Nivel(1);
+        nivel.generarCasillerosEnemigos();
 
-        while(cantidadNiveles > 0) {
-            nivel1.iniciarNivel();
+        while(nivel.getNroNivel() <= 3) {
+            nivel.iniciarNivel();
             cantidadNiveles--;
+            nivel.aumentarNivel();
         }
     }
 

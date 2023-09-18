@@ -13,9 +13,10 @@ public class Nivel {
     private ArrayList<Casillero> casillerosEnemigos = new ArrayList<>();
     private ArrayList<Torre> listaTorres = new ArrayList<>();
     private Mapa mapaNivel = new Mapa();
-
+    private Menu menuNivel = new Menu();
     private Oleada oleadaNivel = new Oleada(1);
     private int puntosMagia;
+
     public Nivel(int nroNivel) {
         this.nroNivel = nroNivel;
         this.puntosMagia = 500;
@@ -43,10 +44,10 @@ public class Nivel {
 
     public void iniciarNivel() {
         // Colocacion de torres solo al principio de nivel.
-        menuNivel(); // Aca agrego la Torre comprada a listaTorres
+        menuNivel.mostrarMenuNivel(this); // Aca agrego la Torre comprada a listaTorres
         int posicionCerro = casillerosEnemigos.size()-1;
         while (oleadaNivel.getNroOleada()<=3 && casillerosEnemigos.get(posicionCerro).getCerroGloria().getVida() > 0){
-            menuOleada();
+            menuNivel.mostrarMenuOleada(this);
             iniciarOleada();
         }
 
@@ -202,92 +203,6 @@ public class Nivel {
         }
     }
 
-    public void menuNivel() {
-        // Despliega menu torres
-        // El usuario puede elegir entre 3 torres
-        // El usuario decide donde colocar la torre, el metodo valida, si es posible, la coloca en el mapa
-        // Cada vez una torre es colocada, se muestra el mapa.
-        Scanner sc = new Scanner(System.in);
-
-        int tipoTorre;
-        boolean seguirComprando = true;
-
-        while (seguirComprando) {
-            do {
-                this.mapaNivel.mostrarMapa();
-                System.out.println();
-                System.out.println("--- Mercado de Torres ---");
-                System.out.println("Puntos de magia: " + this.puntosMagia);
-                System.out.println("1 - Torre comun: 200 ptos. magia (Ataca un enemigo a la vez)");
-                System.out.println("2 - Torre hielo: 400 ptos. magia (Relentiza enemigos)");
-                System.out.println("3 - Torre fuego: 1000 ptos. magia (Causa daño de area)");
-
-                if (!listaTorres.isEmpty()) {
-                    System.out.println("4 - No comprar ninguna Torre.");
-                }
-
-                do {
-                    System.out.print("Ingrese numero según opción deseada: ");
-                    tipoTorre = sc.nextInt();
-                    if (tipoTorre < 0 || tipoTorre>3){
-                        System.out.println("Número inválido , ingrese un número entre 1 y 3");
-                    }
-                }while ((tipoTorre < 0 || tipoTorre>3));
-
-            }while (!validarPrecioTorre(tipoTorre));
-
-            Coordenada coordTorre = ingresarYValidarCoordenadas("Torre");
-            colocarTorre(tipoTorre, coordTorre);
-            this.mostrarMapaNivel();
-
-            if (this.puntosMagia >= 200) {
-                System.out.print("Desea comprar otra torre? (y/n): ");
-                String otraTorre = sc.next();
-                if (otraTorre.equals("n")) {
-                    seguirComprando = false;
-                }
-            } else {
-                System.out.println("No tiene suficientes puntos de magia para seguir comprando Torres.");
-                seguirComprando = false;
-            }
-        }
-    }
-
-    public void menuOleada(){
-        // El usuario debe poder elegir entre mejorar torres y/o colocar barreras (solo al finalizar cada oleada)
-        Scanner scanner = new Scanner(System.in);
-        boolean seguirEnMenuOleada = true;
-        int opcionSeleccionada;
-
-        do {
-            System.out.println(" --- MENU OLEADA ---");
-            System.out.println("Puntos de magia: " + this.puntosMagia);
-            System.out.println("1 - Mejorar Torres.");
-            System.out.println("2 - Comprar y colocar barrera. (100 puntos de magia c/u)");
-            System.out.println("3 - Iniciar Oleada.");
-            System.out.print("Seleccione una opción: ");
-
-            opcionSeleccionada = scanner.nextInt();
-            if (opcionSeleccionada < 4 && opcionSeleccionada > 0) {
-                if (opcionSeleccionada == 3) {
-                    seguirEnMenuOleada = false;
-                }
-
-                switch (opcionSeleccionada) {
-                    case 1: //mejorarTorre();
-                        break;
-                    case 2:
-                        if (puntosMagia < 100) {
-                            System.out.println("No tienes puntos de magia suficientes para comprar Barreras.");
-                        } else {
-                            colocarBarrera();
-                        }
-                        break;
-                }
-            }
-        } while(seguirEnMenuOleada);
-    }
-
     public void mejorarTorre(){
         //preguntar si deseamos mejorar alguna torre
         //pasar coordenadas
@@ -333,33 +248,6 @@ public class Nivel {
         Barrera barrera = casillero.getBarrera();
         restarPuntosMagia(barrera.getPrecioBarrera());
         System.out.println("Se agregó Barrera: " + barrera.toString() + " en el casillero " + casillero.getCoordenadaCasillero().mostrarCoordenada());
-    }
-
-    public boolean validarPrecioTorre(int tipoTorre){
-
-        boolean dineroSuficiente = true;
-
-        switch (tipoTorre) {
-            case 1 -> {
-                if (puntosMagia < 200) {
-                    System.out.println("No te alcanza para la Torre Comun");
-                    dineroSuficiente = false;
-                }
-            }
-            case 2 -> {
-                if (puntosMagia < 400) {
-                    System.out.println("No te alcanza para la Torre de Hielo");
-                    dineroSuficiente = false;
-                }
-            }
-            case 3 -> {
-                if (puntosMagia < 1000) {
-                    System.out.println("No te alcanza para la Torre de Fuego");
-                    dineroSuficiente = false;
-                }
-            }
-        }
-        return dineroSuficiente;
     }
 
     public Boolean existenEnemigos(){
@@ -447,11 +335,6 @@ public class Nivel {
         return mapaNivel;
     }
 
-    public void mostrarMapaNivel() {
-        mapaNivel.mostrarMapa();
-    }
-
-
     public int getNroNivel() {
         return nroNivel;
     }
@@ -475,5 +358,17 @@ public class Nivel {
 
     public void restarPuntosMagia(int puntosMagia) {
         this.puntosMagia -= puntosMagia;
+    }
+
+    public ArrayList<Torre> getListaTorres() {
+        return listaTorres;
+    }
+
+    public Oleada getOleadaNivel() {
+        return oleadaNivel;
+    }
+
+    public void aumentarNivel() {
+        this.nroNivel++;
     }
 }
