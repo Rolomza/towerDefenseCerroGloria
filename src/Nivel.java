@@ -42,6 +42,7 @@ public class Nivel {
 
 
     public void iniciarNivel() {
+        // Colocacion de torres solo al principio de nivel.
         menuNivel(); // Aca agrego la Torre comprada a listaTorres
         int posicionCerro = casillerosEnemigos.size()-1;
         while (oleadaNivel.getNroOleada()<=3 && casillerosEnemigos.get(posicionCerro).getCerroGloria().getVida() > 0){
@@ -50,11 +51,7 @@ public class Nivel {
 
     }
     public void iniciarOleada() {
-
-        // Colocacion de torres solo al principio de nivel.
-
         // Mejora de torres y colocacion de barreras solo al principio de cada oleada.
-
         menuOleada();
 
         //Iteraciones Juego
@@ -211,9 +208,6 @@ public class Nivel {
         //añadir barreras solo si tenemos puntos de magia
         colocarBarreraEnMapa();
         //Mejorar torres
-
-
-
     }
     public void mejorarTorre(){
             //preguntar si deseamos mejorar alguna torre
@@ -228,10 +222,6 @@ public class Nivel {
         // El usuario puede elegir entre 3 torres
         // El usuario decide donde colocar la torre, el metodo valida, si es posible, la coloca en el mapa
         // Cada vez una torre es colocada, se muestra el mapa.
-
-        // Mejorar la torres en este metodo? Luego de cada oleada
-        //mejora 1: daño
-        //mejora 2: alcance que sea muuuuuuy caro
 
         if (puntosMagia > 200){
             int tipoTorre; // Numero de opcion
@@ -260,38 +250,8 @@ public class Nivel {
 
                 Coordenada coordTorre = ingresarYValidarCoordenadas("Torre");
 
-                switch (tipoTorre) {
-                    case 1 -> {
-                        TorreComun torreComun = new TorreComun(coordTorre);
-                        restarPuntosMagia(torreComun.getCosteTorre());
-                        mapaNivel.colocarRefTorre(coordTorre, "Comun"); // Desarrollar input para las coordenadas del usuario
-                        this.mostrarMapaNivel();
-                        this.listaTorres.add(torreComun);
-                        torreComun.calcularCasillerosAtaque(this.mapaNivel);
-                        //torreComun.imprimirCasillerosAtaque();
-                    }
-
-                    case 2 -> {
-                        // Torre de Hielo
-                        TorreHielo torreHielo = new TorreHielo(coordTorre);
-                        restarPuntosMagia(torreHielo.getCosteTorre());
-                        mapaNivel.colocarRefTorre(coordTorre , "Hielo"); // Desarrollar input para las coordenadas del usuario
-                        this.mostrarMapaNivel();
-                        this.listaTorres.add(torreHielo);
-                        torreHielo.calcularCasillerosAtaque(this.mapaNivel);
-                        //torreHielo.imprimirCasillerosAtaque();
-                    }
-                    case 3 -> {
-                        TorreFuego torreFuego = new TorreFuego(coordTorre);
-                        restarPuntosMagia(torreFuego.getCosteTorre());
-                        mapaNivel.colocarRefTorre(coordTorre , "Fuego");
-                        this.mostrarMapaNivel();
-                        this.listaTorres.add(torreFuego);
-                        torreFuego.calcularCasillerosAtaque(this.mapaNivel);
-                        //torreFuego.imprimirCasillerosAtaque();
-                    }
-
-                }
+                colocarTorre(tipoTorre, coordTorre);
+                this.mostrarMapaNivel();
 
                 if (puntosMagia > 200){
                     System.out.println("¿Desea comprar otra torre? y/n");
@@ -308,6 +268,32 @@ public class Nivel {
         }else {
             System.out.println("No tienes dinero suficiente para comprar Torres");
         }
+
+    }
+
+    public void colocarTorre(int nroTorre, Coordenada coordTorre) {
+        Torre torre = null;
+        String tipoTorre = null;
+
+        switch (nroTorre) {
+            case 1:
+                torre = new TorreComun(coordTorre);
+                tipoTorre = "Comun";
+                break;
+            case 2:
+                torre = new TorreHielo(coordTorre);
+                tipoTorre = "Hielo";
+                break;
+            case 3:
+                torre = new TorreFuego(coordTorre);
+                tipoTorre = "Fuego";
+                break;
+        }
+
+        restarPuntosMagia(torre.getCosteTorre());
+        mapaNivel.colocarRefTorre(coordTorre, tipoTorre);
+        listaTorres.add(torre);
+        torre.calcularCasillerosAtaque(this.mapaNivel);
 
     }
 
