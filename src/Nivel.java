@@ -51,7 +51,7 @@ public class Nivel {
         while (oleadaNivel.getNroOleada()<=3){
             if (cerro.getVida() > 0) {
                 menuNivel.mostrarMenuOleada(this);
-                iniciarOleada();
+                oleadaNivel.iniciarOleada(this);
                 oleadaNivel.aumentarOleada();
             } else {
                 System.out.println("Te hicieron percha el cerro papu.");
@@ -59,46 +59,6 @@ public class Nivel {
                 this.derrotado = true;
                 break;
             }
-        }
-    }
-    public void iniciarOleada() {
-        //Iteraciones Juego
-        int count = 0;
-        System.out.println("Iteracion: "+count);
-
-        int posicionCerro = casillerosEnemigos.size()-1;
-        casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();;
-        oleadaNivel.generarEnemigos();
-
-
-        // Revisar el orden en el que mostramos las cosas
-        while (casillerosEnemigos.get(posicionCerro).getCerroGloria().getVida() > 0){
-            //si hay enemigos en mi lista enemigos por iteracion mandamos los enemigos que correspondan a la oleada
-            if (!oleadaNivel.getListaEnemigosOleada().isEmpty()){
-                oleadaNivel.cargarEnemigosCasilleroInicial(this.casillerosEnemigos);
-            }
-            if (count ==0){
-                System.out.println("Iteracion: "+ count);
-                mostrarTodosLosCasilleros();}
-            if (!existenEnemigos()){
-                break;
-            }
-            System.out.println("Iteracion: " + (count+1));
-            torresAtacan();
-
-            System.out.println("Vida del Cerro antes del ataque de los Enemigos:");
-            casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();
-            reducirContadoresEnemigos(); // El error estaba aqui
-            enemigosAtacan();
-            moverEnemigosListos(); //Aca muevo a los enemigos, si estan en el penultimo casillero atacan y mueren
-            System.out.println("Casilleros despues de mover enemigos:");
-            mostrarTodosLosCasilleros();
-            System.out.println("Vida Post-Ataque");
-            casillerosEnemigos.get(posicionCerro).getCerroGloria().mostarVida();
-
-            count++;
-            // Nota: Cuando destruyo la barrera, los enemigos no se mueven hasta la siguiente iteracion
-            // porque el que chequea que la barrera este destruida es enemigosAtacan
         }
     }
 
@@ -200,9 +160,11 @@ public class Nivel {
     }
 
 
-    public void mostrarTodosLosCasilleros(){
-        for (Casillero casillero : this.casillerosEnemigos){
-            casillero.mostrarEntidadesCasillero();
+    public void mostrarCasillerosConEnemigos() {
+        for (Casillero casillero : this.casillerosEnemigos) {
+            if (casillero.tieneEnemigos()) {
+                casillero.mostrarEntidadesCasillero();
+            }
         }
     }
 
@@ -215,6 +177,7 @@ public class Nivel {
                 break;
             case 2:
                 torreAMejorar.aumentarAlcance();
+                torreAMejorar.calcularCasillerosAtaque(this.mapaNivel);
                 restarPuntosMagia(1000);
                 System.out.println("Mejora de +1 Alcance de ataque a " + torreAMejorar.toString() + " aplicado.");
                 break;
@@ -393,5 +356,9 @@ public class Nivel {
 
     public boolean getDerrotado() {
         return derrotado;
+    }
+
+    public ArrayList<Casillero> getCasillerosEnemigos() {
+        return casillerosEnemigos;
     }
 }

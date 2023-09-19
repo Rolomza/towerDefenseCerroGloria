@@ -19,6 +19,47 @@ public class Oleada {
         this.nroOleada = 1;
     }
 
+    public void iniciarOleada(Nivel nivelActual) {
+        //Iteraciones Juego
+        int count = 0;
+        System.out.println("Iteracion: "+count);
+
+        int posicionCerro = nivelActual.getCasillerosEnemigos().size()-1;
+        nivelActual.getCasillerosEnemigos().get(posicionCerro).getCerroGloria().mostarVida();;
+        generarEnemigos();
+
+
+        // Revisar el orden en el que mostramos las cosas
+        while (nivelActual.getCasillerosEnemigos().get(posicionCerro).getCerroGloria().getVida() > 0){
+            //si hay enemigos en mi lista enemigos por iteracion mandamos los enemigos que correspondan a la oleada
+            if (!this.listaEnemigosOleada.isEmpty()){
+                cargarEnemigosCasilleroInicial(nivelActual.getCasillerosEnemigos());
+            }
+            if (count ==0){
+                System.out.println("Iteracion: "+ count);
+                nivelActual.mostrarCasillerosConEnemigos();}
+            if (!nivelActual.existenEnemigos()){
+                break;
+            }
+            System.out.println("Iteracion: " + (count+1));
+            nivelActual.torresAtacan();
+
+            System.out.println("Vida del Cerro antes del ataque de los Enemigos:");
+            nivelActual.getCasillerosEnemigos().get(posicionCerro).getCerroGloria().mostarVida();
+            nivelActual.reducirContadoresEnemigos(); // El error estaba aqui
+            nivelActual.enemigosAtacan();
+            nivelActual.moverEnemigosListos(); //Aca muevo a los enemigos, si estan en el penultimo casillero atacan y mueren
+            System.out.println("Casilleros despues de mover enemigos:");
+            nivelActual.mostrarCasillerosConEnemigos();
+            System.out.println("Vida Post-Ataque");
+            nivelActual.getCasillerosEnemigos().get(posicionCerro).getCerroGloria().mostarVida();
+
+            count++;
+            // Nota: Cuando destruyo la barrera, los enemigos no se mueven hasta la siguiente iteracion
+            // porque el que chequea que la barrera este destruida es enemigosAtacan
+        }
+    }
+
 
     public void generarEnemigos() {
         // Segun nivel actual y nro oleada debe generar cierta cantidad y tipo de enemigos de forma random
@@ -115,8 +156,6 @@ public class Oleada {
             }
 
         }
-
-        //c1.mostrarEntidadesCasillero();
     }
 
     public int getNroOleada() {

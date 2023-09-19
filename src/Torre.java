@@ -65,7 +65,6 @@ public abstract class Torre implements Ataque {
                 }
             }
         }
-
     }
 
     public void imprimirCasillerosAtaque() {
