@@ -16,6 +16,7 @@ public class Nivel {
     private Menu menuNivel = new Menu();
     private Oleada oleadaNivel = new Oleada(1);
     private int puntosMagia;
+    private boolean derrotado = false;
 
     public Nivel(int nroNivel) {
         this.nroNivel = nroNivel;
@@ -39,17 +40,26 @@ public class Nivel {
         }
     }
 
-
-
     public void iniciarNivel() {
-        // Colocacion de torres solo al principio de nivel.
-        menuNivel.mostrarMenuNivel(this); // Aca agrego la Torre comprada a listaTorres
         int posicionCerro = casillerosEnemigos.size()-1;
-        while (oleadaNivel.getNroOleada()<=3 && casillerosEnemigos.get(posicionCerro).getCerroGloria().getVida() > 0){
-            menuNivel.mostrarMenuOleada(this);
-            iniciarOleada();
-        }
+        Cerro cerro = casillerosEnemigos.get(posicionCerro).getCerroGloria();
 
+        menuNivel.mostrarMenuNivel(this); // Aca agrego la Torre comprada a listaTorres
+        oleadaNivel.reiniciarNroOleada();
+
+        while (oleadaNivel.getNroOleada()<=3){
+            if (cerro.getVida() > 0) {
+                menuNivel.mostrarMenuOleada(this);
+                iniciarOleada();
+                oleadaNivel.aumentarOleada();
+            } else {
+                System.out.println("Te hicieron percha el cerro papu.");
+                System.out.println("Llegaste hasta el Nivel: " + nroNivel + "| Oleada: " + oleadaNivel.getNroOleada());
+                this.derrotado = true;
+                break;
+            }
+
+        }
     }
     public void iniciarOleada() {
         //Iteraciones Juego
@@ -90,7 +100,6 @@ public class Nivel {
             // Nota: Cuando destruyo la barrera, los enemigos no se mueven hasta la siguiente iteracion
             // porque el que chequea que la barrera este destruida es enemigosAtacan
         }
-        oleadaNivel.aumentarOleada();
     }
 
     public void torresAtacan(){
@@ -372,5 +381,9 @@ public class Nivel {
 
     public void aumentarNivel() {
         this.nroNivel++;
+    }
+
+    public boolean getDerrotado() {
+        return derrotado;
     }
 }

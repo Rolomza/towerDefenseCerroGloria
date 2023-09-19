@@ -138,6 +138,10 @@ public class Oleada {
     public ArrayList<Enemigo> getListaEnemigosOleada() {
         return listaEnemigosOleada;
     }
+
+    public void reiniciarNroOleada() {
+        this.nroOleada = 1;
+    }
     public void aumentarOleada(){
         this.nroOleada++;
     }

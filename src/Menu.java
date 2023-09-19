@@ -86,7 +86,8 @@ public class Menu {
                 }
 
                 switch (opcionSeleccionada) {
-                    case 1: //mejorarTorre();
+                    case 1:
+                        //mejorarTorre();
                         break;
                     case 2:
                         if (nivelActual.getPuntosMagia() < 100) {
