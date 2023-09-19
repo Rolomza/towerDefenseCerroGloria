@@ -117,8 +117,6 @@ public class Nivel {
                 TorreFuego torreFuego = (TorreFuego) torreActual;
                 torreFuego.chequearCasillerosAtaque(this.casillerosEnemigos, this);
             }
-
-
         }
     }
 
@@ -198,9 +196,6 @@ public class Nivel {
                     }
                 }
             }
-        }else{
-            //atacar barrera
-
         }
     }
 
@@ -211,10 +206,28 @@ public class Nivel {
         }
     }
 
-    public void mejorarTorre(){
-        //preguntar si deseamos mejorar alguna torre
-        //pasar coordenadas
-        //validar que exista esa torre comparando su coordenda
+    public void mejorarTorre(Torre torreAMejorar, int tipoMejora){
+        switch (tipoMejora) {
+            case 1:
+                torreAMejorar.aumentarDanio(50);
+                restarPuntosMagia(500);
+                System.out.println("Mejora de +50 Daño a " + torreAMejorar.toString() + " aplicado.");
+                break;
+            case 2:
+                torreAMejorar.aumentarAlcance();
+                restarPuntosMagia(1000);
+                System.out.println("Mejora de +1 Alcance de ataque a " + torreAMejorar.toString() + " aplicado.");
+                break;
+        }
+    }
+
+    public Torre buscarTorrePorNombre(String nombreTorre) {
+        for (Torre torre: this.listaTorres) {
+            if (torre.toString().equals(nombreTorre)) {
+                return torre;
+            }
+        }
+        return null;
     }
 
     public void colocarTorre(int nroTorre, Coordenada coordTorre) {
@@ -244,11 +257,6 @@ public class Nivel {
     }
 
     public void colocarBarrera() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println(" --- COLOCACION BARRERA ---");
-        System.out.println("Puntos de magia: " + this.puntosMagia);
-
         this.mapaNivel.mostrarMapa();
         Coordenada coordBarrera = ingresarYValidarCoordenadas("Barrera");
         Casillero casillero = buscarCasilleroPorCoordenada(coordBarrera);

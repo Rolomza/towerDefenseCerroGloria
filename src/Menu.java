@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -87,12 +88,14 @@ public class Menu {
 
                 switch (opcionSeleccionada) {
                     case 1:
-                        //mejorarTorre();
+                        mostrarMenuTorres(nivelActual);
                         break;
                     case 2:
                         if (nivelActual.getPuntosMagia() < 100) {
                             System.out.println("No tienes puntos de magia suficientes para comprar Barreras.");
                         } else {
+                            System.out.println(" --- COLOCACION BARRERA ---");
+                            System.out.println("Puntos de magia: " + nivelActual.getPuntosMagia());
                             nivelActual.colocarBarrera();
                         }
                         break;
@@ -101,6 +104,66 @@ public class Menu {
                 System.out.println("Opción NO valida.");
             }
         } while(seguirEnMenuOleada);
+    }
+
+
+    public void mostrarMenuTorres(Nivel nivelActual) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("--- MEJORAR TORRES ---");
+        ArrayList<String> listaNombreTorres = new ArrayList<>();
+
+        for (Torre torre : nivelActual.getListaTorres()) {
+            listaNombreTorres.add(torre.toString());
+            System.out.println("Torre: " + torre.toString() + " | Daño: " + torre.getDanio() + " | Alcance: " + torre.getAlcanceAtaque());
+        }
+
+        boolean nombreValido = false;
+        do {
+            System.out.print("Ingrese el nombre de la torre que desea mejorar: ");
+            String nombreTorre = scanner.next();
+
+            if (listaNombreTorres.contains(nombreTorre)) {
+                nombreValido = true;
+                Torre torreAMejorar = nivelActual.buscarTorrePorNombre(nombreTorre);
+
+                System.out.println(" --- Mejorar Torre "+ torreAMejorar.toString() + " ---");
+                boolean opcionValida = false;
+                do {
+                    System.out.println("1 - +50 Daño | 500 Ptos Magia.");
+                    System.out.println("2 - +1 Alcance | 1000 Ptos Magia");
+                    System.out.println("3 - Volver a menu Oleada.");
+                    System.out.print("Ingrese número segun mejora deseada: ");
+                    int tipoMejora = scanner.nextInt();
+
+                    switch (tipoMejora) {
+                        case 1:
+                            if (nivelActual.getPuntosMagia() >= 500) {
+                                nivelActual.mejorarTorre(torreAMejorar, tipoMejora);
+                                opcionValida = true;
+                            } else {
+                                System.out.println("Necesitas al menos 500 Ptos Magia para realizar esta mejora.");
+                            }
+                            break;
+                        case 2:
+                            if (nivelActual.getPuntosMagia() >= 1000) {
+                                nivelActual.mejorarTorre(torreAMejorar, tipoMejora);
+                                opcionValida = true;
+                            } else {
+                                System.out.println("Necesitas al menos 1000 Ptos Magia para realizar esta mejora.");
+                            }
+                            break;
+                        case 3:
+                            System.out.println("Volviendo a Menu oleada...");
+                            opcionValida = true;
+                            break;
+                        default:
+                            System.out.println("Opcion NO valida.");
+                    }
+                } while(!opcionValida);
+            } else {
+                System.out.println("Nombre NO valido.");
+            }
+        } while(!nombreValido);
     }
 
     public boolean validarSuficientesPuntosMagia(int tipoTorre, int puntosMagia){

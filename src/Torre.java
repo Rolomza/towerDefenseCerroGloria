@@ -78,4 +78,20 @@ public abstract class Torre implements Ataque {
     public int getCosteTorre() {
         return costeTorre;
     }
+
+    public double getDanio() {
+        return danio;
+    }
+
+    public int getAlcanceAtaque() {
+        return alcanceAtaque;
+    }
+
+    public void aumentarDanio(int aumentoDanio) {
+        this.danio += aumentoDanio;
+    }
+
+    public void aumentarAlcance() {
+        this.alcanceAtaque++;
+    }
 }
