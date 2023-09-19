@@ -13,7 +13,9 @@ public class ControladorIO {
         int opcionSeleccionada;
         int tipoTorre;
         boolean seguirEnMenuNivel = true;
-
+        TorreComun torreComun = new TorreComun();
+        TorreHielo torreHielo = new TorreHielo();
+        TorreFuego torreFuego = new TorreFuego();
         do {
             boolean noComprar = false;
             System.out.println();
@@ -22,9 +24,9 @@ public class ControladorIO {
             System.out.println("Puntos de magia: " + nivelActual.getPuntosMagia());
             nivelActual.getMapaNivel().mostrarMapa();
 
-            System.out.println("1 - Torre comun: 200 ptos. magia (Ataca un enemigo a la vez)");
-            System.out.println("2 - Torre hielo: 400 ptos. magia (Relentiza enemigos)");
-            System.out.println("3 - Torre fuego: 1000 ptos. magia (Causa daño de area)");
+            System.out.println("1 - Torre comun: " +  torreComun.getCosteTorre() + " ptos. magia (Ataca un enemigo a la vez)");
+            System.out.println("2 - Torre hielo: " +  torreHielo.getCosteTorre() + " ptos. magia (Relentiza enemigos)");
+            System.out.println("3 - Torre fuego: " +  torreFuego.getCosteTorre() + " ptos. magia (Causa daño de area)");
 
             if (!nivelActual.getListaTorres().isEmpty()) {
                 System.out.println("4 - No comprar más torres.");
@@ -49,7 +51,7 @@ public class ControladorIO {
                     continue;
                 }
 
-                if (nivelActual.getPuntosMagia() >= 200) {
+                if (nivelActual.getPuntosMagia() >= torreComun.getCosteTorre()) {
                     System.out.print("Deseas comprar otra torre? (y/n): ");
                     String otraTorre = scanner.next();
                     if (otraTorre.equals("n")) {
@@ -73,7 +75,7 @@ public class ControladorIO {
 
         do {
             System.out.println(" --- MENU OLEADA ---");
-            System.out.println("Oleada: " + nivelActual.getOleadaNivel().getNroOleada());
+            System.out.println("Oleada: " + nivelActual.getOleadaNivel().getNroOleada() + " Nivel: " + nivelActual.getNroNivel());
             System.out.println("Puntos de magia: " + nivelActual.getPuntosMagia());
             System.out.println("1 - Mejorar Torres.");
             System.out.println("2 - Comprar y colocar barrera. (100 puntos de magia c/u)");
@@ -168,23 +170,26 @@ public class ControladorIO {
 
     public boolean validarSuficientesPuntosMagia(int tipoTorre, int puntosMagia){
 
+        TorreComun torreComun = new TorreComun();
+        TorreHielo torreHielo = new TorreHielo();
+        TorreFuego torreFuego = new TorreFuego();
         boolean dineroSuficiente = true;
 
         switch (tipoTorre) {
             case 1 -> {
-                if (puntosMagia < 200) {
+                if (puntosMagia < torreComun.getCosteTorre()) {
                     System.out.println("No te alcanza para la Torre Comun");
                     dineroSuficiente = false;
                 }
             }
             case 2 -> {
-                if (puntosMagia < 400) {
+                if (puntosMagia < torreHielo.getCosteTorre()) {
                     System.out.println("No te alcanza para la Torre de Hielo");
                     dineroSuficiente = false;
                 }
             }
             case 3 -> {
-                if (puntosMagia < 1000) {
+                if (puntosMagia < torreFuego.getCosteTorre()) {
                     System.out.println("No te alcanza para la Torre de Fuego");
                     dineroSuficiente = false;
                 }

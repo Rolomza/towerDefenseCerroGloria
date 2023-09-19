@@ -7,7 +7,7 @@ public class Barrera {
     private int precioBarrera;
     public Barrera() {
         this.id = contador.incrementAndGet();
-        this.vida = 500;
+        this.vida = 650;
         this.precioBarrera = 100;
     }
 

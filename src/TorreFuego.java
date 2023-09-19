@@ -11,7 +11,11 @@ public class TorreFuego extends Torre{
         this.alcanceAtaque = 1;
         this.costeTorre = 1000;
     }
-
+    public TorreFuego(){
+        this.danio = 50;
+        this.alcanceAtaque = 1;
+        this.costeTorre = 1000;
+    }
     public void getCoordenadaTorre() {
         this.coordenadaTorre.mostrarCoordenada();
     }

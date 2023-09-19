@@ -9,9 +9,14 @@ public class TorreHielo extends Torre{
         this.danio = 15;
         this.coordenadaTorre = coordenadaTorre;
         this.alcanceAtaque = 1;
-        this.costeTorre = 400;
+        this.costeTorre = 500;
     }
 
+    public TorreHielo(){
+        this.danio = 25;
+        this.alcanceAtaque = 1;
+        this.costeTorre = 500;
+    }
     public void getCoordenadaTorre() {
         this.coordenadaTorre.mostrarCoordenada();
     }
