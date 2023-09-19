@@ -20,7 +20,7 @@ public class Nivel {
 
     public Nivel(int nroNivel) {
         this.nroNivel = nroNivel;
-        this.puntosMagia = 500;
+        this.puntosMagia = 1000;
     }
 
     public void generarCasillerosEnemigos() {
@@ -44,6 +44,7 @@ public class Nivel {
         int posicionCerro = casillerosEnemigos.size()-1;
         Cerro cerro = casillerosEnemigos.get(posicionCerro).getCerroGloria();
 
+
         menuNivel.mostrarMenuNivel(this); // Aca agrego la Torre comprada a listaTorres
         oleadaNivel.reiniciarNroOleada();
 
@@ -58,7 +59,6 @@ public class Nivel {
                 this.derrotado = true;
                 break;
             }
-
         }
     }
     public void iniciarOleada() {
@@ -109,13 +109,13 @@ public class Nivel {
 
             if (torreActual instanceof TorreComun){
                 TorreComun torreComun = (TorreComun) torreActual;
-                torreComun.chequearCasillerosAtaque(this.casillerosEnemigos);
+                torreComun.chequearCasillerosAtaque(this.casillerosEnemigos, this);
             } else if (torreActual instanceof TorreHielo) {
                 TorreHielo torreHielo = (TorreHielo) torreActual;
-                torreHielo.chequearCasillerosAtaque(this.casillerosEnemigos);
+                torreHielo.chequearCasillerosAtaque(this.casillerosEnemigos, this);
             } else if (torreActual instanceof TorreFuego){
                 TorreFuego torreFuego = (TorreFuego) torreActual;
-                torreFuego.chequearCasillerosAtaque(this.casillerosEnemigos);
+                torreFuego.chequearCasillerosAtaque(this.casillerosEnemigos, this);
             }
 
 
@@ -150,7 +150,7 @@ public class Nivel {
                     if (casillero.getBarrera() != null) {
                         for (Enemigo enemigo : listaEnemigos) {
                             if (casillero.getBarrera().getVida() > 0) {
-                                enemigo.atacar(casillero);
+                                enemigo.atacar(casillero, this);
                                 if (casillero.getBarrera().getVida() < 0){
                                     System.out.println("La barrera ha sido eliminada");
                                 }
@@ -185,7 +185,7 @@ public class Nivel {
                 if (esPenultimo) {
                     while (!listaEnemigosParaMoverse.isEmpty()) {
                         enemigo = listaEnemigosParaMoverse.remove(0);
-                        enemigo.atacar(casilleroSiguiente);
+                        enemigo.atacar(casilleroSiguiente, this);
                         casilleroActual.eliminarEnemigo(enemigo);
                     }
 

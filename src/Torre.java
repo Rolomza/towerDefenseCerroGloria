@@ -13,7 +13,9 @@ public abstract class Torre implements Ataque {
     protected ArrayList<Enemigo> listaAtaqueEnemigos = new ArrayList<>(); // Esta lista contiene a los enemigos a los que esta atacando la torre
 
     public abstract ArrayList<Enemigo> prioridadEnemigo(Casillero casilleroEnemigo);
-    public void chequearCasillerosAtaque(ArrayList<Casillero> casillerosEnemigos) {
+
+
+    public void chequearCasillerosAtaque(ArrayList<Casillero> casillerosEnemigos, Nivel nivelActual) {
         boolean haAtacado = false;
 
         for (Casillero casilleroEnemigo : casillerosEnemigos) {
@@ -26,7 +28,7 @@ public abstract class Torre implements Ataque {
                 if (casilleroEnemigo.getCoordenadaCasillero().compararConCoordenada(coordenadaAtaqueTorre)) {
                     if (casilleroEnemigo.tieneEnemigos()) {
                         // En el casillero actual devuelvo los enemigos a los que le voy a pegar
-                        this.atacar(casilleroEnemigo);
+                        this.atacar(casilleroEnemigo, nivelActual);
                         haAtacado = true; // Activar la bandera de ataque
                         break;
                     }

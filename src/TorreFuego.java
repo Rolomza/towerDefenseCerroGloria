@@ -6,7 +6,7 @@ public class TorreFuego extends Torre{
     private static final AtomicInteger contador = new AtomicInteger(0);
     public TorreFuego(Coordenada coordenadaTorre){
         this.id = contador.incrementAndGet();
-        this.danio = 37.5; // Mata a los elfos de 2 tiros
+        this.danio = 50; // Mata a los elfos de 2 tiros
         this.coordenadaTorre = coordenadaTorre;
         this.alcanceAtaque = 1;
         this.costeTorre = 1000;
@@ -16,14 +16,14 @@ public class TorreFuego extends Torre{
         this.coordenadaTorre.mostrarCoordenada();
     }
 
-    public void chequearCasillerosAtaque(ArrayList<Casillero> casillerosEnemigos) {
+    public void chequearCasillerosAtaque(ArrayList<Casillero> casillerosEnemigos, Nivel nivelActual) {
 
         for (Casillero casilleroEnemigo : casillerosEnemigos) {
 
             for (Coordenada coordenadaAtaqueTorre : casillerosAtaque) {
                 if (casilleroEnemigo.getCoordenadaCasillero().compararConCoordenada(coordenadaAtaqueTorre)) {
                     if (casilleroEnemigo.tieneEnemigos()) {
-                        this.atacar(casilleroEnemigo);
+                        this.atacar(casilleroEnemigo, nivelActual);
                         break;
                     }
                 }
@@ -32,7 +32,7 @@ public class TorreFuego extends Torre{
     }
 
     @Override
-    public void atacar(Casillero casillero) {
+    public void atacar(Casillero casillero, Nivel nivelActual) {
         //
         listaAtaqueEnemigos = prioridadEnemigo(casillero);
 
@@ -40,10 +40,12 @@ public class TorreFuego extends Torre{
             enemigoActual.restarVida(this.danio);
             if (enemigoActual.getVida() <= 0){
                 casillero.eliminarEnemigo(enemigoActual);
+                nivelActual.aumentarPuntosMagia(enemigoActual.getRecompensaEnemigo());
                 casillero.getEnemigosListosParaMoverse().remove(enemigoActual);
+                System.out.println("La torre " + this.toString() + " ha asesinado a " + enemigoActual.toString() + " | +" + enemigoActual.getRecompensaEnemigo() + " PtosMagia.");
+            } else {
+                System.out.println(enemigoActual.toString() + " fue atacado por "+this.toString()+" y ahora tiene "+enemigoActual.getVida()+" de vida");
             }
-
-            System.out.println(enemigoActual.toString() + " fue atacado por "+this.toString()+" y ahora tiene "+enemigoActual.getVida()+" de vida");
         }
 
     }

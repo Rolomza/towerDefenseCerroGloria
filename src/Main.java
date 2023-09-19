@@ -7,5 +7,5 @@ public class Main {
 }
 
 interface Ataque {
-    void atacar(Casillero casillero);
+    void atacar(Casillero casillero, Nivel nivelActual);
 }

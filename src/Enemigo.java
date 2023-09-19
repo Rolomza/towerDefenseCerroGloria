@@ -19,7 +19,7 @@ public abstract class Enemigo implements Ataque {
 
 
 @Override
-    public void atacar(Casillero casillero) {
+    public void atacar(Casillero casillero, Nivel nivelActual) {
         // Si el enemigo tiene alcance != 1, debe poder iterar mas alla de su propio casillero para atacar.
         // Si hay barrera, el enemigo resta daño a barrera
         if (casillero.tieneBarrera()){
@@ -70,6 +70,10 @@ public abstract class Enemigo implements Ataque {
 
     public double getDanio() {
         return danio;
+    }
+
+    public int getRecompensaEnemigo() {
+        return recompensaEnemigo;
     }
 
     public void restarVida(double danio){

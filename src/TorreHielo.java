@@ -6,7 +6,7 @@ public class TorreHielo extends Torre{
     private static final AtomicInteger contador = new AtomicInteger(0);
     public TorreHielo(Coordenada coordenadaTorre){
         this.id = contador.incrementAndGet();
-        this.danio = 20;
+        this.danio = 25;
         this.coordenadaTorre = coordenadaTorre;
         this.alcanceAtaque = 1;
         this.costeTorre = 400;
@@ -17,7 +17,7 @@ public class TorreHielo extends Torre{
     }
 
     @Override
-    public void atacar(Casillero casillero) {
+    public void atacar(Casillero casillero, Nivel nivelActual) {
         //
         listaAtaqueEnemigos = prioridadEnemigo(casillero);
 
@@ -28,10 +28,14 @@ public class TorreHielo extends Torre{
             }
             if (enemigoActual.getVida() <= 0){
                 casillero.eliminarEnemigo(enemigoActual);
+                nivelActual.aumentarPuntosMagia(enemigoActual.getRecompensaEnemigo());
                 casillero.getEnemigosListosParaMoverse().remove(enemigoActual);
+                System.out.println("La torre " + this.toString() + " ha asesinado a " + enemigoActual.toString() + " | +" + enemigoActual.getRecompensaEnemigo() + " PtosMagia.");
+            } else {
+                System.out.println(enemigoActual.toString() + " fue atacado por "+this.toString()+" y ahora tiene "+enemigoActual.getVida()+" de vida");
             }
 
-            System.out.println(enemigoActual.toString() + " fue atacado por "+this.toString()+" y ahora tiene "+enemigoActual.getVida()+" de vida");
+
         }
 
     }
