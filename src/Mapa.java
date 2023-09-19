@@ -1,48 +1,115 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Mapa {
     // Responsabilidad principal: Determinar referencias para generar coordenadas tanto para casilleros, torres y barreras.
     // Tambien para verificar a que casilleros alcanza cada torre y para mostrar por consola el desarrollo de las iteraciones
     protected ArrayList<Coordenada> caminosEnemigos = new ArrayList<>();
-    protected String[][] mapaRefCoord = new String[5][5];
+    protected String[][] map = new String[5][15];
 
+    public void generarMapaAleatorio() {
 
-    public void generarCoordCaminoEnemigos() {
-        //Objetivo: Crear aleatoriamente por nivel como nos dijo el profe
+        int rows = this.map.length;
+        int cols = this.map[0].length;
 
-        // Validar que las coordenadas sean validas
+        // Inicializar el mapa con puntos
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                this.map[i][j] = " . ";
+            }
+        }
 
-        // Ahora probamos hardcodeando algunas coordenadas
-        this.caminosEnemigos.add(new Coordenada(0, 0));
-        this.caminosEnemigos.add(new Coordenada(0, 1));
-        this.caminosEnemigos.add(new Coordenada(0, 2));
+        // Inicializar el generador de números aleatorios
+        Random random = new Random();
 
+        // Empezar el camino en la primera columna, fila aleatoria
+        int currentRow = random.nextInt(rows);
+        int currentCol = 0;
 
-        this.caminosEnemigos.add(new Coordenada(1, 2));
-        this.caminosEnemigos.add(new Coordenada(2, 2));
-        this.caminosEnemigos.add(new Coordenada(3, 2));
-        this.caminosEnemigos.add(new Coordenada(4, 2));
+        // Marcar el inicio del camino con "E"
+        this.map[currentRow][currentCol] = " E ";
 
-        this.caminosEnemigos.add(new Coordenada(4, 3));
-        this.caminosEnemigos.add(new Coordenada(4, 4));
+        // Definir los movimientos posibles (derecha, arriba, abajo)
+        int[] rowOffsets = { 0, -1, 1 };
+        int[] colOffsets = { 1, 0, 0 };
 
+        // Agregar la primera coordenada del camino
+        this.caminosEnemigos.add(new Coordenada(currentRow, currentCol));
+
+        // Contadores para los movimientos hacia arriba, abajo y derecha
+        int upCount = 0;
+        int downCount = 0;
+        int rightCount = 0;
+
+        // Generar el camino aleatorio
+        while (currentCol < cols - 2) { // Cambiar la condición para permitir dos movimientos más hacia la derecha
+            // Mezclar los índices de movimiento aleatoriamente
+            int[] indexes = { 0, 1, 2 };
+            for (int i = 2; i >= 0; i--) {
+                int j = random.nextInt(i + 1);
+                int temp = indexes[i];
+                indexes[i] = indexes[j];
+                indexes[j] = temp;
+            }
+
+            // Intentar moverse en las direcciones aleatorias
+            for (int i = 0; i < 3; i++) {
+                int newRow = currentRow + rowOffsets[indexes[i]] * 2; // Mover dos casilleros
+                int newCol = currentCol + colOffsets[indexes[i]] * 2; // Mover dos casilleros
+
+                // Verificar si el nuevo movimiento está dentro del mapa y no es una "C"
+                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols
+                        && this.map[newRow][newCol].equals(" . ")) {
+                    // Realizar dos movimientos en la dirección correspondiente
+                    for (int j = 0; j < 2; j++) {
+                        currentRow += rowOffsets[indexes[i]];
+                        currentCol += colOffsets[indexes[i]];
+                        this.map[currentRow][currentCol] = " C ";
+                        this.caminosEnemigos.add(new Coordenada(currentRow, currentCol));
+                    }
+
+                    // Contar los movimientos hacia arriba, abajo y derecha
+                    if (indexes[i] == -1) {
+                        upCount += 2;
+                    } else if (indexes[i] == 1) {
+                        downCount += 2;
+                    } else if (indexes[i] == 0) {
+                        rightCount += 2;
+                    }
+
+                    // Verificar si se han hecho al menos 2 movimientos en cada dirección
+                    if (upCount >= 2 && downCount >= 2 && rightCount >= 2) {
+                        break; // Salir del bucle si se cumplen las condiciones
+                    }
+
+                    break; // Salir del bucle de movimientos
+                }
+            }
+        }
+
+        // Marcar el final del camino con "CG"
+        int coordXCerroGloria = this.caminosEnemigos.get(caminosEnemigos.size()-1).getX();
+        int coordYCerroGloria = this.caminosEnemigos.get(caminosEnemigos.size()-1).getY();
+        this.map[coordXCerroGloria][coordYCerroGloria] = " CG";
 
     }
 
-    public void colocarReferenciasEnMapa() {
-
-        for (Coordenada coordenada : this.caminosEnemigos) {
-            int x = coordenada.getX();
-            int y = coordenada.getY();
-            mapaRefCoord[x][y] = "C";
-        }
-
-        for (int i = 0; i < mapaRefCoord.length; i++) {
-            for (int j = 0; j < mapaRefCoord[i].length; j++) {
-                if (mapaRefCoord[i][j] == null) {
-                    mapaRefCoord[i][j] = "X";
-                }
+    public void mostrarMapa() {
+        System.out.print("  ");
+        for (int j = 0; j < this.map[0].length; j++) {
+            if (j < 11){
+                System.out.print("  " +j + "  ");
+            }else{
+                System.out.print(" " +j + "  ");
             }
+        }
+        System.out.println();
+        for (int i = 0; i < this.map.length; i++) {
+            System.out.print(i + "  ");
+            for (int j = 0; j < map[i].length; j++) {
+                System.out.print( map[i][j] + "  ");
+            }
+            System.out.println();
         }
     }
 
@@ -51,28 +118,15 @@ public class Mapa {
         int posY = coordenadaTorre.getY();
         switch (tipoTorre) {
             case ("Comun") -> {
-                mapaRefCoord[posX][posY] = "Tc";
+                map[posX][posY] = "Tc ";
             }
             case ("Hielo") -> {
-                mapaRefCoord[posX][posY] = "Th";
+                map[posX][posY] = "Th ";
             }
             case ("Fuego") -> {
-                mapaRefCoord[posX][posY] = "Tf";
+                map[posX][posY] = "Tf ";
             }
 
-        }
-    }
-
-    public void mostrarMapa() {
-        System.out.println("  A  B  C  ");
-        for (int i = 0; i < mapaRefCoord.length; i++) {
-            for (int j = 0; j < mapaRefCoord[i].length; j++) {
-                if (j == 0) {
-                    System.out.print(i+1);
-                }
-                System.out.print(" " + mapaRefCoord[i][j] + " ");
-            }
-            System.out.println();
         }
     }
 
@@ -80,5 +134,5 @@ public class Mapa {
         return caminosEnemigos;
     }
 
-    public String[][] getMapaRefCoord() { return mapaRefCoord; }
+    public String[][] getMapaRefCoord() { return map; }
 }

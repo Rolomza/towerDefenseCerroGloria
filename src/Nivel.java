@@ -24,8 +24,7 @@ public class Nivel {
 
     public void generarCasillerosEnemigos() {
 
-        this.mapaNivel.generarCoordCaminoEnemigos();
-        this.mapaNivel.colocarReferenciasEnMapa();
+        this.mapaNivel.generarMapaAleatorio();
         int count =0; //sirve para saber la posicion de la lista de tuplas caminos enemigos
 
         for (Coordenada coordenada : this.mapaNivel.getCaminosEnemigos()) {
@@ -270,14 +269,15 @@ public class Nivel {
             System.out.print("Ingrese coordenada Y: ");
             int coordY = scanner.nextInt();
             coordenadaEstructura = new Coordenada(coordX , coordY);
-        } while (!validarCoordenada(coordenadaEstructura, tipoEstructura));
+        } while (!validarCoordenada(coordenadaEstructura, tipoEstructura, mapaNivel));
         return coordenadaEstructura;
     }
 
-    public boolean validarCoordenada(Coordenada coordenada , String tipoEstructura){
+    public boolean validarCoordenada(Coordenada coordenada , String tipoEstructura, Mapa mapa){
 
         // Cambiar el 4 por las dimensiones del mapa
-        if (( coordenada.getX() < 0 || coordenada.getX() > 4) || (coordenada.getY() < 0 || coordenada.getY() > 4)){
+        if (( coordenada.getX() < 0 || coordenada.getX() > mapa.getMapaRefCoord().length) ||
+                (coordenada.getY() < 0 || coordenada.getY() > mapa.getMapaRefCoord()[0].length)){
             System.out.println("Coordenada NO válida (fuera de rango del mapa).");
             return false;
         }
@@ -311,19 +311,21 @@ public class Nivel {
             int coordX = coordenada.getX();
             int coordY = coordenada.getY();
 
-            if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("Tc")) {
+            if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("Tc ")) {
                 System.out.println("No puedes colocar torre ya hay una Tc en el casillero.");
                 return false;
-            } else if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("Th")) {
+            } else if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("Th ")) {
                 System.out.println("No puedes colocartorre ya hay Th en el casillero.");
                 return false;
-            } else if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("Tf")) {
+            } else if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("Tf ")) {
                 System.out.println("No puedes colocar ya hay Tf en el casillero.");
                 return false;
             }
 
 
-            if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].equals("C")) {
+            if (this.mapaNivel.getMapaRefCoord()[coordX][coordY].contains("C") ||
+                    this.mapaNivel.getMapaRefCoord()[coordX][coordY].contains("E") ||
+                    this.mapaNivel.getMapaRefCoord()[coordX][coordY].contains("CG")) {
                 System.out.println("No puedes colocar la torre en el camino de enemigos.");
                 return false;
             }

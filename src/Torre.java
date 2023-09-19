@@ -55,7 +55,7 @@ public abstract class Torre implements Ataque {
                 if (i >= 0 && i < arrayMapa.length && j >= 0 && j < arrayMapa[0].length) {
                     // Verificar si el casillero es diferente de la posición de la torre
 
-                    if (!arrayMapa[i][j].equals("C") || (i == posX && j == posY)) {
+                    if (!arrayMapa[i][j].contains("C") || (i == posX && j == posY)) {
                         continue;
                     }
                     // Agregar la coordenada a casillerosAtaque
