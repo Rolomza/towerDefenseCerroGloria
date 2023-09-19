@@ -6,7 +6,7 @@ public class TorreHielo extends Torre{
     private static final AtomicInteger contador = new AtomicInteger(0);
     public TorreHielo(Coordenada coordenadaTorre){
         this.id = contador.incrementAndGet();
-        this.danio = 25;
+        this.danio = 15;
         this.coordenadaTorre = coordenadaTorre;
         this.alcanceAtaque = 1;
         this.costeTorre = 500;

@@ -17,6 +17,7 @@ public class Casillero {
     private ArrayList<Enemigo> listaEnanos = new ArrayList<>();
     private ArrayList<Enemigo> enemigosListosParaMoverse = new ArrayList<>();
     private Coordenada coordenadaCasillero;
+
     public Casillero(int coordX,int coordY) {
         this.id = contador.incrementAndGet();
         // Agrego listas al HashMap de Casillero
@@ -135,7 +136,7 @@ public class Casillero {
 
     @Override
     public String toString() {
-        return "Casillero{" + "id=" + id + '}';
+        return "C"+id;
     }
 
     public int getId() {
