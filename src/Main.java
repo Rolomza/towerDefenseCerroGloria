@@ -10,4 +10,3 @@ interface Ataque {
     void atacar(Casillero casillero);
 }
 
-
