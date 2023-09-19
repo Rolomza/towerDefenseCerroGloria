@@ -6,7 +6,7 @@ public class TorreComun extends Torre{
     private static final AtomicInteger contador = new AtomicInteger(0);
     public TorreComun(Coordenada coordenadaTorre){
         this.id = contador.incrementAndGet();
-        this.danio = 60;
+        this.danio = 30;
         this.coordenadaTorre = coordenadaTorre;
         this.alcanceAtaque = 1;
         this.costeTorre = 200;

@@ -15,10 +15,10 @@ public abstract class Torre implements Ataque {
     public abstract ArrayList<Enemigo> prioridadEnemigo(Casillero casilleroEnemigo);
 
 
-    public void chequearCasillerosAtaque(ArrayList<Casillero> casillerosEnemigos, Nivel nivelActual) {
+    public void chequearCasillerosAtaque(Nivel nivelActual) {
         boolean haAtacado = false;
 
-        for (Casillero casilleroEnemigo : casillerosEnemigos) {
+        for (Casillero casilleroEnemigo : nivelActual.getCasillerosEnemigos()) {
             if (haAtacado) {
                 // Si ya ha atacado en otro casillero, salir del bucle
                 break;
