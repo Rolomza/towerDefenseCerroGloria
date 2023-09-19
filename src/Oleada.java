@@ -33,7 +33,7 @@ public class Oleada {
                     crearNEnemigosDeTipoS(10 , "Humano");
                     break;
                 case 3:
-                    crearNEnemigosDeTipoS(15 , "Hobbit");
+                    crearNEnemigosDeTipoS(10 , "Hobbit");
                     crearNEnemigosDeTipoS(15 , "Humano");
                     break;
 
@@ -41,39 +41,39 @@ public class Oleada {
         } else if (this.nivelActual == 2){
             switch (nroOleada){
                 case 1:
-                    crearNEnemigosDeTipoS(15 , "Hobbit");
-                    crearNEnemigosDeTipoS(15 , "Humano");
-                    crearNEnemigosDeTipoS(5 , "Elfo");
+                    crearNEnemigosDeTipoS(30 , "Hobbit");
+                    crearNEnemigosDeTipoS(35 , "Humano");
+                    crearNEnemigosDeTipoS(15 , "Elfo");
                     break;
                 case 2:
-                    crearNEnemigosDeTipoS(20 , "Hobbit");
-                    crearNEnemigosDeTipoS(15 , "Humano");
-                    crearNEnemigosDeTipoS(10 , "Elfo");
+                    crearNEnemigosDeTipoS(40 , "Hobbit");
+                    crearNEnemigosDeTipoS(45 , "Humano");
+                    crearNEnemigosDeTipoS(50 , "Elfo");
                     break;
                 case 3:
-                    crearNEnemigosDeTipoS(15 , "Hobbit");
-                    crearNEnemigosDeTipoS(20 , "Humano");
-                    crearNEnemigosDeTipoS(15 , "Elfo");
+                    crearNEnemigosDeTipoS(50 , "Hobbit");
+                    crearNEnemigosDeTipoS(60 , "Humano");
+                    crearNEnemigosDeTipoS(65 , "Elfo");
                     break;
 
             }
         } else if (this.nivelActual == 3){
             switch (nroOleada){
                 case 1:
-                    crearNEnemigosDeTipoS(15 , "Hobbit");
-                    crearNEnemigosDeTipoS(15 , "Humano");
-                    crearNEnemigosDeTipoS(15 , "Elfo");
-                    crearNEnemigosDeTipoS(5 , "Enano");
+                    crearNEnemigosDeTipoS(30 , "Hobbit");
+                    crearNEnemigosDeTipoS(40 , "Humano");
+                    crearNEnemigosDeTipoS(60 , "Elfo");
+                    crearNEnemigosDeTipoS(10 , "Enano");
                     break;
                 case 2:
-                    crearNEnemigosDeTipoS(20 , "Humano");
-                    crearNEnemigosDeTipoS(15 , "Elfo");
-                    crearNEnemigosDeTipoS(15 , "Enano");
+                    crearNEnemigosDeTipoS(40 , "Humano");
+                    crearNEnemigosDeTipoS(70 , "Elfo");
+                    crearNEnemigosDeTipoS(30 , "Enano");
                     break;
                 case 3:
-                    crearNEnemigosDeTipoS(20 , "Humano");
-                    crearNEnemigosDeTipoS(20 , "Elfo");
-                    crearNEnemigosDeTipoS(20 , "Enano");
+                    crearNEnemigosDeTipoS(50 , "Humano");
+                    crearNEnemigosDeTipoS(80 , "Elfo");
+                    crearNEnemigosDeTipoS(45 , "Enano");
                     break;
             }
         }
@@ -98,11 +98,11 @@ public class Oleada {
         //int cantidadEnemigosCarga = 8;
         int cantidadEnemigosCarga = 0;
             switch (nivelActual) {
-                case 1: cantidadEnemigosCarga = 2;
+                case 1: cantidadEnemigosCarga = 3;
                         break;
-                case 2: cantidadEnemigosCarga = 4;
+                case 2: cantidadEnemigosCarga = 5;
                         break;
-                case 3: cantidadEnemigosCarga = 5;
+                case 3: cantidadEnemigosCarga = 7;
                         break;
             }
         Random random = new Random();

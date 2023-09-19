@@ -20,7 +20,7 @@ public class Nivel {
 
     public Nivel(int nroNivel) {
         this.nroNivel = nroNivel;
-        this.puntosMagia = 1000;
+        this.puntosMagia = 800;
     }
 
     public void generarCasillerosEnemigos() {
