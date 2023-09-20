@@ -15,7 +15,7 @@ public class Mapa {
         // Inicializar el mapa con puntos
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                this.map[i][j] = " . ";
+                this.map[i][j] = "  . ";
             }
         }
 
@@ -54,12 +54,13 @@ public class Mapa {
 
             // Intentar moverse en las direcciones aleatorias
             for (int i = 0; i < 3; i++) {
+
                 int newRow = currentRow + rowOffsets[indexes[i]] * 2; // Mover dos casilleros
                 int newCol = currentCol + colOffsets[indexes[i]] * 2; // Mover dos casilleros
 
                 // Verificar si el nuevo movimiento está dentro del mapa y no es una "C"
                 if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols
-                        && this.map[newRow][newCol].equals(" . ")) {
+                        && this.map[newRow][newCol].equals("  . ")) {
                     // Realizar dos movimientos en la dirección correspondiente
                     for (int j = 0; j < 2; j++) {
                         currentRow += rowOffsets[indexes[i]];
@@ -97,18 +98,24 @@ public class Mapa {
     public void mostrarMapa() {
         System.out.print("  ");
         for (int j = 0; j < this.map[0].length; j++) {
-            if (j < 11){
-                System.out.print("  " +j + "  ");
+            if (j < 10){
+                System.out.print("   " +j + "  ");
             }else{
-                System.out.print(" " +j + "  ");
+                System.out.print("  " +j + "  ");
             }
         }
         System.out.println();
         for (int i = 0; i < this.map.length; i++) {
             System.out.print(i + "  ");
             for (int j = 0; j < map[i].length; j++) {
-                System.out.print( map[i][j] + "  ");
+                if(map[i][j].length() == 3) {
+                    System.out.print(" " + map[i][j] + " ");
+                } else {
+                    System.out.print(map[i][j] + "  ");
+                }
+
             }
+            System.out.println();
             System.out.println();
         }
     }
@@ -118,18 +125,6 @@ public class Mapa {
         int posY = torre.getCoordenadaTorre().getY();
 
         map[posX][posY] = torre.toString();
-//        switch (tipoTorre) {
-//            case ("Comun") -> {
-//                map[posX][posY] = "Tc ";
-//            }
-//            case ("Hielo") -> {
-//                map[posX][posY] = "Th ";
-//            }
-//            case ("Fuego") -> {
-//                map[posX][posY] = "Tf ";
-//            }
-//
-//        }
     }
 
     public ArrayList<Coordenada> getCaminosEnemigos() {

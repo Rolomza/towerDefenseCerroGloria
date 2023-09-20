@@ -37,6 +37,24 @@ public class Nivel {
             }
             count++;
         }
+
+        colocarIdsCasillerosMapa();
+    }
+
+
+    public void colocarIdsCasillerosMapa() {
+        ArrayList<Coordenada> coordenadasCasilleros = this.mapaNivel.getCaminosEnemigos();
+        for (Coordenada coordenada : coordenadasCasilleros) {
+            Casillero casillero = buscarCasilleroPorCoordenada(coordenada);
+            int coordXCasillero = coordenada.getX();
+            int coordYCasillero = coordenada.getY();
+            if (casillero.getId() < 10) {
+                this.mapaNivel.getMapaRefCoord()[coordXCasillero][coordYCasillero] = " "+casillero.toString() + " ";
+            } else {
+                this.mapaNivel.getMapaRefCoord()[coordXCasillero][coordYCasillero] = casillero.toString() + " ";
+            }
+
+        }
     }
 
     public void iniciarNivel() {
@@ -155,6 +173,7 @@ public class Nivel {
         }
         return null;
     }
+
 
     public int getPuntosMagia() {
         return puntosMagia;
