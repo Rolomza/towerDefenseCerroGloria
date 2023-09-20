@@ -33,4 +33,5 @@ public class Cerro {
     public void mostrarVida(){
         System.out.println("La vida actual del Cerro Gloria es: "+vida);
     }
+
 }

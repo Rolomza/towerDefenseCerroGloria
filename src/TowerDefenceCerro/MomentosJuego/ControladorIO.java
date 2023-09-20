@@ -21,7 +21,7 @@ public class ControladorIO {
  */
     public void mostrarInfoJuego(){
         System.out.println("");
-        System.out.println("---------------¡BIENVENIDO A CERRO GLORIA TOWER DEFENCE!---------------");
+        System.out.println("---------------¡BIENVENIDO A CERRO GLORIA TOWER DEFENSE!---------------");
         System.out.println(" - El juego presenta un mapa generado de forma aleatoria por un camino por donde se enviaran enemigos por cada oleada.");
         System.out.println(" - Al final del camino se encuentra el cerro gloria, el cual deberás defender de forma estratégica.");
         System.out.println(" - Existen 4 tipos de enemigos: Hobbit, Humano, Elfo y Enano. Algunos son más fuertes otros son más rápidos.");

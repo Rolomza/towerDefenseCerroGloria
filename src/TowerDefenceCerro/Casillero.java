@@ -85,9 +85,9 @@ public class Casillero {
      * @param enemigo El enemigo que se eliminará del casillero.
      */
     public void eliminarEnemigo(Enemigo enemigo) {
-            // ver si los enemigos son eliminados con esto.
-            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get(enemigo.getClass().getName());
-            listaEnemigos.remove(enemigo);
+        // ver si los enemigos son eliminados con esto.
+        ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get(enemigo.getClass().getName());
+        listaEnemigos.remove(enemigo);
     }
 
     /**
