@@ -3,7 +3,11 @@ package TowerDefenceCerro.Torres;
 import TowerDefenceCerro.Coordenada;
 
 import java.util.concurrent.atomic.AtomicInteger;
-
+/**
+ * Clase que hereda de torre y representa una torre común en el juego Tower Defense.
+ * @author  Victor Ramirez
+ * @version 1.0
+ */
 public class TorreComun extends Torre{
 
     private static final AtomicInteger contador = new AtomicInteger(0);
@@ -14,33 +18,21 @@ public class TorreComun extends Torre{
         this.alcanceAtaque = 1;
         this.costeTorre = 400;
     }
-
+    /**
+     * Constructor que crea una nueva instancia de TorreComun con valores predeterminados.
+     * Se utiliza cuando se necesita una instancia de torre común sin ubicación específica.
+     */
     public TorreComun(){
         this.danio = 40;
         this.alcanceAtaque = 1;
         this.costeTorre = 400;
     }
 
-
-//    public void atacar(TowerDefenceCerro.Casillero casillero, TowerDefenceCerro.MomentosJuego.Juego.Nivel nivelActual) {
-//        listaAtaqueEnemigos = prioridadEnemigo(casillero);
-//
-//        for (TowerDefenceCerro.Enemigos.Enemigo enemigoActual : listaAtaqueEnemigos){
-//            enemigoActual.restarVida(this.danio);
-//            if (enemigoActual.getVida() <= 0){
-//                casillero.eliminarEnemigo(enemigoActual);
-//                nivelActual.aumentarPuntosMagia(enemigoActual.getRecompensaEnemigo());
-//                casillero.getEnemigosListosParaMoverse().remove(enemigoActual);
-//                System.out.println("La torre " + this.toString() + " ha asesinado a " + enemigoActual.toString() + " | +" + enemigoActual.getRecompensaEnemigo() + " PtosMagia.");
-//            } else {
-//                System.out.println(enemigoActual.toString() + " fue atacado por "+this.toString()+" y ahora tiene "+enemigoActual.getVida()+" de vida");
-//            }
-//        }
-//    }
-
-
-
-
+    /**
+     * Obtiene una representación en cadena de la torre común.
+     *
+     * @return Una cadena que representa la torre común.
+     */
     public String toString() {
         return "Tc"+this.id;
     }

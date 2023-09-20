@@ -11,7 +11,14 @@ import TowerDefenceCerro.Torres.TorreFuego;
 import TowerDefenceCerro.Torres.TorreHielo;
 
 import java.util.ArrayList;
-
+/**
+ * Clase que representa un nivel en el juego de Tower Defense.
+ * Esta clase se encarga de gestionar la creación del mapa, la colocación de torres y barreras,
+ * la interacción con el jugador y la generación de oleadas de enemigos.
+ *
+ * @author Augustos Robles
+ * @version 1.0
+ */
 public class Nivel {
     // Cada nivel tiene la responsabilidad de:
     // 1) Generar un mapa
@@ -34,6 +41,9 @@ public class Nivel {
         entradaSalidaUsuario.mostrarInfoJuego();
     }
 
+    /**
+     * Genera los casilleros de enemigos a partir del mapa generado aleatoriamente.
+     */
     public void generarCasillerosEnemigos() {
 
         this.mapaNivel.generarMapaAleatorio();
@@ -53,7 +63,9 @@ public class Nivel {
         colocarIdsCasillerosMapa();
     }
 
-
+    /**
+     * Coloca los identificadores de los casilleros en el mapa.
+     */
     public void colocarIdsCasillerosMapa() {
         ArrayList<Coordenada> coordenadasCasilleros = this.mapaNivel.getCaminosEnemigos();
         for (Coordenada coordenada : coordenadasCasilleros) {
@@ -68,7 +80,9 @@ public class Nivel {
 
         }
     }
-
+    /**
+     * Inicia el nivel, gestionando la colocación de torres y el enfrentamiento con las oleadas de enemigos.
+     */
     public void iniciarNivel() {
         int posicionCerro = casillerosEnemigos.size()-1;
         Cerro cerro = casillerosEnemigos.get(posicionCerro).getCerroGloria();
@@ -92,7 +106,9 @@ public class Nivel {
             }
         }
     }
-
+    /**
+     * Reacomoda las torres en el mapa al inicio de un nuevo nivel.
+     */
     public void reacomodarTorres(){
         for (Torre torreActual: this.listaTorres){
             this.puntosMagia= (torreActual.getCosteTorre()/2) + this.puntosMagia;
@@ -103,7 +119,9 @@ public class Nivel {
         listaTorres.clear();
 
     }
-
+    /**
+     * Reacomoda las torres en el mapa al inicio de un nuevo nivel.
+     */
     public void mostrarCasillerosConEnemigos() {
         for (Casillero casillero : this.casillerosEnemigos) {
             if (casillero.tieneEnemigos()) {
@@ -111,7 +129,12 @@ public class Nivel {
             }
         }
     }
-
+    /**
+     * Mejora una torre según el tipo de mejora especificado.
+     *
+     * @param torreAMejorar La torre que se va a mejorar.
+     * @param tipoMejora El tipo de mejora: 1 para aumento de daño, 2 para aumento de alcance.
+     */
     public void mejorarTorre(Torre torreAMejorar, int tipoMejora){
         switch (tipoMejora) {
             case 1:
@@ -127,7 +150,12 @@ public class Nivel {
                 break;
         }
     }
-
+    /**
+     * Busca una torre en la lista de torres por su nombre.
+     *
+     * @param nombreTorre El nombre de la torre a buscar.
+     * @return La torre encontrada o null si no se encuentra.
+     */
     public Torre buscarTorrePorNombre(String nombreTorre) {
         for (Torre torre: this.listaTorres) {
             if (torre.toString().equals(nombreTorre)) {
@@ -136,7 +164,12 @@ public class Nivel {
         }
         return null;
     }
-
+    /**
+     * Coloca una torre en una coordenada especificada.
+     *
+     * @param nroTorre El número de la torre a colocar.
+     * @param coordTorre Las coordenadas donde se coloca la torre.
+     */
     public void colocarTorre(int nroTorre, Coordenada coordTorre) {
         Torre torre = null;
         String tipoTorre = null;
@@ -162,7 +195,9 @@ public class Nivel {
         torre.calcularCoordenadasCasillerosAtaque(this);
         System.out.println("Se colocó Torre: " + torre.toString() + " en la posición " + coordTorre.mostrarCoordenada());
     }
-
+    /**
+     * Coloca una barrera en el mapa.
+     */
     public void colocarBarrera() {
         Coordenada coordBarrera = entradaSalidaUsuario.ingresarYValidarCoordenadas("Barrera", this);
         Casillero casillero = buscarCasilleroPorCoordenada(coordBarrera);
@@ -171,7 +206,11 @@ public class Nivel {
         restarPuntosMagia(barrera.getPrecioBarrera());
         System.out.println("Se agregó Barrera: " + barrera.toString() + " en el casillero " + casillero.getCoordenadaCasillero().mostrarCoordenada());
     }
-
+    /**
+     * Verifica si existen enemigos en el nivel.
+     *
+     * @return true si hay enemigos, false si no hay enemigos.
+     */
     public Boolean existenEnemigos(){
         for (Casillero casilleroActual : this.casillerosEnemigos){
             for (ArrayList<Enemigo> listaEnemigos : casilleroActual.getEnemigosCasillero().values()){
@@ -182,14 +221,30 @@ public class Nivel {
         }
         return false;
     }
+    /**
+     * Obtiene el mapa del nivel.
+     *
+     * @return El mapa del nivel.
+     */
     public Mapa getMapaNivel() {
         return mapaNivel;
     }
 
+    /**
+     * Obtiene el número del nivel.
+     *
+     * @return El número del nivel.
+     */
     public int getNroNivel() {
         return nroNivel;
     }
 
+    /**
+     * Busca un casillero por sus coordenadas.
+     *
+     * @param coordenada Las coordenadas del casillero a buscar.
+     * @return El casillero encontrado o null si no se encuentra.
+     */
     public Casillero buscarCasilleroPorCoordenada(Coordenada coordenada) {
         for (Casillero casillero : this.casillerosEnemigos) {
             if (casillero.getCoordenadaCasillero().compararConCoordenada(coordenada)) {
@@ -199,35 +254,72 @@ public class Nivel {
         return null;
     }
 
-
+    /**
+     * Obtiene los puntos de magia disponibles.
+     *
+     * @return Los puntos de magia disponibles.
+     */
     public int getPuntosMagia() {
         return puntosMagia;
     }
-
+    /**
+     * Aumenta los puntos de magia disponibles.
+     *
+     * @param puntosMagia Los puntos de magia a aumentar.
+     */
     public void aumentarPuntosMagia(int puntosMagia) {
         this.puntosMagia += puntosMagia;
     }
+
+    /**
+     * Resta puntos de magia disponibles.
+     *
+     * @param puntosMagia Los puntos de magia a restar.
+     */
 
     public void restarPuntosMagia(int puntosMagia) {
         this.puntosMagia -= puntosMagia;
     }
 
+    /**
+     * Obtiene la lista de torres colocadas en el nivel.
+     *
+     * @return La lista de torres colocadas.
+     */
+
     public ArrayList<Torre> getListaTorres() {
         return listaTorres;
     }
+    /**
+     * Obtiene la oleada de enemigos actual.
+     *
+     * @return La oleada de enemigos actual.
+     */
 
     public Oleada getOleadaNivel() {
         return oleadaNivel;
     }
 
+    /**
+     * Aumenta el número del nivel.
+     */
     public void aumentarNivel() {
         this.nroNivel++;
     }
-
+    /**
+     * Verifica si el nivel ha sido derrotado.
+     *
+     * @return true si el nivel ha sido derrotado, false en caso contrario.
+     */
     public boolean getDerrotado() {
         return derrotado;
     }
 
+    /**
+     * Obtiene la lista de casilleros donde los enemigos se mueven en el nivel.
+     *
+     * @return La lista de casilleros de enemigos.
+     */
     public ArrayList<Casillero> getCasillerosEnemigos() {
         return casillerosEnemigos;
     }

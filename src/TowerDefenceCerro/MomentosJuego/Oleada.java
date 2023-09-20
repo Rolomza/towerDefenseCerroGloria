@@ -7,7 +7,13 @@ import TowerDefenceCerro.Torres.Torre;
 
 import java.util.ArrayList;
 import java.util.Random;
-
+/**
+ * Clase que representa una oleada de enemigos en el juego.
+ * Se encarga de generar los enemigos, controlar las iteraciones y el movimiento de las unidades, así como gestionar las interacciones con las torres y el Cerro de la Gloria.
+ *
+ * @author Augustos Robles, Victor Ramirez, Aida Laricchia
+ * @version 1.0
+ */
 public class Oleada {
     // Esta Clase TowerDefenceCerro.MomentosJuego.Juego.Oleada se encarga de:
     // 1) Generar los enemigos de cada oleada
@@ -20,12 +26,20 @@ public class Oleada {
     private ArrayList<Enemigo> listaEnemigosOleada = new ArrayList<>();
     private int nivelActual;
     private int nroOleada;
-
+    /**
+     * Constructor de la clase Oleada.
+     *
+     * @param nroNivel El número del nivel actual.
+     */
     public Oleada(int nroNivel) {
         this.nivelActual = nroNivel;
         this.nroOleada = 1;
     }
-
+    /**
+     * Inicia una oleada de enemigos en el juego.
+     *
+     * @param nivelActual El nivel actual en el juego.
+     */
     public void iniciarOleada(Nivel nivelActual) {
         //Iteraciones TowerDefenceCerro.MomentosJuego.Juego
 
@@ -74,7 +88,11 @@ public class Oleada {
         }
     }
 
-
+    /**
+     * Realiza los ataques de las torres a los enemigos en sus casilleros de ataque.
+     *
+     * @param nivelActual El nivel actual en el juego.
+     */
     // Revisar si funciona la nueva implementacion de torres atacan
     public void torresAtacan(Nivel nivelActual){
         // Aca iterariamos todas las torres y atacarian antes de que los enemigos se muevan
@@ -85,7 +103,11 @@ public class Oleada {
             torreActual.atacar(nivelActual, casillero);
         }
     }
-
+    /**
+     * Realiza los ataques de los enemigos a las barreras en sus casilleros.
+     *
+     * @param nivelActual El nivel actual en el juego.
+     */
     public void enemigosAtacan(Nivel nivelActual){
         for (Casillero casillero: nivelActual.getCasillerosEnemigos()) {
             if(casillero.tieneEnemigos() && casillero.tieneBarrera()) {
@@ -109,7 +131,11 @@ public class Oleada {
             }
         }
     }
-
+    /**
+     * Reduce los contadores de los enemigos en los casilleros y los mueve si es necesario.
+     *
+     * @param nivelActual El nivel actual en el juego.
+     */
     public void reducirContadoresEnemigos(Nivel nivelActual) {
         for (Casillero casillero: nivelActual.getCasillerosEnemigos()) {
             if(casillero.tieneEnemigos()) {
@@ -118,7 +144,11 @@ public class Oleada {
             }
         }
     }
-
+    /**
+     * Realiza el movimiento de los enemigos en los casilleros.
+     *
+     * @param nivelActual El nivel actual en el juego.
+     */
     public void moverEnemigosListos(Nivel nivelActual) {
         for (Casillero casillero: nivelActual.getCasillerosEnemigos()) {
             if(casillero.tieneEnemigos()) {
@@ -130,7 +160,13 @@ public class Oleada {
         }
 
     }
-
+    /**
+     * Mueve los enemigos de un casillero a otro.
+     *
+     * @param casilleroActual    El casillero actual de los enemigos.
+     * @param casilleroSiguiente El casillero al que se moverán los enemigos.
+     * @param nivelActual        El nivel actual en el juego.
+     */
     public void moverEnemigos(Casillero casilleroActual, Casillero casilleroSiguiente, Nivel nivelActual) {
         ArrayList<Enemigo> listaEnemigosParaMoverse = casilleroActual.getEnemigosListosParaMoverse();
         boolean esPenultimo = false;
@@ -224,7 +260,12 @@ public class Oleada {
             }
         }
     }
-
+    /**
+     * Genera una cantidad específica de enemigos de un tipo dado.
+     *
+     * @param n          La cantidad de enemigos a generar.
+     * @param tipoEnemigo El tipo de enemigo a generar.
+     */
     public void crearNEnemigosDeTipoS(int n , String tipoEnemigo){
 
         for (int i=0 ; i < n; i++){
@@ -237,7 +278,11 @@ public class Oleada {
         }
 
     }
-
+    /**
+     * Carga enemigos en el casillero inicial de la oleada.
+     *
+     * @param casillerosEnemigos Lista de casilleros del nivel donde se cargarán los enemigos.
+     */
     public void cargarEnemigosCasilleroInicial(ArrayList<Casillero> casillerosEnemigos) {
         // Se cargan una determinada cantidad de enemigos segun el nivel y la oleada
         Casillero c1 = casillerosEnemigos.get(0);
@@ -259,30 +304,31 @@ public class Oleada {
             }
         }
     }
-
+    /**
+     * Obtiene el número de la oleada actual.
+     *
+     * @return El número de la oleada actual.
+     */
     public int getNroOleada() {
         return nroOleada;
     }
-
-    public int getNivelActual() {
-        return nivelActual;
-    }
-
-    public void setNroOleada(int nroOleada) {
-        this.nroOleada = nroOleada;
-    }
-
-    public void setNivelActual(int nivelActual) {
-        this.nivelActual = nivelActual;
-    }
-
+    /**
+     * Obtiene la lista de enemigos de la oleada.
+     *
+     * @return La lista de enemigos de la oleada.
+     */
     public ArrayList<Enemigo> getListaEnemigosOleada() {
         return listaEnemigosOleada;
     }
-
+    /**
+     * Reinicia el número de la oleada a 1.
+     */
     public void reiniciarNroOleada() {
         this.nroOleada = 1;
     }
+    /**
+     * Aumenta el número de la oleada en 1.
+     */
     public void aumentarOleada(){
         this.nroOleada++;
     }

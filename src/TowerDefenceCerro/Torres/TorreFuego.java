@@ -7,10 +7,20 @@ import TowerDefenceCerro.MomentosJuego.Nivel;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
-
+/**
+ * Clase que hereda de torre y representa una torre de fuego en el juego Tower Defense.
+ * @author  Victor Ramirez
+ * @version 1.0
+ */
 public class TorreFuego extends Torre{
 
     private static final AtomicInteger contador = new AtomicInteger(0);
+
+    /**
+     * Constructor que crea una nueva instancia de TorreFuego en la ubicación especificada.
+     *
+     * @param coordenadaTorre La coordenada donde se coloca la torre en el mapa.
+     */
     public TorreFuego(Coordenada coordenadaTorre){
         this.id = contador.incrementAndGet();
         this.danio = 50; // Mata a los elfos de 2 tiros
@@ -18,6 +28,10 @@ public class TorreFuego extends Torre{
         this.alcanceAtaque = 1;
         this.costeTorre = 1000;
     }
+    /**
+     * Constructor que crea una nueva instancia de TorreFuego con valores predeterminados.
+     * Se utiliza cuando se necesita una instancia de torre de fuego sin ubicación específica.
+     */
     public TorreFuego(){
         this.danio = 50;
         this.alcanceAtaque = 1;
@@ -25,24 +39,12 @@ public class TorreFuego extends Torre{
     }
 
 
-    // Revisar implementacion chequear
-
-    public void chequearCasillerosAtaque(ArrayList<Casillero> casillerosEnemigos, Nivel nivelActual) {
-
-        for (Casillero casilleroEnemigo : casillerosEnemigos) {
-
-            for (Coordenada coordenadaAtaqueTorre : coordCasillerosAtaque) {
-                if (casilleroEnemigo.getCoordenadaCasillero().compararConCoordenada(coordenadaAtaqueTorre)) {
-                    if (casilleroEnemigo.tieneEnemigos()) {
-                        this.atacar(nivelActual, casilleroEnemigo);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-
-
+    /**
+     * Realiza un ataque a los enemigos dentro del alcance de la torre de fuego.
+     *
+     * @param nivelActual     El nivel actual del juego.
+     * @param casilleroActual El casillero donde se encuentra la torre de fuego.
+     */
     public void atacar(Nivel nivelActual, Casillero casilleroActual) {
         // TowerDefenceCerro.Torres.Torre fuego ataca a todos los enemigos que ve en cada casillero
         for (Casillero casilleroAtaque : this.casillerosAtaque) {
@@ -67,7 +69,13 @@ public class TorreFuego extends Torre{
         }
     }
 
-
+    /**
+     * Calcula la prioridad de ataque de la torre de fuego.
+     * Prioriza a los enemigos por tipo de daño.
+     *
+     * @param casilleroEnemigo El casillero que contiene a los enemigos.
+     * @return Una lista de enemigos ordenados por prioridad de ataque.
+     */
     @Override
     public ArrayList<Enemigo> prioridadEnemigo(Casillero casilleroEnemigo) {
         ArrayList<Enemigo> listaEnemigosPorPrioridad = new ArrayList<>();
@@ -85,8 +93,11 @@ public class TorreFuego extends Torre{
         }
         return listaEnemigosPorPrioridad;
     }
-
-
+    /**
+     * Obtiene una representación en cadena de la torre de fuego.
+     *
+     * @return Una cadena que representa la torre de fuego.
+     */
     public String toString() {
         return "Tf"+this.id;
     }

@@ -8,8 +8,17 @@ import TowerDefenceCerro.Torres.TorreHielo;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+/**
+ * Clase encargada de manejar entradas y salidas.
+ *
+ * @author Augustos Robles
+ * @version 1.0
+ */
 public class ControladorIO {
+
+/**
+ * Muestra información detallada sobre el juego
+ */
     public void mostrarInfoJuego(){
         System.out.println("");
         System.out.println("---------------¡BIENVENIDO A CERRO GLORIA TOWER DEFENCE!---------------");
@@ -33,6 +42,14 @@ public class ControladorIO {
 
 
     }
+
+    /**
+     * Muestra el menú de compra y colocación de torres en un nivel del juego.
+     * El jugador puede seleccionar entre diferentes tipos de torres y ubicarlas estratégicamente en el mapa.
+     * También puede optar por no comprar más torres si lo desea.
+     *
+     * @param nivelActual El nivel actual en el que se encuentra el jugador.
+     */
     public void mostrarMenuNivel(Nivel nivelActual) {
         Scanner scanner = new Scanner(System.in);
         int opcionSeleccionada;
@@ -101,6 +118,13 @@ public class ControladorIO {
     }
 
 
+    /**
+     * Muestra el menú de compra y colocación de torres en un nivel del juego.
+     * El jugador puede seleccionar entre diferentes tipos de torres y ubicarlas estratégicamente en el mapa.
+     * También puede optar por no comprar más torres si lo desea.
+     *
+     * @param nivelActual El nivel actual en el que se encuentra el jugador.
+     */
     public void mostrarMenuOleada(Nivel nivelActual) {
         Scanner scanner = new Scanner(System.in);
         boolean seguirEnMenuOleada = true;
@@ -147,7 +171,13 @@ public class ControladorIO {
             }
         } while (seguirEnMenuOleada);
     }
-
+    /**
+     * Muestra el menú de mejoras de torres en el juego, permitiendo al jugador seleccionar
+     * una torre existente para mejorar su daño o alcance mediante el uso de puntos de magia.
+     * También ofrece la opción de volver al menú de oleada.
+     *
+     * @param nivelActual El nivel actual en el que se encuentra el jugador.
+     */
     public void mostrarMenuTorres(Nivel nivelActual) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("--- MEJORAR TORRES ---");
@@ -211,7 +241,14 @@ public class ControladorIO {
             }
         } while (!nombreValido);
     }
-
+    /**
+     * Valida si el jugador tiene suficientes puntos de magia para comprar una torre
+     * de un tipo específico.
+     *
+     * @param tipoTorre El tipo de torre que el jugador desea comprar.
+     * @param puntosMagia Los puntos de magia disponibles del jugador.
+     * @return true si el jugador tiene suficientes puntos de magia, false en caso contrario.
+     */
     public boolean validarSuficientesPuntosMagia(int tipoTorre, int puntosMagia){
 
         TorreComun torreComun = new TorreComun();
@@ -246,7 +283,13 @@ public class ControladorIO {
     }
 
 
-
+    /**
+     * Solicita al jugador ingresar y validar coordenadas para una estructura en el mapa.
+     *
+     * @param tipoEstructura El tipo de estructura que se va a colocar (por ejemplo, "Torre" o "Barrera").
+     * @param nivelActual El nivel actual del juego en el que se está colocando la estructura.
+     * @return La coordenada ingresada y validada.
+     */
     public Coordenada ingresarYValidarCoordenadas(String tipoEstructura, Nivel nivelActual) {
         Coordenada coordenadaEstructura;
         Scanner scanner = new Scanner(System.in);
@@ -272,7 +315,14 @@ public class ControladorIO {
 
         return coordenadaEstructura;
     }
-
+    /**
+     * Valida si una coordenada es válida para colocar una estructura (torre o barrera) en el mapa.
+     *
+     * @param coordenada La coordenada que se desea validar.
+     * @param tipoEstructura El tipo de estructura que se desea colocar (por ejemplo, "Torre" o "Barrera").
+     * @param nivelActual El nivel actual del juego en el que se está colocando la estructura.
+     * @return true si la coordenada es válida para colocar la estructura, false en caso contrario.
+     */
     public boolean validarCoordenada(Coordenada coordenada , String tipoEstructura, Nivel nivelActual){
 
         // Cambiar el 4 por las dimensiones del mapa

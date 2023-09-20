@@ -6,12 +6,21 @@ import TowerDefenceCerro.Torres.Torre;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Clase que se encarga de determinar referencias para generar coordenadas tanto para casilleros, torres y barreras.
+ * También se utiliza para verificar a qué casilleros alcanza cada torre y mostrar por consola el desarrollo de las iteraciones.
+ * @author Victor Ramirez, Aida Laricchia
+ * @version 1.0
+ */
 public class Mapa {
     // Responsabilidad principal: Determinar referencias para generar coordenadas tanto para casilleros, torres y barreras.
     // Tambien para verificar a que casilleros alcanza cada torre y para mostrar por consola el desarrollo de las iteraciones
     protected ArrayList<Coordenada> caminosEnemigos = new ArrayList<>();
     protected String[][] map = new String[5][15];
-
+    /**
+     * Genera un mapa aleatorio, estableciendo caminos para que los enemigos sigan.
+     * El camino se genera de manera aleatoria pero garantizando que llegue hasta el final.
+     */
     public void generarMapaAleatorio() {
 
         int rows = this.map.length;
@@ -99,7 +108,9 @@ public class Mapa {
         this.map[coordXCerroGloria][coordYCerroGloria] = " CG";
 
     }
-
+    /**
+     * Muestra el mapa por consola, incluyendo las coordenadas de las celdas.
+     */
     public void mostrarMapa() {
         System.out.print("  ");
         for (int j = 0; j < this.map[0].length; j++) {
@@ -124,17 +135,29 @@ public class Mapa {
             System.out.println();
         }
     }
-
+    /**
+     * Coloca una referencia de una torre en el mapa en la posición correspondiente.
+     *
+     * @param torre La torre que se coloca en el mapa.
+     */
     public void colocarRefTorre(Torre torre){
         int posX = torre.getCoordenadaTorre().getX();
         int posY = torre.getCoordenadaTorre().getY();
 
         map[posX][posY] = torre.toString();
     }
-
+    /**
+     * Obtiene la lista de coordenadas que representan los caminos por donde se moverán los enemigos en el mapa.
+     *
+     * @return La lista de coordenadas de los caminos de enemigos.
+     */
     public ArrayList<Coordenada> getCaminosEnemigos() {
         return caminosEnemigos;
     }
-
+    /**
+     * Obtiene una referencia a la matriz que representa el mapa con sus elementos.
+     *
+     * @return La matriz del mapa con referencias a sus elementos.
+     */
     public String[][] getMapaRefCoord() { return map; }
 }

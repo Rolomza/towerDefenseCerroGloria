@@ -4,6 +4,11 @@ import TowerDefenceCerro.*;
 
 import java.util.ArrayList;
 import TowerDefenceCerro.MomentosJuego.Nivel;
+/**
+ * Clase abstracta que representa a un enemigo en el juego Tower Defense.
+ * @author  Aida Laricchia
+ * @version 1.0
+ */
 public abstract class Enemigo implements IAtaque {
     protected int id; // Como lo generamos por cada tipo TowerDefenceCerro.Enemigos.Enemigo
     protected double vida;
@@ -17,11 +22,12 @@ public abstract class Enemigo implements IAtaque {
     protected int recompensaEnemigo; // Puntos de magia ganados al eliminar el enemigo
     protected ArrayList<Coordenada> camino = new ArrayList<>(); //lista de posiciones que debe recorrer cada enemigo por mapa
 
-    public void obtenerCaminoNivel(Nivel nivel){
-        //camino = nivel.getCaminoEnemigos();
-    }
 
-
+    /**
+     *
+     * @param nivelActual El nivel actual del juego.
+     * @param casillero   El casillero en el que se encuentra el enemigo.
+     */
 @Override
     public void atacar(Nivel nivelActual, Casillero casillero) {
         // Si el enemigo tiene alcance != 1, debe poder iterar mas alla de su propio casillero para atacar.
@@ -42,25 +48,34 @@ public abstract class Enemigo implements IAtaque {
     }
 
 
-//    public void entregarPuntosMagia(TowerDefenceCerro.MomentosJuego.Juego juego) {
-//        // Cuando una torre elimina al enemigo, antes de ser eliminado el objeto, este devuelve al juego puntos de magia, para mejoras y/o compras.
-//        juego.aumentarPuntosMagia(recompensaEnemigo);
-//    }
-
+    /**
+     * Obtiene el identificador único del enemigo.
+     *
+     * @return El identificador único del enemigo.
+     */
     public int getID() {
         return id;
     }
 
+    /**
+     * Obtiene el contador de movimientos restantes antes de que el enemigo se mueva.
+     *
+     * @return El contador de movimientos restantes.
+     */
     public int getContadorMovimientosRestantes() {
         return this.contadorMovimientosRestantes;
     }
 
+    /**
+     * Reinicia el contador de iteraciones para el movimiento del enemigo.
+     */
     public void reiniciarContadorIteraciones(){
         this.contadorMovimientosRestantes = this.velocidadDesplazamiento;
     }
-
-    //Este metodo reduce en 1 unidad el contador que determina despues de cuantas iteracion se debe mover cada enemigo
-    // El contador depende de la velocidad de desplazamiento de cada enemigo
+/**
+    *Este metodo reduce en 1 unidad el contador que determina despues de cuantas iteracion se debe mover cada enemigo
+    * El contador depende de la velocidad de desplazamiento de cada enemigo
+    */
 
     public void reducirContadorIteraciones(){
         this.contadorMovimientosRestantes--;
@@ -68,23 +83,43 @@ public abstract class Enemigo implements IAtaque {
             this.relentizado = false;
         }
     }
+    /**
+     * Aumenta el contador de iteraciones restantes para el movimiento del enemigo en 1 unidad
+     * cuando el enemigo está relentizado.
+     */
     public void aumentarContadorIteraciones(){
         this.relentizado = true;
         this.contadorMovimientosRestantes++;
     }
-
+    /**
+     * Obtiene la cantidad de daño que el enemigo puede infligir.
+     *
+     * @return La cantidad de daño del enemigo.
+     */
     public double getDanio() {
         return danio;
     }
-
+    /**
+     * Obtiene la recompensa en puntos de magia otorgada al eliminar al enemigo.
+     *
+     * @return La recompensa en puntos de magia.
+     */
     public int getRecompensaEnemigo() {
         return recompensaEnemigo;
     }
-
+    /**
+     * Reduce los puntos de vida del enemigo en función del daño recibido.
+     *
+     * @param danio La cantidad de daño que el enemigo recibe.
+     */
     public void restarVida(double danio){
         this.vida = this.vida - danio;
     }
-
+    /**
+     * Obtiene la cantidad de puntos de vida del enemigo.
+     *
+     * @return La cantidad de puntos de vida del enemigo.
+     */
     public double getVida() {
         return vida;
     }

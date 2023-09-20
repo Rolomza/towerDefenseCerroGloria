@@ -2,8 +2,18 @@ package TowerDefenceCerro.Enemigos;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Clase que representa un enemigo tipo "Enano" en el juego Tower Defense.
+ * Los enanos son enemigos de corto alcance y alta resistencia.
+ * @author  Aida Laricchia
+ * @version 1.0
+ */
 public class Enano extends Enemigo {
     private static final AtomicInteger contador = new AtomicInteger(0);
+    /**
+     * Constructor que inicializa un nuevo enano con valores predeterminados.
+     * Cada enano tiene un identificador único generado automáticamente.
+     */
     public Enano() {
         this.id = contador.incrementAndGet();
         this.vida = 400;
@@ -14,7 +24,11 @@ public class Enano extends Enemigo {
         this.inmunidad = "None";
         this.recompensaEnemigo = 75;
     }
-
+    /**
+     * Devuelve una representación en cadena del enano, que incluye su identificador único.
+     *
+     * @return Una cadena que representa el enano.
+     */
     public String toString() {
         return "En"+this.id;
     }
