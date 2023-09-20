@@ -10,6 +10,29 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ControladorIO {
+    public void mostrarInfoJuego(){
+        System.out.println("");
+        System.out.println("---------------¡BIENVENIDO A CERRO GLORIA TOWER DEFENCE!---------------");
+        System.out.println(" - El juego presenta un mapa generado de forma aleatoria por un camino por donde se enviaran enemigos por cada oleada.");
+        System.out.println(" - Al final del camino se encuentra el cerro gloria, el cual deberás defender de forma estratégica.");
+        System.out.println(" - Existen 4 tipos de enemigos: Hobbit, Humano, Elfo y Enano. Algunos son más fuertes otros son más rápidos.");
+        System.out.println(" -Tendrás a tu disposición 3 tipos de torres. Cada una con un tipo de ataque daño y alcance.");
+        System.out.println(" -Torre Común: ataca a un enemigo a la vez. ");
+        System.out.println(" -Torre Hielo: ataca dos enemigos por vez y los relentiza.");
+        System.out.println(" -Torre Fuego: ataca a todos sus enemigos en su radio de ataque pero les pega a uno por casillero.");
+        System.out.println(" -Tambien dispondras de barreras para colocar en el camino y poder así ganar tiempo con tus torres.");
+        System.out.println("----------------------------------------------------------------------------------");
+        System.out.println("---------------DESARROLLO DEL JUEGO---------------");
+        System.out.println(" " );
+        System.out.println("1- Colocar torres al comienzo de cada nivel");
+        System.out.println("2- Dentro del menu oleada se pueden mejorar las torres o colocar barreras");
+        System.out.println("3- Se inicia la oleada, los tres niveles nos enfrentaran a tres oleadas con distintos enemigos cada una.");
+        System.out.println("4- Al final de cada nivel, se eliminaran las torres del mapa y se devuelve el 50% de su valor en puntos de magia");
+        System.out.println("5- Se gana el juego si el Cerro Gloria se mantiene en pie despues de todas las oleadas de todos los niveles.");
+
+
+
+    }
     public void mostrarMenuNivel(Nivel nivelActual) {
         Scanner scanner = new Scanner(System.in);
         int opcionSeleccionada;

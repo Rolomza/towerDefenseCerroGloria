@@ -31,6 +31,7 @@ public class Nivel {
     public Nivel(int nroNivel) {
         this.nroNivel = nroNivel;
         this.puntosMagia = 1000;
+        entradaSalidaUsuario.mostrarInfoJuego();
     }
 
     public void generarCasillerosEnemigos() {
@@ -94,7 +95,7 @@ public class Nivel {
 
     public void reacomodarTorres(){
         for (Torre torreActual: this.listaTorres){
-            this.puntosMagia= torreActual.getCosteTorre() + this.puntosMagia;
+            this.puntosMagia= (torreActual.getCosteTorre()/2) + this.puntosMagia;
             int posX=torreActual.getCoordenadaTorre().getX();
             int posY=torreActual.getCoordenadaTorre().getY();
             this.mapaNivel.getMapaRefCoord()[posX][posY]= " . ";
