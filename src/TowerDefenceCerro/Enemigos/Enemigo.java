@@ -1,9 +1,13 @@
-import java.util.ArrayList;
+package TowerDefenceCerro.Enemigos;
 
+import TowerDefenceCerro.*;
+
+import java.util.ArrayList;
+import TowerDefenceCerro.MomentosJuego.Nivel;
 public abstract class Enemigo implements IAtaque {
-    protected int id; // Como lo generamos por cada tipo Enemigo
+    protected int id; // Como lo generamos por cada tipo TowerDefenceCerro.Enemigos.Enemigo
     protected double vida;
-    protected double danio; // cantidad de daño que realiza a barreras o Cerro Gloria
+    protected double danio; // cantidad de daño que realiza a barreras o TowerDefenceCerro.Cerro Gloria
     protected String inmunidad; // Puede ser hielo, fuego o ninguno, esto reducirá el ataque sufrido por la torre correspondiente
     protected int alcanceAtaque; // Define si un enemigo puede atacar mas alla de su propio casillero. (Borrar?)
     protected int velocidadDesplazamiento; // Determina cada cuantas iteraciones avanza un casillero
@@ -28,17 +32,17 @@ public abstract class Enemigo implements IAtaque {
             System.out.println(this.toString() + " inflinge daño " + this.danio + " a " + casillero.getBarrera().toString());
         }
         if (casillero.getCerroGloria() != null){
-            // Si hay cerro Gloria, el enemigo resta daño a Cerro y desaparece.
+            // Si hay cerro Gloria, el enemigo resta daño a TowerDefenceCerro.Cerro y desaparece.
             Cerro cerroGloria = casillero.getCerroGloria();
             cerroGloria.restarVida(this.getDanio());
-            // Ver de borrar objeto enemigo cuando ataque Cerro.
+            // Ver de borrar objeto enemigo cuando ataque TowerDefenceCerro.Cerro.
             System.out.println("El "+this.toString()+" inflinge "+this.getDanio()+" de daño al cerro gloria.");
 
         }
     }
 
 
-//    public void entregarPuntosMagia(Juego juego) {
+//    public void entregarPuntosMagia(TowerDefenceCerro.MomentosJuego.Juego juego) {
 //        // Cuando una torre elimina al enemigo, antes de ser eliminado el objeto, este devuelve al juego puntos de magia, para mejoras y/o compras.
 //        juego.aumentarPuntosMagia(recompensaEnemigo);
 //    }

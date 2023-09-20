@@ -1,5 +1,16 @@
+package TowerDefenceCerro.MomentosJuego;
+
+import TowerDefenceCerro.Barrera;
+import TowerDefenceCerro.Casillero;
+import TowerDefenceCerro.Cerro;
+import TowerDefenceCerro.Coordenada;
+import TowerDefenceCerro.Enemigos.Enemigo;
+import TowerDefenceCerro.Torres.Torre;
+import TowerDefenceCerro.Torres.TorreComun;
+import TowerDefenceCerro.Torres.TorreFuego;
+import TowerDefenceCerro.Torres.TorreHielo;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Nivel {
     // Cada nivel tiene la responsabilidad de:
@@ -61,8 +72,10 @@ public class Nivel {
         int posicionCerro = casillerosEnemigos.size()-1;
         Cerro cerro = casillerosEnemigos.get(posicionCerro).getCerroGloria();
 
-
-        entradaSalidaUsuario.mostrarMenuNivel(this); // Aca agrego la Torre comprada a listaTorres
+        if (this.nroNivel!=1){
+            reacomodarTorres();
+        }
+        entradaSalidaUsuario.mostrarMenuNivel(this); // Aca agrego la TowerDefenceCerro.Torres.Torre comprada a listaTorres
         oleadaNivel.reiniciarNroOleada();
 
         while (oleadaNivel.getNroOleada()<=3){
@@ -70,13 +83,24 @@ public class Nivel {
                 entradaSalidaUsuario.mostrarMenuOleada(this);
                 oleadaNivel.iniciarOleada(this);
                 oleadaNivel.aumentarOleada();
+
             } else {
-                System.out.println("Te hicieron percha el cerro papu.");
                 System.out.println("Llegaste hasta el Nivel: " + nroNivel + "| Oleada: " + oleadaNivel.getNroOleada());
                 this.derrotado = true;
                 break;
             }
         }
+    }
+
+    public void reacomodarTorres(){
+        for (Torre torreActual: this.listaTorres){
+            this.puntosMagia= torreActual.getCosteTorre() + this.puntosMagia;
+            int posX=torreActual.getCoordenadaTorre().getX();
+            int posY=torreActual.getCoordenadaTorre().getY();
+            this.mapaNivel.getMapaRefCoord()[posX][posY]= " . ";
+        }
+        listaTorres.clear();
+
     }
 
     public void mostrarCasillerosConEnemigos() {

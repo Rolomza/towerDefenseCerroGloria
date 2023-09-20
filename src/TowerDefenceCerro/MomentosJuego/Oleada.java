@@ -1,12 +1,19 @@
+package TowerDefenceCerro.MomentosJuego;
+
+import TowerDefenceCerro.Casillero;
+import TowerDefenceCerro.Cerro;
+import TowerDefenceCerro.Enemigos.*;
+import TowerDefenceCerro.Torres.Torre;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Oleada {
-    // Esta Clase Oleada se encarga de:
+    // Esta Clase TowerDefenceCerro.MomentosJuego.Juego.Oleada se encarga de:
     // 1) Generar los enemigos de cada oleada
     // 2) Controlar las iteraciones, posiblemente con la flecha '->' para avanzar en el desarrollo de la partida
-    // 3) En cada iteracion: Enemigos son cargados en casilleros arranque
-    //                       Enemigos se desplazan a traves de los casilleros
+    // 3) En cada iteracion: TowerDefenceCerro.Enemigos son cargados en casilleros arranque
+    //                       TowerDefenceCerro.Enemigos se desplazan a traves de los casilleros
     //                       Torres detectan y atacan enemigos en sus casilleros de ataque
     //                       Se muestra el mapa, posiblemente una tabla/log
     // 4) La tabla/Log indica que enemigos hay en cada casillero, que torres estan atacando a quienes, enemigos eliminados...
@@ -20,7 +27,7 @@ public class Oleada {
     }
 
     public void iniciarOleada(Nivel nivelActual) {
-        //Iteraciones Juego
+        //Iteraciones TowerDefenceCerro.MomentosJuego.Juego
         int count = 0;
 
         int posicionCerro = nivelActual.getCasillerosEnemigos().size()-1;
@@ -41,6 +48,7 @@ public class Oleada {
             }
 
             System.out.println("--- ITERACION : " + (count+1) + " ---");
+            System.out.println("Puntos de Magia: " + nivelActual.getPuntosMagia());
             nivelActual.getMapaNivel().mostrarMapa();
             nivelActual.mostrarCasillerosConEnemigos();
 
@@ -54,6 +62,9 @@ public class Oleada {
 
             count++;
         }
+        if (nivelActual.getNroNivel()==3 && this.nroOleada==3 && cerroGloria.getVida()>0){
+            System.out.println("FELICIDADES, GANASTE");
+        }
     }
 
 
@@ -61,7 +72,7 @@ public class Oleada {
     public void torresAtacan(Nivel nivelActual){
         // Aca iterariamos todas las torres y atacarian antes de que los enemigos se muevan
         for (Torre torreActual : nivelActual.getListaTorres()){
-            torreActual.imprimirCasillerosAtaque();
+            //torreActual.imprimirCasillerosAtaque();
             // Revisar casillero, esta puesto para evitar romper ataque enemigo
             Casillero casillero = new Casillero(99,99);
             torreActual.atacar(nivelActual, casillero);
@@ -154,54 +165,54 @@ public class Oleada {
         if (this.nivelActual == 1){
             switch (nroOleada){
                 case 1:
-                    crearNEnemigosDeTipoS(15 , "Hobbit");
+                    crearNEnemigosDeTipoS(15 , "TowerDefenceCerro.Enemigos.Hobbit");
                     break;
                 case 2:
-                    crearNEnemigosDeTipoS(10 , "Hobbit");
-                    crearNEnemigosDeTipoS(10 , "Humano");
+                    crearNEnemigosDeTipoS(10 , "TowerDefenceCerro.Enemigos.Hobbit");
+                    crearNEnemigosDeTipoS(10 , "TowerDefenceCerro.Enemigos.Humano");
                     break;
                 case 3:
-                    crearNEnemigosDeTipoS(10 , "Hobbit");
-                    crearNEnemigosDeTipoS(15 , "Humano");
+                    crearNEnemigosDeTipoS(10 , "TowerDefenceCerro.Enemigos.Hobbit");
+                    crearNEnemigosDeTipoS(15 , "TowerDefenceCerro.Enemigos.Humano");
                     break;
 
             }
         } else if (this.nivelActual == 2){
             switch (nroOleada){
                 case 1:
-                    crearNEnemigosDeTipoS(30 , "Hobbit");
-                    crearNEnemigosDeTipoS(35 , "Humano");
-                    crearNEnemigosDeTipoS(15 , "Elfo");
+                    crearNEnemigosDeTipoS(30 , "TowerDefenceCerro.Enemigos.Hobbit");
+                    crearNEnemigosDeTipoS(35 , "TowerDefenceCerro.Enemigos.Humano");
+                    crearNEnemigosDeTipoS(15 , "TowerDefenceCerro.Enemigos.Elfo");
                     break;
                 case 2:
-                    crearNEnemigosDeTipoS(40 , "Hobbit");
-                    crearNEnemigosDeTipoS(45 , "Humano");
-                    crearNEnemigosDeTipoS(50 , "Elfo");
+                    crearNEnemigosDeTipoS(40 , "TowerDefenceCerro.Enemigos.Hobbit");
+                    crearNEnemigosDeTipoS(45 , "TowerDefenceCerro.Enemigos.Humano");
+                    crearNEnemigosDeTipoS(50 , "TowerDefenceCerro.Enemigos.Elfo");
                     break;
                 case 3:
-                    crearNEnemigosDeTipoS(50 , "Hobbit");
-                    crearNEnemigosDeTipoS(60 , "Humano");
-                    crearNEnemigosDeTipoS(65 , "Elfo");
+                    crearNEnemigosDeTipoS(50 , "TowerDefenceCerro.Enemigos.Hobbit");
+                    crearNEnemigosDeTipoS(60 , "TowerDefenceCerro.Enemigos.Humano");
+                    crearNEnemigosDeTipoS(65 , "TowerDefenceCerro.Enemigos.Elfo");
                     break;
 
             }
         } else if (this.nivelActual == 3){
             switch (nroOleada){
                 case 1:
-                    crearNEnemigosDeTipoS(30 , "Hobbit");
-                    crearNEnemigosDeTipoS(40 , "Humano");
-                    crearNEnemigosDeTipoS(60 , "Elfo");
-                    crearNEnemigosDeTipoS(10 , "Enano");
+                    crearNEnemigosDeTipoS(30 , "TowerDefenceCerro.Enemigos.Hobbit");
+                    crearNEnemigosDeTipoS(40 , "TowerDefenceCerro.Enemigos.Humano");
+                    crearNEnemigosDeTipoS(60 , "TowerDefenceCerro.Enemigos.Elfo");
+                    crearNEnemigosDeTipoS(10 , "TowerDefenceCerro.Enemigos.Enano");
                     break;
                 case 2:
-                    crearNEnemigosDeTipoS(40 , "Humano");
-                    crearNEnemigosDeTipoS(70 , "Elfo");
-                    crearNEnemigosDeTipoS(30 , "Enano");
+                    crearNEnemigosDeTipoS(40 , "TowerDefenceCerro.Enemigos.Humano");
+                    crearNEnemigosDeTipoS(70 , "TowerDefenceCerro.Enemigos.Elfo");
+                    crearNEnemigosDeTipoS(30 , "TowerDefenceCerro.Enemigos.Enano");
                     break;
                 case 3:
-                    crearNEnemigosDeTipoS(50 , "Humano");
-                    crearNEnemigosDeTipoS(80 , "Elfo");
-                    crearNEnemigosDeTipoS(45 , "Enano");
+                    crearNEnemigosDeTipoS(50 , "TowerDefenceCerro.Enemigos.Humano");
+                    crearNEnemigosDeTipoS(80 , "TowerDefenceCerro.Enemigos.Elfo");
+                    crearNEnemigosDeTipoS(45 , "TowerDefenceCerro.Enemigos.Enano");
                     break;
             }
         }
@@ -211,10 +222,10 @@ public class Oleada {
 
         for (int i=0 ; i < n; i++){
             switch (tipoEnemigo) {
-                case ("Hobbit") -> listaEnemigosOleada.add(new Hobbit());
-                case ("Humano") -> listaEnemigosOleada.add(new Humano());
-                case ("Elfo") -> listaEnemigosOleada.add(new Elfo());
-                case ("Enano") -> listaEnemigosOleada.add(new Enano());
+                case ("TowerDefenceCerro.Enemigos.Hobbit") -> listaEnemigosOleada.add(new Hobbit());
+                case ("TowerDefenceCerro.Enemigos.Humano") -> listaEnemigosOleada.add(new Humano());
+                case ("TowerDefenceCerro.Enemigos.Elfo") -> listaEnemigosOleada.add(new Elfo());
+                case ("TowerDefenceCerro.Enemigos.Enano") -> listaEnemigosOleada.add(new Enano());
             }
         }
 

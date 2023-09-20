@@ -1,3 +1,11 @@
+package TowerDefenceCerro.MomentosJuego;
+
+import TowerDefenceCerro.Coordenada;
+import TowerDefenceCerro.Torres.Torre;
+import TowerDefenceCerro.Torres.TorreComun;
+import TowerDefenceCerro.Torres.TorreFuego;
+import TowerDefenceCerro.Torres.TorreHielo;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 

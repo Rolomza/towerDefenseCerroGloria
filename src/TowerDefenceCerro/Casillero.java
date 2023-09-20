@@ -1,6 +1,9 @@
+package TowerDefenceCerro;
+
+import TowerDefenceCerro.Enemigos.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Casillero {
@@ -8,7 +11,7 @@ public class Casillero {
     private final int id;
     private HashMap<String,ArrayList<Enemigo>> enemigosCasillero = new HashMap<>();
 
-    // Revisar modelado de barrera, si hacemos solo clase Barrera o creamos clase Estructura para Barreras y Cerro Gloria
+    // Revisar modelado de barrera, si hacemos solo clase TowerDefenceCerro.Barrera o creamos clase Estructura para Barreras y TowerDefenceCerro.Cerro Gloria
     private Barrera barrera;
     private Cerro cerroGloria = null;
     private ArrayList<Enemigo> listaHumanos = new ArrayList<>();
@@ -20,11 +23,11 @@ public class Casillero {
 
     public Casillero(int coordX,int coordY) {
         this.id = contador.incrementAndGet();
-        // Agrego listas al HashMap de Casillero
-        this.enemigosCasillero.put("Humano",listaHumanos);
-        this.enemigosCasillero.put("Hobbit",listaHobbits);
-        this.enemigosCasillero.put("Elfo",listaElfos);
-        this.enemigosCasillero.put("Enano",listaEnanos);
+        // Agrego listas al HashMap de TowerDefenceCerro.Casillero
+        this.enemigosCasillero.put("TowerDefenceCerro.Enemigos.Humano",listaHumanos);
+        this.enemigosCasillero.put("TowerDefenceCerro.Enemigos.Hobbit",listaHobbits);
+        this.enemigosCasillero.put("TowerDefenceCerro.Enemigos.Elfo",listaElfos);
+        this.enemigosCasillero.put("TowerDefenceCerro.Enemigos.Enano",listaEnanos);
         // Esta coordenada nos servira para colocar las barreras en el lugar indicado por el usuario
         this.coordenadaCasillero = new Coordenada(coordX,coordY);
     }
@@ -35,20 +38,20 @@ public class Casillero {
     }
 
     public void agregarEnemigo(Enemigo enemigo) {
-        // Agrego enemigo a cada lista dentro del hashmap Enemigos segun el tipo de enemigo
+        // Agrego enemigo a cada lista dentro del hashmap TowerDefenceCerro.Enemigos segun el tipo de enemigo
         if (enemigo instanceof Humano) {
             // Obtengo el arrayList asociado
-            ArrayList<Enemigo> listaHumanos = enemigosCasillero.get("Humano");
+            ArrayList<Enemigo> listaHumanos = enemigosCasillero.get("TowerDefenceCerro.Enemigos.Humano");
             // Actualizo lista
             listaHumanos.add(enemigo);
         } else if (enemigo instanceof Hobbit) {
-            ArrayList<Enemigo> listaHobbits = enemigosCasillero.get("Hobbit");
+            ArrayList<Enemigo> listaHobbits = enemigosCasillero.get("TowerDefenceCerro.Enemigos.Hobbit");
             listaHobbits.add(enemigo);
         } else if (enemigo instanceof Elfo) {
-            ArrayList<Enemigo> listaElfos = enemigosCasillero.get("Elfo");
+            ArrayList<Enemigo> listaElfos = enemigosCasillero.get("TowerDefenceCerro.Enemigos.Elfo");
             listaElfos.add(enemigo);
         } else if (enemigo instanceof Enano) {
-            ArrayList<Enemigo> listaEnanos = enemigosCasillero.get("Enano");
+            ArrayList<Enemigo> listaEnanos = enemigosCasillero.get("TowerDefenceCerro.Enemigos.Enano");
             listaEnanos.add(enemigo);
         }
     }
@@ -77,7 +80,15 @@ public class Casillero {
     public void mostrarEntidadesCasillero() {
         /// Muestra el HashMap
         String nombreCasillero = toString();
-        System.out.println(nombreCasillero + this.enemigosCasillero);
+        System.out.print("El casillero "+nombreCasillero + " ubicado en "+this.coordenadaCasillero.mostrarCoordenada()+" , tiene --> ");
+        mostrarListaEnemigos();
+    }
+    public void mostrarListaEnemigos(){
+        for (ArrayList<Enemigo> listaEnemigo : this.enemigosCasillero.values()){
+            if (!listaEnemigo.isEmpty()){
+                System.out.println(listaEnemigo);
+            }
+        }
     }
 
     public void reducirContadores(){

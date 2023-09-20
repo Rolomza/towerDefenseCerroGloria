@@ -1,10 +1,9 @@
-import java.sql.SQLOutput;
-import java.util.Scanner;
+package TowerDefenceCerro.MomentosJuego;
 
 public class Juego {
 
     public void iniciarJuego() {
-        System.out.println("Bienvenido a Cerro de la Gloria Defense!");
+        System.out.println("Bienvenido a TowerDefenceCerro.Cerro de la Gloria Defense!");
 
         Nivel nivel = new Nivel(1);
         nivel.generarCasillerosEnemigos();

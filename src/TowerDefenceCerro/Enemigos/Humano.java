@@ -1,3 +1,5 @@
+package TowerDefenceCerro.Enemigos;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Humano extends Enemigo {
@@ -20,6 +22,6 @@ public class Humano extends Enemigo {
     // Este metodo se va a llamar cuando se cambie de casillero
 
     public String getNameClass() {
-        return "Humano";
+        return "TowerDefenceCerro.Enemigos.Humano";
     }
 }
