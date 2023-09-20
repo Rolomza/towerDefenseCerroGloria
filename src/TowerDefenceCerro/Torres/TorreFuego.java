@@ -1,41 +1,56 @@
+package TowerDefenceCerro.Torres;
+
+import TowerDefenceCerro.Casillero;
+import TowerDefenceCerro.Coordenada;
+import TowerDefenceCerro.Enemigos.Enemigo;
+import TowerDefenceCerro.MomentosJuego.Nivel;
+
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TorreHielo extends Torre{
+public class TorreFuego extends Torre{
 
     private static final AtomicInteger contador = new AtomicInteger(0);
-    public TorreHielo(Coordenada coordenadaTorre){
+    public TorreFuego(Coordenada coordenadaTorre){
         this.id = contador.incrementAndGet();
-        this.danio = 15;
+        this.danio = 50; // Mata a los elfos de 2 tiros
         this.coordenadaTorre = coordenadaTorre;
         this.alcanceAtaque = 1;
-        this.costeTorre = 500;
+        this.costeTorre = 1000;
     }
-
-    public TorreHielo(){
-        this.danio = 25;
+    public TorreFuego(){
+        this.danio = 50;
         this.alcanceAtaque = 1;
-        this.costeTorre = 500;
+        this.costeTorre = 1000;
     }
 
-    @Override
-    public void atacar(Nivel nivelActual, Casillero casilleroActual) {
-        // Esta flag sirve para que la torre ataque a 1 casillero solamente donde detecte enemigos.
-        int enemigosAtacados = 0;
 
+    // Revisar implementacion chequear
+
+    public void chequearCasillerosAtaque(ArrayList<Casillero> casillerosEnemigos, Nivel nivelActual) {
+
+        for (Casillero casilleroEnemigo : casillerosEnemigos) {
+
+            for (Coordenada coordenadaAtaqueTorre : coordCasillerosAtaque) {
+                if (casilleroEnemigo.getCoordenadaCasillero().compararConCoordenada(coordenadaAtaqueTorre)) {
+                    if (casilleroEnemigo.tieneEnemigos()) {
+                        this.atacar(nivelActual, casilleroEnemigo);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void atacar(Nivel nivelActual, Casillero casilleroActual) {
+        // TowerDefenceCerro.Torres.Torre fuego ataca a todos los enemigos que ve en cada casillero
         for (Casillero casilleroAtaque : this.casillerosAtaque) {
             System.out.println("Estoy revisando para atacar a " + casilleroAtaque.toString());
             listaAtaqueEnemigos = prioridadEnemigo(casilleroAtaque);
 
             for (Enemigo enemigoActual : listaAtaqueEnemigos){
                 enemigoActual.restarVida(this.danio);
-
-                // Sobreescribo el metodo de Torre para agregar relentizado y atacar solo 2 por casillero.
-
-                if (!enemigoActual.isRelentizado()){
-                    enemigoActual.aumentarContadorIteraciones();
-                }
-
 
                 if (enemigoActual.getVida() <= 0){
                     // Si la torre mata al enemigo, sucede lo siguiente:
@@ -47,38 +62,33 @@ public class TorreHielo extends Torre{
                     // Si la torre no mata al enemigo muestra el siguiente mensaje:
                     System.out.println(enemigoActual.toString() + " fue atacado por "+this.toString()+" y ahora tiene "+enemigoActual.getVida()+" de vida");
                 }
-                enemigosAtacados++; // Activar la bandera de ataque
 
-            }
-            if (enemigosAtacados > 1) {
-                break;
             }
         }
     }
 
+
     @Override
     public ArrayList<Enemigo> prioridadEnemigo(Casillero casilleroEnemigo) {
         ArrayList<Enemigo> listaEnemigosPorPrioridad = new ArrayList<>();
-        String[] tiposEnemigos = {"Elfo", "Humano", "Hobbit", "Enano"}; // Prioriza por velocidad
+        String[] tiposEnemigos = {"TowerDefenceCerro.Enemigos.Elfo", "TowerDefenceCerro.Enemigos.Enano", "TowerDefenceCerro.Enemigos.Humano", "TowerDefenceCerro.Enemigos.Hobbit"}; // Prioriza por daño de enemigo
 
         for (String tipo : tiposEnemigos) {
             ArrayList<Enemigo> listaEnemigos = casilleroEnemigo.getEnemigosCasillero().get(tipo);
             if (!listaEnemigos.isEmpty()) {
                 for (Enemigo enemigo : listaEnemigos) {
                     listaEnemigosPorPrioridad.add(enemigo);
-                    if (listaEnemigosPorPrioridad.size() >= 2) {
-                        return listaEnemigosPorPrioridad;
-                    }
+                    return listaEnemigosPorPrioridad;
+
                 }
             }
         }
-
         return listaEnemigosPorPrioridad;
     }
 
 
     public String toString() {
-        return "Th"+this.id;
+        return "Tf"+this.id;
     }
 
 

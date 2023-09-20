@@ -1,4 +1,7 @@
-import java.util.ArrayList;
+package TowerDefenceCerro.Torres;
+
+import TowerDefenceCerro.Coordenada;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TorreComun extends Torre{
@@ -19,10 +22,10 @@ public class TorreComun extends Torre{
     }
 
 
-//    public void atacar(Casillero casillero, Nivel nivelActual) {
+//    public void atacar(TowerDefenceCerro.Casillero casillero, TowerDefenceCerro.MomentosJuego.Juego.Nivel nivelActual) {
 //        listaAtaqueEnemigos = prioridadEnemigo(casillero);
 //
-//        for (Enemigo enemigoActual : listaAtaqueEnemigos){
+//        for (TowerDefenceCerro.Enemigos.Enemigo enemigoActual : listaAtaqueEnemigos){
 //            enemigoActual.restarVida(this.danio);
 //            if (enemigoActual.getVida() <= 0){
 //                casillero.eliminarEnemigo(enemigoActual);

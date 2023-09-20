@@ -1,3 +1,5 @@
+package TowerDefenceCerro;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Cerro {
@@ -10,6 +12,6 @@ public class Cerro {
         this.vida = vida - danio;
     }
     public void mostrarVida(){
-        System.out.println("La vida actual del Cerro Gloria es: "+vida);
+        System.out.println("La vida actual del TowerDefenceCerro.Cerro Gloria es: "+vida);
     }
 }

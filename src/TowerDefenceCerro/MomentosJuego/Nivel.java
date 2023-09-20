@@ -1,5 +1,16 @@
+package TowerDefenceCerro.MomentosJuego;
+
+import TowerDefenceCerro.Barrera;
+import TowerDefenceCerro.Casillero;
+import TowerDefenceCerro.Cerro;
+import TowerDefenceCerro.Coordenada;
+import TowerDefenceCerro.Enemigos.Enemigo;
+import TowerDefenceCerro.Torres.Torre;
+import TowerDefenceCerro.Torres.TorreComun;
+import TowerDefenceCerro.Torres.TorreFuego;
+import TowerDefenceCerro.Torres.TorreHielo;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Nivel {
     // Cada nivel tiene la responsabilidad de:
@@ -44,7 +55,7 @@ public class Nivel {
         Cerro cerro = casillerosEnemigos.get(posicionCerro).getCerroGloria();
 
 
-        entradaSalidaUsuario.mostrarMenuNivel(this); // Aca agrego la Torre comprada a listaTorres
+        entradaSalidaUsuario.mostrarMenuNivel(this); // Aca agrego la TowerDefenceCerro.Torres.Torre comprada a listaTorres
         oleadaNivel.reiniciarNroOleada();
 
         while (oleadaNivel.getNroOleada()<=3){
@@ -54,7 +65,7 @@ public class Nivel {
                 oleadaNivel.aumentarOleada();
             } else {
                 System.out.println("Te hicieron percha el cerro papu.");
-                System.out.println("Llegaste hasta el Nivel: " + nroNivel + "| Oleada: " + oleadaNivel.getNroOleada());
+                System.out.println("Llegaste hasta el TowerDefenceCerro.MomentosJuego.Juego.Nivel: " + nroNivel + "| TowerDefenceCerro.MomentosJuego.Juego.Oleada: " + oleadaNivel.getNroOleada());
                 this.derrotado = true;
                 break;
             }
@@ -117,16 +128,16 @@ public class Nivel {
         mapaNivel.colocarRefTorre(torre);
         listaTorres.add(torre);
         torre.calcularCoordenadasCasillerosAtaque(this);
-        System.out.println("Se colocó Torre: " + torre.toString() + " en la posición " + coordTorre.mostrarCoordenada());
+        System.out.println("Se colocó TowerDefenceCerro.Torres.Torre: " + torre.toString() + " en la posición " + coordTorre.mostrarCoordenada());
     }
 
     public void colocarBarrera() {
-        Coordenada coordBarrera = entradaSalidaUsuario.ingresarYValidarCoordenadas("Barrera", this);
+        Coordenada coordBarrera = entradaSalidaUsuario.ingresarYValidarCoordenadas("TowerDefenceCerro.Barrera", this);
         Casillero casillero = buscarCasilleroPorCoordenada(coordBarrera);
         casillero.agregarBarrera();
         Barrera barrera = casillero.getBarrera();
         restarPuntosMagia(barrera.getPrecioBarrera());
-        System.out.println("Se agregó Barrera: " + barrera.toString() + " en el casillero " + casillero.getCoordenadaCasillero().mostrarCoordenada());
+        System.out.println("Se agregó TowerDefenceCerro.Barrera: " + barrera.toString() + " en el casillero " + casillero.getCoordenadaCasillero().mostrarCoordenada());
     }
 
     public Boolean existenEnemigos(){

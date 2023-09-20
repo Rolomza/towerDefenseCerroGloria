@@ -1,3 +1,8 @@
+package TowerDefenceCerro.MomentosJuego;
+
+import TowerDefenceCerro.Coordenada;
+import TowerDefenceCerro.Torres.Torre;
+
 import java.util.ArrayList;
 import java.util.Random;
 

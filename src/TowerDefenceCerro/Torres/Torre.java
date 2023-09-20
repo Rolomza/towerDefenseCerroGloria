@@ -1,3 +1,8 @@
+package TowerDefenceCerro.Torres;
+
+import TowerDefenceCerro.*;
+import TowerDefenceCerro.Enemigos.Enemigo;
+import TowerDefenceCerro.MomentosJuego.Nivel;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -12,13 +17,13 @@ public abstract class Torre implements IAtaque {
 
     protected ArrayList<Coordenada> coordCasillerosAtaque = new ArrayList<>();
     //Antiguo casilleros ataque:
-//    protected ArrayList<Coordenada> casillerosAtaque = new ArrayList<>();
+//    protected ArrayList<TowerDefenceCerro.Coordenada> casillerosAtaque = new ArrayList<>();
     protected ArrayList<Casillero> casillerosAtaque = new ArrayList<>();
     protected ArrayList<Enemigo> listaAtaqueEnemigos = new ArrayList<>(); // Esta lista contiene a los enemigos a los que esta atacando la torre
 
 
 
-//    public abstract ArrayList<Enemigo> prioridadEnemigo(Casillero casilleroEnemigo);
+//    public abstract ArrayList<TowerDefenceCerro.Enemigos.Enemigo> prioridadEnemigo(TowerDefenceCerro.Casillero casilleroEnemigo);
 
     public void atacar(Nivel nivelActual, Casillero casilleroActual) {
         // Esta flag sirve para que la torre ataque a 1 casillero solamente donde detecte enemigos.
@@ -94,9 +99,9 @@ public abstract class Torre implements IAtaque {
     }
 
 
-    // Segun la lista de coordCasillerosAtaque construye una lista de Casilleros a los cuales la Torre puede atacar
+    // Segun la lista de coordCasillerosAtaque construye una lista de Casilleros a los cuales la TowerDefenceCerro.Torres.Torre puede atacar
     // Construye (casillerosAtaque)
-    public void agregarCasillerosAtaquePorCoordenada(Nivel nivelActual ,ArrayList<Coordenada> coordCasillerosAtaque) {
+    public void agregarCasillerosAtaquePorCoordenada(Nivel nivelActual , ArrayList<Coordenada> coordCasillerosAtaque) {
         for (Coordenada coordCasillero : coordCasillerosAtaque) {
             this.casillerosAtaque.add(nivelActual.buscarCasilleroPorCoordenada(coordCasillero));
         }
