@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public abstract class Enemigo implements Ataque {
+public abstract class Enemigo implements IAtaque {
     protected int id; // Como lo generamos por cada tipo Enemigo
     protected double vida;
     protected double danio; // cantidad de daño que realiza a barreras o Cerro Gloria

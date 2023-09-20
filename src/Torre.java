@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
-public abstract class Torre implements Ataque {
+public abstract class Torre implements IAtaque {
     protected int costeTorre; //cantidad de puntos de magia que necesitaremos para comprar la torre
     protected  double danio;
     protected int velocidadAtaque;
