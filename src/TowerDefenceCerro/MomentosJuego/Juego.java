@@ -13,7 +13,7 @@ public class Juego {
                 nivel.iniciarNivel();
                 nivel.aumentarNivel();
             } else {
-                System.out.println("TowerDefenceCerro.MomentosJuego.Juego terminado.");
+                System.out.println("Juego terminado.");
                 break;
             }
         }

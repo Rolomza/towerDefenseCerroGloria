@@ -30,7 +30,6 @@ public abstract class Torre implements IAtaque {
         boolean haAtacado = false;
 
         for (Casillero casilleroAtaque : this.casillerosAtaque) {
-            System.out.println("Estoy revisando para atacar a " + casilleroAtaque.toString());
             listaAtaqueEnemigos = prioridadEnemigo(casilleroAtaque);
 
             for (Enemigo enemigoActual : listaAtaqueEnemigos){
@@ -108,13 +107,13 @@ public abstract class Torre implements IAtaque {
     }
 
 
-    public void imprimirCasillerosAtaque() {
+   /* public void imprimirCasillerosAtaque() {
         for (Casillero casilleroAtaque : this.casillerosAtaque){
             System.out.println("---------Casilleros ataque " + this.toString() + " ---------");
             System.out.println(casillerosAtaque.toString() + " ");
             System.out.println("---------------------------------------");
         }
-    }
+    }*/
 
     public int getCosteTorre() {
         return costeTorre;

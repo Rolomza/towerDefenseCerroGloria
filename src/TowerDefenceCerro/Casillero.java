@@ -97,7 +97,15 @@ public class Casillero {
     public void mostrarEntidadesCasillero() {
         /// Muestra el HashMap
         String nombreCasillero = toString();
-        System.out.println(nombreCasillero + this.enemigosCasillero);
+        System.out.print("El casillero "+nombreCasillero + " ubicado en "+this.coordenadaCasillero.mostrarCoordenada()+" , tiene --> ");
+        mostrarListaEnemigos();
+    }
+    public void mostrarListaEnemigos(){
+        for (ArrayList<Enemigo> listaEnemigo : this.enemigosCasillero.values()){
+            if (!listaEnemigo.isEmpty()){
+                System.out.println(listaEnemigo);
+            }
+        }
     }
 
     public void reducirContadores(){

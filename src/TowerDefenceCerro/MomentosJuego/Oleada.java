@@ -61,6 +61,9 @@ public class Oleada {
 
             count++;
         }
+        if (nivelActual.getNroNivel()==3 && this.nroOleada==3 && cerroGloria.getVida()>0){
+            System.out.println("FELICIDADES, GANASTE");
+        }
     }
 
 
@@ -68,7 +71,7 @@ public class Oleada {
     public void torresAtacan(Nivel nivelActual){
         // Aca iterariamos todas las torres y atacarian antes de que los enemigos se muevan
         for (Torre torreActual : nivelActual.getListaTorres()){
-            torreActual.imprimirCasillerosAtaque();
+            //torreActual.imprimirCasillerosAtaque();
             // Revisar casillero, esta puesto para evitar romper ataque enemigo
             Casillero casillero = new Casillero(99,99);
             torreActual.atacar(nivelActual, casillero);

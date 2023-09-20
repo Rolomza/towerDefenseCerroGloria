@@ -46,7 +46,7 @@ public class TorreFuego extends Torre{
     public void atacar(Nivel nivelActual, Casillero casilleroActual) {
         // TowerDefenceCerro.Torres.Torre fuego ataca a todos los enemigos que ve en cada casillero
         for (Casillero casilleroAtaque : this.casillerosAtaque) {
-            System.out.println("Estoy revisando para atacar a " + casilleroAtaque.toString());
+            //System.out.println("Estoy revisando para atacar a " + casilleroAtaque.toString());
             listaAtaqueEnemigos = prioridadEnemigo(casilleroAtaque);
 
             for (Enemigo enemigoActual : listaAtaqueEnemigos){

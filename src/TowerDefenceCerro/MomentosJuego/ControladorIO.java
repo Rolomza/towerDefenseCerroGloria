@@ -28,13 +28,13 @@ public class ControladorIO {
             boolean noComprar = false;
             System.out.println();
             System.out.println("--- MERCADO DE TORRES ---");
-            System.out.println("TowerDefenceCerro.MomentosJuego.Juego.Nivel: " + nivelActual.getNroNivel());
+            System.out.println("Nivel: " + nivelActual.getNroNivel());
             System.out.println("Puntos de magia: " + nivelActual.getPuntosMagia());
             nivelActual.getMapaNivel().mostrarMapa();
 
-            System.out.println("1 - TowerDefenceCerro.Torres.Torre comun: " +  torreComun.getCosteTorre() + " ptos. magia (Ataca un enemigo a la vez)");
-            System.out.println("2 - TowerDefenceCerro.Torres.Torre hielo: " +  torreHielo.getCosteTorre() + " ptos. magia (Relentiza enemigos)");
-            System.out.println("3 - TowerDefenceCerro.Torres.Torre fuego: " +  torreFuego.getCosteTorre() + " ptos. magia (Causa daño de area)");
+            System.out.println("1 - Torre comun: " +  torreComun.getCosteTorre() + " ptos. magia (Ataca un enemigo a la vez)");
+            System.out.println("2 - Torre hielo: " +  torreHielo.getCosteTorre() + " ptos. magia (Relentiza enemigos)");
+            System.out.println("3 - Torre fuego: " +  torreFuego.getCosteTorre() + " ptos. magia (Causa daño de area)");
 
             if (!nivelActual.getListaTorres().isEmpty()) {
                 System.out.println("4 - No comprar más torres.");
@@ -52,7 +52,7 @@ public class ControladorIO {
             } else {
 
                 if (validarSuficientesPuntosMagia(opcionSeleccionada, nivelActual.getPuntosMagia())) {
-                    Coordenada coordTorre = ingresarYValidarCoordenadas("TowerDefenceCerro.Torres.Torre", nivelActual);
+                    Coordenada coordTorre = ingresarYValidarCoordenadas("Torre", nivelActual);
                     nivelActual.colocarTorre(opcionSeleccionada, coordTorre);
                     nivelActual.getMapaNivel().mostrarMapa();
                 } else {
@@ -83,12 +83,12 @@ public class ControladorIO {
 
         do {
             System.out.println(" --- MENU OLEADA ---");
-            System.out.println("TowerDefenceCerro.MomentosJuego.Juego.Oleada: " + nivelActual.getOleadaNivel().getNroOleada() + " TowerDefenceCerro.MomentosJuego.Juego.Nivel: " + nivelActual.getNroNivel());
+            System.out.println("Oleada: " + nivelActual.getOleadaNivel().getNroOleada() + " Nivel: " + nivelActual.getNroNivel());
             System.out.println("Puntos de magia: " + nivelActual.getPuntosMagia());
             nivelActual.getMapaNivel().mostrarMapa();
             System.out.println("1 - Mejorar Torres.");
             System.out.println("2 - Comprar y colocar barrera. (100 puntos de magia c/u)");
-            System.out.println("3 - Iniciar TowerDefenceCerro.MomentosJuego.Juego.Oleada.");
+            System.out.println("3 - Iniciar Oleada.");
             System.out.print("Seleccione una opción: ");
 
             opcionSeleccionada = scanner.nextInt();
@@ -125,7 +125,7 @@ public class ControladorIO {
 
         for (Torre torre : nivelActual.getListaTorres()) {
             listaNombreTorres.add(torre.toString());
-            System.out.println("TowerDefenceCerro.Torres.Torre: " + torre.toString() + " | Daño: " + torre.getDanio() + " | Alcance: " + torre.getAlcanceAtaque());
+            System.out.println("Torre: " + torre.toString() + " | Daño: " + torre.getDanio() + " | Alcance: " + torre.getAlcanceAtaque());
         }
 
         boolean nombreValido = false;
@@ -137,12 +137,12 @@ public class ControladorIO {
                 nombreValido = true;
                 Torre torreAMejorar = nivelActual.buscarTorrePorNombre(nombreTorre);
 
-                System.out.println(" --- Mejorar TowerDefenceCerro.Torres.Torre "+ torreAMejorar.toString() + " ---");
+                System.out.println(" --- Mejorar Torre "+ torreAMejorar.toString() + " ---");
                 boolean opcionValida = false;
                 do {
                     System.out.println("1 - +50 Daño | 500 Ptos Magia.");
                     System.out.println("2 - +1 Alcance | 1000 Ptos Magia");
-                    System.out.println("3 - Volver a menu TowerDefenceCerro.MomentosJuego.Juego.Oleada.");
+                    System.out.println("3 - Volver a menu Oleada.");
                     System.out.print("Ingrese número segun mejora deseada: ");
                     int tipoMejora = scanner.nextInt();
 
@@ -187,19 +187,19 @@ public class ControladorIO {
         switch (tipoTorre) {
             case 1 -> {
                 if (puntosMagia < torreComun.getCosteTorre()) {
-                    System.out.println("No te alcanza para la TowerDefenceCerro.Torres.Torre Comun");
+                    System.out.println("No te alcanza para la Torre Comun");
                     dineroSuficiente = false;
                 }
             }
             case 2 -> {
                 if (puntosMagia < torreHielo.getCosteTorre()) {
-                    System.out.println("No te alcanza para la TowerDefenceCerro.Torres.Torre de Hielo");
+                    System.out.println("No te alcanza para la Torre de Hielo");
                     dineroSuficiente = false;
                 }
             }
             case 3 -> {
                 if (puntosMagia < torreFuego.getCosteTorre()) {
-                    System.out.println("No te alcanza para la TowerDefenceCerro.Torres.Torre de Fuego");
+                    System.out.println("No te alcanza para la Torre de Fuego");
                     dineroSuficiente = false;
                 }
             }
@@ -226,13 +226,13 @@ public class ControladorIO {
         // Cambiar el 4 por las dimensiones del mapa
         if (( coordenada.getX() < 0 || coordenada.getX() > nivelActual.getMapaNivel().getMapaRefCoord().length - 1 ) ||
                 (coordenada.getY() < 0 || coordenada.getY() > nivelActual.getMapaNivel().getMapaRefCoord()[0].length - 1)){
-            System.out.println("TowerDefenceCerro.Coordenada NO válida (fuera de rango del mapa).");
+            System.out.println("Coordenada NO válida (fuera de rango del mapa).");
             return false;
         }
 
         // Lista de casilleros servirá para determinar si en determinado casillero existe o no barrera/torre para evitar tener 2 estructuras en el mismo casillero
 
-        if (tipoEstructura.equals("TowerDefenceCerro.Barrera")){
+        if (tipoEstructura.equals("Barrera")){
             int ultimaCoordenada = nivelActual.getMapaNivel().getCaminosEnemigos().size()-1;
             Coordenada coordenadaCerro = nivelActual.getMapaNivel().getCaminosEnemigos().get(ultimaCoordenada);
 
@@ -250,12 +250,12 @@ public class ControladorIO {
                 System.out.println("No puedes poner barrera fuera del camino de enemigos.");
                 return false;
             } else {
-                System.out.println("No puedes colocar barrera en el mismo casillero del TowerDefenceCerro.Cerro.");
+                System.out.println("No puedes colocar barrera en el mismo casillero del Cerro.");
                 return false;
             }
         }
 
-        if (tipoEstructura.equals("TowerDefenceCerro.Torres.Torre")){
+        if (tipoEstructura.equals("Torre")){
             int coordX = coordenada.getX();
             int coordY = coordenada.getY();
 

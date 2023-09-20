@@ -31,7 +31,7 @@ public class TorreHielo extends Torre{
         int enemigosAtacados = 0;
 
         for (Casillero casilleroAtaque : this.casillerosAtaque) {
-            System.out.println("Estoy revisando para atacar a " + casilleroAtaque.toString());
+
             listaAtaqueEnemigos = prioridadEnemigo(casilleroAtaque);
 
             for (Enemigo enemigoActual : listaAtaqueEnemigos){
