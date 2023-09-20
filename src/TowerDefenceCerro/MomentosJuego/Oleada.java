@@ -48,6 +48,7 @@ public class Oleada {
             }
 
             System.out.println("--- ITERACION : " + (count+1) + " ---");
+            System.out.println("Puntos de Magia: " + nivelActual.getPuntosMagia());
             nivelActual.getMapaNivel().mostrarMapa();
             nivelActual.mostrarCasillerosConEnemigos();
 

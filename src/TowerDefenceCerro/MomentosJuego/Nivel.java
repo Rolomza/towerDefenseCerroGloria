@@ -54,7 +54,9 @@ public class Nivel {
         int posicionCerro = casillerosEnemigos.size()-1;
         Cerro cerro = casillerosEnemigos.get(posicionCerro).getCerroGloria();
 
-
+        if (this.nroNivel!=1){
+            reacomodarTorres();
+        }
         entradaSalidaUsuario.mostrarMenuNivel(this); // Aca agrego la TowerDefenceCerro.Torres.Torre comprada a listaTorres
         oleadaNivel.reiniciarNroOleada();
 
@@ -63,12 +65,24 @@ public class Nivel {
                 entradaSalidaUsuario.mostrarMenuOleada(this);
                 oleadaNivel.iniciarOleada(this);
                 oleadaNivel.aumentarOleada();
+
             } else {
                 System.out.println("Llegaste hasta el Nivel: " + nroNivel + "| Oleada: " + oleadaNivel.getNroOleada());
                 this.derrotado = true;
                 break;
             }
         }
+    }
+
+    public void reacomodarTorres(){
+        for (Torre torreActual: this.listaTorres){
+            this.puntosMagia= torreActual.getCosteTorre() + this.puntosMagia;
+            int posX=torreActual.getCoordenadaTorre().getX();
+            int posY=torreActual.getCoordenadaTorre().getY();
+            this.mapaNivel.getMapaRefCoord()[posX][posY]= " . ";
+        }
+        listaTorres.clear();
+
     }
 
     public void mostrarCasillerosConEnemigos() {
