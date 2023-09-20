@@ -113,21 +113,23 @@ public class Mapa {
         }
     }
 
-    public void colocarRefTorre(Coordenada coordenadaTorre , String tipoTorre){
-        int posX = coordenadaTorre.getX();
-        int posY = coordenadaTorre.getY();
-        switch (tipoTorre) {
-            case ("Comun") -> {
-                map[posX][posY] = "Tc ";
-            }
-            case ("Hielo") -> {
-                map[posX][posY] = "Th ";
-            }
-            case ("Fuego") -> {
-                map[posX][posY] = "Tf ";
-            }
+    public void colocarRefTorre(Torre torre){
+        int posX = torre.getCoordenadaTorre().getX();
+        int posY = torre.getCoordenadaTorre().getY();
 
-        }
+        map[posX][posY] = torre.toString();
+//        switch (tipoTorre) {
+//            case ("Comun") -> {
+//                map[posX][posY] = "Tc ";
+//            }
+//            case ("Hielo") -> {
+//                map[posX][posY] = "Th ";
+//            }
+//            case ("Fuego") -> {
+//                map[posX][posY] = "Tf ";
+//            }
+//
+//        }
     }
 
     public ArrayList<Coordenada> getCaminosEnemigos() {

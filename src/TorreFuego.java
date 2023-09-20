@@ -16,18 +16,18 @@ public class TorreFuego extends Torre{
         this.alcanceAtaque = 1;
         this.costeTorre = 1000;
     }
-    public void getCoordenadaTorre() {
-        this.coordenadaTorre.mostrarCoordenada();
-    }
+
+
+    // Revisar implementacion chequear
 
     public void chequearCasillerosAtaque(ArrayList<Casillero> casillerosEnemigos, Nivel nivelActual) {
 
         for (Casillero casilleroEnemigo : casillerosEnemigos) {
 
-            for (Coordenada coordenadaAtaqueTorre : casillerosAtaque) {
+            for (Coordenada coordenadaAtaqueTorre : coordCasillerosAtaque) {
                 if (casilleroEnemigo.getCoordenadaCasillero().compararConCoordenada(coordenadaAtaqueTorre)) {
                     if (casilleroEnemigo.tieneEnemigos()) {
-                        this.atacar(casilleroEnemigo, nivelActual);
+                        this.atacar(nivelActual, casilleroEnemigo);
                         break;
                     }
                 }
@@ -35,25 +35,33 @@ public class TorreFuego extends Torre{
         }
     }
 
-    @Override
-    public void atacar(Casillero casillero, Nivel nivelActual) {
-        //
-        listaAtaqueEnemigos = prioridadEnemigo(casillero);
 
-        for (Enemigo enemigoActual : listaAtaqueEnemigos){
-            enemigoActual.restarVida(this.danio);
-            if (enemigoActual.getVida() <= 0){
-                casillero.eliminarEnemigo(enemigoActual);
-                nivelActual.aumentarPuntosMagia(enemigoActual.getRecompensaEnemigo());
-                casillero.getEnemigosListosParaMoverse().remove(enemigoActual);
-                System.out.println("La torre " + this.toString() + " ha asesinado a " + enemigoActual.toString() + " | +" + enemigoActual.getRecompensaEnemigo() + " PtosMagia.");
-            } else {
-                System.out.println(enemigoActual.toString() + " fue atacado por "+this.toString()+" y ahora tiene "+enemigoActual.getVida()+" de vida");
+    public void atacar(Nivel nivelActual, Casillero casilleroActual) {
+        // Torre fuego ataca a todos los enemigos que ve en cada casillero
+        for (Casillero casilleroAtaque : this.casillerosAtaque) {
+            System.out.println("Estoy revisando para atacar a " + casilleroAtaque.toString());
+            listaAtaqueEnemigos = prioridadEnemigo(casilleroAtaque);
+
+            for (Enemigo enemigoActual : listaAtaqueEnemigos){
+                enemigoActual.restarVida(this.danio);
+
+                if (enemigoActual.getVida() <= 0){
+                    // Si la torre mata al enemigo, sucede lo siguiente:
+                    casilleroAtaque.eliminarEnemigo(enemigoActual);
+                    nivelActual.aumentarPuntosMagia(enemigoActual.getRecompensaEnemigo());
+                    casilleroAtaque.getEnemigosListosParaMoverse().remove(enemigoActual);
+                    System.out.println("La torre " + this.toString() + " ha asesinado a " + enemigoActual.toString() + " | +" + enemigoActual.getRecompensaEnemigo() + " Ptos. Magia.");
+                } else {
+                    // Si la torre no mata al enemigo muestra el siguiente mensaje:
+                    System.out.println(enemigoActual.toString() + " fue atacado por "+this.toString()+" y ahora tiene "+enemigoActual.getVida()+" de vida");
+                }
+
             }
         }
-
     }
 
+
+    @Override
     public ArrayList<Enemigo> prioridadEnemigo(Casillero casilleroEnemigo) {
         ArrayList<Enemigo> listaEnemigosPorPrioridad = new ArrayList<>();
         String[] tiposEnemigos = {"Elfo", "Enano", "Humano", "Hobbit"}; // Prioriza por daño de enemigo
@@ -68,7 +76,6 @@ public class TorreFuego extends Torre{
                 }
             }
         }
-
         return listaEnemigosPorPrioridad;
     }
 

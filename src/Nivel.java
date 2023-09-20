@@ -19,7 +19,7 @@ public class Nivel {
 
     public Nivel(int nroNivel) {
         this.nroNivel = nroNivel;
-        this.puntosMagia = 800;
+        this.puntosMagia = 1000;
     }
 
     public void generarCasillerosEnemigos() {
@@ -78,7 +78,7 @@ public class Nivel {
                 break;
             case 2:
                 torreAMejorar.aumentarAlcance();
-                torreAMejorar.calcularCasillerosAtaque(this.mapaNivel);
+                torreAMejorar.calcularCoordenadasCasillerosAtaque(this);
                 restarPuntosMagia(1000);
                 System.out.println("Mejora de +1 Alcance de ataque a " + torreAMejorar.toString() + " aplicado.");
                 break;
@@ -114,14 +114,13 @@ public class Nivel {
         }
 
         restarPuntosMagia(torre.getCosteTorre());
-        mapaNivel.colocarRefTorre(coordTorre, tipoTorre);
+        mapaNivel.colocarRefTorre(torre);
         listaTorres.add(torre);
-        torre.calcularCasillerosAtaque(this.mapaNivel);
+        torre.calcularCoordenadasCasillerosAtaque(this);
         System.out.println("Se colocó Torre: " + torre.toString() + " en la posición " + coordTorre.mostrarCoordenada());
     }
 
     public void colocarBarrera() {
-        this.mapaNivel.mostrarMapa();
         Coordenada coordBarrera = entradaSalidaUsuario.ingresarYValidarCoordenadas("Barrera", this);
         Casillero casillero = buscarCasilleroPorCoordenada(coordBarrera);
         casillero.agregarBarrera();

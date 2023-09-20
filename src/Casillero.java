@@ -54,19 +54,25 @@ public class Casillero {
     }
 
     public void eliminarEnemigo(Enemigo enemigo) {
-        if (enemigo instanceof Humano) {
-            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Humano");
+
+
+            // ver si los enemigos son eliminados con esto.
+            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get(enemigo.getClass().getName());
             listaEnemigos.remove(enemigo);
-        } else if (enemigo instanceof Elfo) {
-            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Elfo");
-            listaEnemigos.remove(enemigo);
-        }else if (enemigo instanceof Enano) {
-            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Enano");
-            listaEnemigos.remove(enemigo);
-        }else {
-            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Hobbit");
-            listaEnemigos.remove(enemigo);
-        }
+
+//        if (enemigo instanceof Humano) {
+//            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Humano");
+//            listaEnemigos.remove(enemigo);
+//        } else if (enemigo instanceof Elfo) {
+//            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Elfo");
+//            listaEnemigos.remove(enemigo);
+//        }else if (enemigo instanceof Enano) {
+//            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Enano");
+//            listaEnemigos.remove(enemigo);
+//        }else {
+//            ArrayList<Enemigo> listaEnemigos = enemigosCasillero.get("Hobbit");
+//            listaEnemigos.remove(enemigo);
+//        }
 
     }
 
@@ -140,7 +146,7 @@ public class Casillero {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setCerroGloria(Cerro cerroGloria) {

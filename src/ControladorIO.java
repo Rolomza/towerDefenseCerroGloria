@@ -77,6 +77,7 @@ public class ControladorIO {
             System.out.println(" --- MENU OLEADA ---");
             System.out.println("Oleada: " + nivelActual.getOleadaNivel().getNroOleada() + " Nivel: " + nivelActual.getNroNivel());
             System.out.println("Puntos de magia: " + nivelActual.getPuntosMagia());
+            nivelActual.getMapaNivel().mostrarMapa();
             System.out.println("1 - Mejorar Torres.");
             System.out.println("2 - Comprar y colocar barrera. (100 puntos de magia c/u)");
             System.out.println("3 - Iniciar Oleada.");
@@ -215,8 +216,8 @@ public class ControladorIO {
     public boolean validarCoordenada(Coordenada coordenada , String tipoEstructura, Nivel nivelActual){
 
         // Cambiar el 4 por las dimensiones del mapa
-        if (( coordenada.getX() < 0 || coordenada.getX() > nivelActual.getMapaNivel().getMapaRefCoord().length) ||
-                (coordenada.getY() < 0 || coordenada.getY() > nivelActual.getMapaNivel().getMapaRefCoord()[0].length)){
+        if (( coordenada.getX() < 0 || coordenada.getX() > nivelActual.getMapaNivel().getMapaRefCoord().length - 1 ) ||
+                (coordenada.getY() < 0 || coordenada.getY() > nivelActual.getMapaNivel().getMapaRefCoord()[0].length - 1)){
             System.out.println("Coordenada NO válida (fuera de rango del mapa).");
             return false;
         }
@@ -250,13 +251,13 @@ public class ControladorIO {
             int coordX = coordenada.getX();
             int coordY = coordenada.getY();
 
-            if (nivelActual.getMapaNivel().getMapaRefCoord()[coordX][coordY].equals("Tc ")) {
+            if (nivelActual.getMapaNivel().getMapaRefCoord()[coordX][coordY].contains("Tc")) {
                 System.out.println("No puedes colocar torre ya hay una Tc en el casillero.");
                 return false;
-            } else if (nivelActual.getMapaNivel().getMapaRefCoord()[coordX][coordY].equals("Th ")) {
+            } else if (nivelActual.getMapaNivel().getMapaRefCoord()[coordX][coordY].contains("Th")) {
                 System.out.println("No puedes colocartorre ya hay Th en el casillero.");
                 return false;
-            } else if (nivelActual.getMapaNivel().getMapaRefCoord()[coordX][coordY].equals("Tf ")) {
+            } else if (nivelActual.getMapaNivel().getMapaRefCoord()[coordX][coordY].contains("Tf")) {
                 System.out.println("No puedes colocar ya hay Tf en el casillero.");
                 return false;
             }

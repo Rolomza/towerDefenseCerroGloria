@@ -9,7 +9,7 @@ public class Cerro {
     public void restarVida(double danio) {
         this.vida = vida - danio;
     }
-    public void mostarVida(){
+    public void mostrarVida(){
         System.out.println("La vida actual del Cerro Gloria es: "+vida);
     }
 }

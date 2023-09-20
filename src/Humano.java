@@ -19,5 +19,7 @@ public class Humano extends Enemigo {
 
     // Este metodo se va a llamar cuando se cambie de casillero
 
-
+    public String getNameClass() {
+        return "Humano";
+    }
 }

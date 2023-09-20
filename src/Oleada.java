@@ -22,59 +22,49 @@ public class Oleada {
     public void iniciarOleada(Nivel nivelActual) {
         //Iteraciones Juego
         int count = 0;
-        System.out.println("Iteracion: "+count);
 
         int posicionCerro = nivelActual.getCasillerosEnemigos().size()-1;
-        nivelActual.getCasillerosEnemigos().get(posicionCerro).getCerroGloria().mostarVida();;
+        Cerro cerroGloria = nivelActual.getCasillerosEnemigos().get(posicionCerro).getCerroGloria();
+        nivelActual.getCasillerosEnemigos().get(posicionCerro).getCerroGloria().mostrarVida();;
         generarEnemigos();
 
+        // Corazon del juego
+        while (cerroGloria.getVida() > 0){
 
-        // Revisar el orden en el que mostramos las cosas
-        while (nivelActual.getCasillerosEnemigos().get(posicionCerro).getCerroGloria().getVida() > 0){
-            //si hay enemigos en mi lista enemigos por iteracion mandamos los enemigos que correspondan a la oleada
             if (!this.listaEnemigosOleada.isEmpty()){
+                // Mientras hay enemigos restantes para generar en la oleada
                 cargarEnemigosCasilleroInicial(nivelActual.getCasillerosEnemigos());
             }
-            if (count ==0){
-                System.out.println("Iteracion: "+ count);
-                nivelActual.mostrarCasillerosConEnemigos();}
+
             if (!nivelActual.existenEnemigos()){
                 break;
             }
-            System.out.println("Iteracion: " + (count+1));
-            torresAtacan(nivelActual);
 
-            System.out.println("Vida del Cerro antes del ataque de los Enemigos:");
-            nivelActual.getCasillerosEnemigos().get(posicionCerro).getCerroGloria().mostarVida();
+            System.out.println("--- ITERACION : " + (count+1) + " ---");
+            nivelActual.getMapaNivel().mostrarMapa();
+            nivelActual.mostrarCasillerosConEnemigos();
+
+            // Funciones sobre los casilleros
+            torresAtacan(nivelActual);
             reducirContadoresEnemigos(nivelActual); // El error estaba aqui
             enemigosAtacan(nivelActual);
             moverEnemigosListos(nivelActual); //Aca muevo a los enemigos, si estan en el penultimo casillero atacan y mueren
-            System.out.println("Casilleros despues de mover enemigos:");
-            nivelActual.mostrarCasillerosConEnemigos();
-            System.out.println("Vida Post-Ataque");
-            nivelActual.getCasillerosEnemigos().get(posicionCerro).getCerroGloria().mostarVida();
+
+            cerroGloria.mostrarVida();
 
             count++;
-            // Nota: Cuando destruyo la barrera, los enemigos no se mueven hasta la siguiente iteracion
-            // porque el que chequea que la barrera este destruida es enemigosAtacan
         }
     }
 
+
+    // Revisar si funciona la nueva implementacion de torres atacan
     public void torresAtacan(Nivel nivelActual){
-        System.out.println("Atacan las Torres");
         // Aca iterariamos todas las torres y atacarian antes de que los enemigos se muevan
         for (Torre torreActual : nivelActual.getListaTorres()){
-
-            if (torreActual instanceof TorreComun){
-                TorreComun torreComun = (TorreComun) torreActual;
-                torreComun.chequearCasillerosAtaque(nivelActual);
-            } else if (torreActual instanceof TorreHielo) {
-                TorreHielo torreHielo = (TorreHielo) torreActual;
-                torreHielo.chequearCasillerosAtaque(nivelActual);
-            } else if (torreActual instanceof TorreFuego){
-                TorreFuego torreFuego = (TorreFuego) torreActual;
-                torreFuego.chequearCasillerosAtaque(nivelActual);
-            }
+            torreActual.imprimirCasillerosAtaque();
+            // Revisar casillero, esta puesto para evitar romper ataque enemigo
+            Casillero casillero = new Casillero(99,99);
+            torreActual.atacar(nivelActual, casillero);
         }
     }
 
@@ -85,7 +75,7 @@ public class Oleada {
                     if (casillero.getBarrera() != null) {
                         for (Enemigo enemigo : listaEnemigos) {
                             if (casillero.getBarrera().getVida() > 0) {
-                                enemigo.atacar(casillero, nivelActual);
+                                enemigo.atacar(nivelActual, casillero);
                                 if (casillero.getBarrera().getVida() < 0){
                                     System.out.println("La barrera ha sido eliminada");
                                 }
@@ -140,7 +130,8 @@ public class Oleada {
                 if (esPenultimo) {
                     while (!listaEnemigosParaMoverse.isEmpty()) {
                         enemigo = listaEnemigosParaMoverse.remove(0);
-                        enemigo.atacar(casilleroSiguiente, nivelActual);
+                        // Revisar implementacion Ataque para enemigos
+                        enemigo.atacar(nivelActual, casilleroSiguiente);
                         casilleroActual.eliminarEnemigo(enemigo);
                     }
 
@@ -232,7 +223,6 @@ public class Oleada {
     public void cargarEnemigosCasilleroInicial(ArrayList<Casillero> casillerosEnemigos) {
         // Se cargan una determinada cantidad de enemigos segun el nivel y la oleada
         Casillero c1 = casillerosEnemigos.get(0);
-        //int cantidadEnemigosCarga = 8;
         int cantidadEnemigosCarga = 0;
             switch (nivelActual) {
                 case 1: cantidadEnemigosCarga = 3;
@@ -245,12 +235,10 @@ public class Oleada {
         Random random = new Random();
         int numeroRandomEnemigo;
         for (int i = 0; i < cantidadEnemigosCarga; i++) {
-
             if (!this.listaEnemigosOleada.isEmpty()) {
                 numeroRandomEnemigo = random.nextInt(listaEnemigosOleada.size());
                 c1.agregarEnemigo(this.listaEnemigosOleada.remove(numeroRandomEnemigo));
             }
-
         }
     }
 
