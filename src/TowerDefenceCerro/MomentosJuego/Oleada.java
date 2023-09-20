@@ -28,6 +28,8 @@ public class Oleada {
 
     public void iniciarOleada(Nivel nivelActual) {
         //Iteraciones TowerDefenceCerro.MomentosJuego.Juego
+
+
         int count = 0;
 
         int posicionCerro = nivelActual.getCasillerosEnemigos().size()-1;
@@ -37,7 +39,12 @@ public class Oleada {
 
         // Corazon del juego
         while (cerroGloria.getVida() > 0){
-
+            try {
+                Thread.sleep(2250); // Agrega un retraso de 3 segundos (3000 milisegundos)
+            } catch (InterruptedException e) {
+                // Maneja la excepción si es necesario
+                e.printStackTrace();
+            }
             if (!this.listaEnemigosOleada.isEmpty()){
                 // Mientras hay enemigos restantes para generar en la oleada
                 cargarEnemigosCasilleroInicial(nivelActual.getCasillerosEnemigos());
@@ -222,10 +229,10 @@ public class Oleada {
 
         for (int i=0 ; i < n; i++){
             switch (tipoEnemigo) {
-                case ("TowerDefenceCerro.Enemigos.Hobbit") -> listaEnemigosOleada.add(new Hobbit());
-                case ("TowerDefenceCerro.Enemigos.Humano") -> listaEnemigosOleada.add(new Humano());
-                case ("TowerDefenceCerro.Enemigos.Elfo") -> listaEnemigosOleada.add(new Elfo());
-                case ("TowerDefenceCerro.Enemigos.Enano") -> listaEnemigosOleada.add(new Enano());
+                case ("TowerDefenceCerro.Enemigos.Hobbit") :{ listaEnemigosOleada.add(new Hobbit()); break;}
+                case ("TowerDefenceCerro.Enemigos.Humano") :{ listaEnemigosOleada.add(new Humano()); break;}
+                case ("TowerDefenceCerro.Enemigos.Elfo") :{ listaEnemigosOleada.add(new Elfo()); break;}
+                case ("TowerDefenceCerro.Enemigos.Enano") :{ listaEnemigosOleada.add(new Enano()); break;}
             }
         }
 
