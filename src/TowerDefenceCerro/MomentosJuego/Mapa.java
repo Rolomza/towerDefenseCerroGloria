@@ -114,7 +114,7 @@ public class Mapa {
             System.out.print(i + "  ");
             for (int j = 0; j < map[i].length; j++) {
                 if(map[i][j].length() == 3) {
-                    System.out.print(" " + map[i][j] + " ");
+                    System.out.print(" " + map[i][j] + "  ");
                 } else {
                     System.out.print(map[i][j] + "  ");
                 }
